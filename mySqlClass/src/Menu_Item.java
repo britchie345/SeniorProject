@@ -1,104 +1,123 @@
 
 public class Menu_Item {
-    private
-         int id;
-         String name;
-         String menu_Desc;
-         String Description;
-         double price;
-         int calories;
-         int onmenu;
-         String cooktime;
-         int spicy;
-         int recommended;
-     public
-          void setId(int arg)
-          {
-              id=arg;
-          }
-          int getId()
-          {
-              return id;
-          }
+
+		private int id;
+		private int calories;
+		private int onmenu;
+		private int spicy;
+		private int recommended;
+		
+		private double price;
+		
+		private String name;
+		private String menu_Desc;
+		private String Description;
+		private String cooktime;
+		
+    /*
+		*   Setters
+		*/
+		public void setId(int id) {
+		
+			this.id = id;
+		}
+		
+		public void setName(String name) {
+					
+				this.name = name;
+		}
           
-          void setName(String arg)
-          {
-              name=arg;
-          }
-          String getName()
-          {
-              return name;
-          }
+		public void setMenuDesc(String menu_Desc) {
+					
+				this.menu_Desc = menu_Desc;
+		}
           
-          void setMenuDesc(String arg)
-          {
-              menu_Desc=arg;
-          }
-          String getMenuDesc()
-          {
-              return menu_Desc;
-          }
+		public void setDescription(String Description) {
+					
+				this.Description = Description;
+		}
           
-          void setDescription(String arg)
-          {
-              Description=arg;
-          }
-          String getDescription()
-          {
-              return Description;
-          }
+		public void setPrice(double price) {
+					
+				this.price = price;
+		}
           
-          void setPrice(double arg)
-          {
-              price=arg;
-          }
-          double getPrice()
-          {
-              return price;
-          }
+		public void setCalories(int calories) {
+					
+				this.calories = calories;
+		}
           
-          void setCalories(int arg)
-          {
-              calories=arg;
-          }
-          int getCalories()
-          {
-              return calories;
-          }
+		public void setOnMenu(int onmenu) {
+					
+				this.onmenu = onmenu;
+		}
           
-          void setOnMenu(int arg)
-          {
-              onmenu=arg;
-          }
-          int getOnMenu()
-          {
-              return onmenu;
-          }
+		public void setCookTime(String cooktime) {
+					
+				this.cooktime = cooktime;
+		}
           
-          void setCookTime(String arg)
-          {
-              cooktime=arg;
-          }
-          String getCookTime()
-          {
-              return cooktime;
-          }
+		public void setSpicy(int spicy) {
+					
+				this.spicy = spicy;
+		}
           
-          void setSpicy(int arg)
-          {
-              spicy=arg;
-          }
-          int getSpicy()
-          {
-              return spicy;
-          }
-          
-          void setRecommended(int arg)
-          {
-              recommended=arg;
-          }
-          int getRecommended()
-          {
-              return recommended;
-          }
+		public void setRecommended(int recommended) {
+		
+				this.recommended = recommended;
+		}
+		
+    /*
+		*   Getters
+		*/
+		public int getId() {
+					
+				return id;
+		}
+					
+		public String getName() {
+					
+				return name;
+		}
+					
+		public String getMenuDesc() {
+					
+				return menu_Desc;
+		}
+		
+		public String getDescription() {
+					
+				return Description;
+		}
+		
+		public double getPrice() {
+					
+				return price;
+		}
+		
+		public int getCalories() {
+					
+				return calories;
+		}
+	
+		public int getOnMenu() {
+					
+				return onmenu;
+		}
+
+		public String getCookTime() {
+					
+				return cooktime;
+		}
+
+		public int getSpicy() {
+					
+				return spicy;
+		}
+
+		public int getRecommended() {
+		
+				return recommended;
+		}
+		
 }

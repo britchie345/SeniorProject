@@ -1,43 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Andrew
- */
+
 public class Type {
-    private
-    int typeID;
-    String name;
-    String description;
-    public
-    
-    void setTypeId(int arg)
-    {
-        typeID=arg;
+
+    private String name;
+    private String description;
+		
+    private int typeID;
+
+    /*
+		*   Setters
+		*/
+    public void setTypeId(int typeID) {
+		
+				this.typeID = typeID;
     }
-    int getTypeId()
-    {
+    
+    public void setName(String name) {
+		
+        this.name = name;
+    }
+    
+    public void setDescription(String description) {
+		
+        this.description = description;
+    }
+
+    /*
+		*   Getters
+		*/
+    public int getTypeId() {
+		
         return typeID;
     }
-    
-    void setName(String arg)
-    {
-        name=arg;
+
+    public String getName() {
+		
+        return name;
     }
-    String getName()
-    {
-        return description;
-    }
-    
-    void setDescription(String arg)
-    {
-        description=arg;
-    }
-    String getDescription()
-    {
+
+    public String getDescription() {
+		
         return description;
     }
     

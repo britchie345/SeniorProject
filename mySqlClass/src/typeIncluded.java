@@ -1,45 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Andrew
- */
+
 public class typeIncluded {
-    private 
-       int typeOne;
-       int typeTwo;
-       int number;
-       
-    public
-            void setTypeOne(int arg)
-            {
-                typeOne=arg;
-            }
-            int getTypeOne()
-            {
-                return typeOne;
-            }
+
+		private int typeOne;
+		private int typeTwo;
+		private int number;
+		
+    /*
+		*   Setters
+		*/
+		public void setTypeOne(int typeOne) {
+						
+				this.typeOne = typeOne;
+		}
             
-            void setTypeTwo(int arg)
-            {
-                typeTwo=arg;
-            }
-            int getTypeTwo()
-            {
-                return typeTwo;
-            }
+		public void setTypeTwo(int typeTwo) {
+						
+				this.typeTwo = typeTwo;
+		}
             
-            void setNumber(int arg)
-            {
-                number=arg;
-            }
-            int getNumber()
-            {
-                return number;
-            }
-            
-            
+		public void setNumber(int number) {
+						
+				this.number = number;
+		}
+		
+    /*
+		*   Getters
+		*/
+		public int getTypeOne() {
+						
+				return typeOne;
+		}
+
+		public int getTypeTwo() {
+						
+				return typeTwo;
+		}
+
+		public int getNumber() {
+		
+				return number;
+		}   
+    
 }

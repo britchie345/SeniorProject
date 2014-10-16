@@ -2,27 +2,25 @@ import java.sql.*;
 import java.util.*;
 import java.util.Scanner;
 
+
 public class mySqlClass {
-    //This is java driver tells what type of database we are accessing
-   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
+
+		//This is java driver tells what type of database we are accessing
+		private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
    
-   //Tells location of database we are accessing
-   static final String DB_URL = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql554700" ;
+		//Tells location of database we are accessing
+		private static final String DB_URL = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql554700" ;
    
-   //Password and user name for database
-   static final String USER = "sql554700";
-   static final String PASS = "kI3!hS8!";
+		//Password and user name for database
+		private static final String USER = "sql554700";
+		private static final String PASS = "kI3!hS8!";
    
-    Connection conn = null;
+    private Connection conn = null;
     
-    public static void main(String[] args) {
-         
-        
-          
-     }
+    public static void main(String[] args) {}
     
-      //Connection function
-    void connection()
+		//Connection function
+    public void connection()
     {
    
         //Try to establish connection
@@ -43,9 +41,15 @@ public class mySqlClass {
         }
         finally{}
     }
-    //------------------------MENU_ITEM table functions --------------------
-    //Get all for MENU_ITEM table returns arraylist of all items in MENU_ITEM
-    ArrayList getAllMenu_Item()
+		
+		
+		/*******MENU_ITEM table functions*******/
+		
+    /*  
+    *   Get all for MENU_ITEM table returns 
+		*   arraylist of all items in MENU_ITEM
+		*/
+    public ArrayList getAllMenu_Item()
     {
       //Intialize arrayList and statement for use
       ArrayList queryResults = new ArrayList();  
@@ -105,8 +109,10 @@ public class mySqlClass {
       return queryResults;
     }
     
-    //function gets single record from MENU_ITEM table
-    ArrayList getSingleMenu_Item(int id)
+    /*
+		*   function gets single record from MENU_ITEM table
+		*/
+    public ArrayList getSingleMenu_Item(int id)
     {
         ArrayList queryResults = new ArrayList();
         //Prepared Statement variable for Prepared SQL statements
@@ -166,9 +172,10 @@ public class mySqlClass {
       return queryResults;
     }
     
-    
-    //Insert entry into MENU_ITEM table
-    void insertIntoMenu_Item(Menu_Item arg)
+    /*
+		*   Insert entry into MENU_ITEM table
+		*/
+    public void insertIntoMenu_Item(Menu_Item arg)
     {
         
         //Prepared Statement variable for Prepared SQL statements
@@ -223,7 +230,7 @@ public class mySqlClass {
       }//end try  
     }
     
-    void deleteMenu_Item(int id)
+    public void deleteMenu_Item(int id)
     {
         //Prepared Statement variable for Prepared SQL statements
         PreparedStatement stmt2= null;
@@ -266,7 +273,8 @@ public class mySqlClass {
             }//end finally try
       }//end try    
     }
-    void updateMenu_Item(Menu_Item arg)
+		
+    public void updateMenu_Item(Menu_Item arg)
     {
       //Prepared Statement variable for Prepared SQL statements
         PreparedStatement stmt2= null;
@@ -321,9 +329,13 @@ public class mySqlClass {
       }//end try    
     }
     
-    //--------------------TYPE Table Functions -----------------------
-    //Returns the whoel table for TYPES
-    ArrayList getAllType()
+		
+    /*******TYPE Table Functions*******/
+		
+    /*
+		*   Returns the whole table for TYPES
+		*/
+    public ArrayList getAllType()
     {
       //Intialize arrayList and statement for use
       ArrayList queryResults = new ArrayList();  
@@ -381,7 +393,7 @@ public class mySqlClass {
       return queryResults;
     }
     
-ArrayList getSingleType(int id)
+		public ArrayList getSingleType(int id)
     {
         ArrayList queryResults = new ArrayList();
         //Prepared Statement variable for Prepared SQL statements
@@ -440,8 +452,10 @@ ArrayList getSingleType(int id)
       return queryResults;
     }
 
- //Insert entry into MENU_ITEM table
-    void insertIntoType(Type arg)
+		/*
+		*   Insert entry into MENU_ITEM table
+		*/
+		public void insertIntoType(Type arg)
     {
         
         //Prepared Statement variable for Prepared SQL statements
@@ -489,7 +503,7 @@ ArrayList getSingleType(int id)
       }//end try  
     }
     
-    void deleteType(int id)
+    public void deleteType(int id)
     {
         //Prepared Statement variable for Prepared SQL statements
         PreparedStatement stmt2= null;
@@ -532,7 +546,8 @@ ArrayList getSingleType(int id)
             }//end finally try
       }//end try    
     }
-    void updateType(Type arg)
+		
+    public void updateType(Type arg)
     {
       //Prepared Statement variable for Prepared SQL statements
         PreparedStatement stmt2= null;
@@ -580,7 +595,7 @@ ArrayList getSingleType(int id)
     }
     
     
-    ArrayList getAllType_Included()
+    public ArrayList getAllType_Included()
     {
       //Intialize arrayList and statement for use
       ArrayList queryResults = new ArrayList();  
@@ -639,8 +654,10 @@ ArrayList getSingleType(int id)
       return queryResults;
     }
     
-    //function gets single record from MENU_ITEM table
-    ArrayList getSingleTypeIncluded(int id)
+    /*
+		*   function gets single record from MENU_ITEM table
+		*/
+    public ArrayList getSingleTypeIncluded(int id)
     {
         ArrayList queryResults = new ArrayList();
         //Prepared Statement variable for Prepared SQL statements
@@ -700,8 +717,10 @@ ArrayList getSingleType(int id)
     }
     
     
-    //Insert entry into MENU_ITEM table
-    void insertIntoType_Included(typeIncluded arg)
+    /*
+		*   Insert entry into MENU_ITEM table
+		*/
+    public void insertIntoType_Included(typeIncluded arg)
     {
         
         //Prepared Statement variable for Prepared SQL statements
@@ -749,7 +768,7 @@ ArrayList getSingleType(int id)
       }//end try  
     }
     
-    void deleteType_Included(int id,int id2)
+    public void deleteType_Included(int id,int id2)
     {
         //Prepared Statement variable for Prepared SQL statements
         PreparedStatement stmt2= null;
@@ -793,8 +812,12 @@ ArrayList getSingleType(int id)
             }//end finally try
       }//end try    
     } 
-   //Get all for MENU_ITEM table returns arraylist of all items in MENU_ITEM
-    ArrayList getAllItemType()
+		
+		/*
+		*   Get all for MENU_ITEM table returns 
+		*   arraylist of all items in MENU_ITEM
+		*/
+    public ArrayList getAllItemType()
     {
       //Intialize arrayList and statement for use
       ArrayList queryResults = new ArrayList();  
@@ -853,7 +876,7 @@ ArrayList getSingleType(int id)
     }
     
     //function gets single record from MENU_ITEM table
-    ArrayList getSingleItem_Type(int id)
+    public ArrayList getSingleItem_Type(int id)
     {
         ArrayList queryResults = new ArrayList();
         //Prepared Statement variable for Prepared SQL statements
@@ -913,7 +936,7 @@ ArrayList getSingleType(int id)
     
     
     //Insert entry into MENU_ITEM table
-    void insertIntoItem_Type(Item_Type arg)
+    public void insertIntoItem_Type(Item_Type arg)
     {
         
         //Prepared Statement variable for Prepared SQL statements
@@ -961,7 +984,7 @@ ArrayList getSingleType(int id)
       }//end try  
     }
     
-    void deleteItem_Type(int id, int id2)
+    public void deleteItem_Type(int id, int id2)
     {
         //Prepared Statement variable for Prepared SQL statements
         PreparedStatement stmt2= null;
