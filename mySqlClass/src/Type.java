@@ -2,44 +2,44 @@
 public class Type {
 
 	private String name;
-    private String description;
+	private String description;
 		
-    private int typeID;
+	private int typeID;
 
-    /*
+	/*
 	*   Setters
 	*/
-    public void setTypeId(int typeID) {
+	public void setTypeId(int typeID) {
 		
-    	this.typeID = typeID;
-    }
-    
-    public void setName(String name) {
+		this.typeID = typeID;
+	}
+	
+	public void setName(String name) {
 		
-    	this.name = name;
-    }
-    
-    public void setDescription(String description) {
+		this.name = name;
+	}
+	
+	public void setDescription(String description) {
 		
-        this.description = description;
-    }
+		this.description = description;
+	}
 
-    /*
+	/*
 	*   Getters
 	*/
-    public int getTypeId() {
+	public int getTypeId() {
 		
-        return typeID;
-    }
+		return typeID;
+	}
 
-    public String getName() {
+	public String getName() {
 		
-        return name;
-    }
+		return name;
+	}
 
-    public String getDescription() {
+	public String getDescription() {
 		
-        return description;
-    }
-    
+		return description;
+	}
+	
 }

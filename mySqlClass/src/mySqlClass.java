@@ -15,9 +15,9 @@ public class mySqlClass {
 	private static final String USER = "sql554700";
 	private static final String PASS = "kI3!hS8!";
    
-    private Connection conn = null;
+	private Connection conn = null;
     
-    public static void main(String[] args) {}
+	public static void main(String[] args) {}
     
 		//Connection function
     public void connection()
@@ -47,8 +47,8 @@ public class mySqlClass {
 		
     /*  
     *   Get all for MENU_ITEM table returns 
-	*   arraylist of all items in MENU_ITEM
-	*/
+		*   arraylist of all items in MENU_ITEM
+		*/
     public ArrayList getAllMenu_Item()
     {
       //Intialize arrayList and statement for use

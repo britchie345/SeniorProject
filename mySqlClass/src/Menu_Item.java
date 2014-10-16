@@ -14,7 +14,7 @@ public class Menu_Item {
 	private String Description;
 	private String cooktime;
 	
-    /*
+	/*
 	*   Setters
 	*/
 	public void setId(int id) {
@@ -67,7 +67,7 @@ public class Menu_Item {
 		this.recommended = recommended;
 	}
 	
-    /*
+	/*
 	*   Getters
 	*/
 	public int getId() {
