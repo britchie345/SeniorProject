@@ -828,7 +828,7 @@ public class mySqlClass {
             stmt = conn.createStatement();
             //Createst String that holds SQL query
             String sql;
-            sql = "SELECT * FROM MENU_ITEM";
+            sql = "SELECT * FROM ITEM_TYPE";
       
             //Returns the results of query in a special class
             ResultSet rs = stmt.executeQuery(sql);
