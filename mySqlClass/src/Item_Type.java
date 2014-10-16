@@ -1,13 +1,12 @@
 
-
 public class Item_Type {
 
-    private int itemID;
+	private int itemID;
     private int typeID;
 		
     /*
-		*   Setters
-		*/
+	*   Setters
+	*/
     public void setItemId(int itemID) {
 		
         this.itemID = itemID;
@@ -19,8 +18,8 @@ public class Item_Type {
     }
 		
     /*
-		*   Getters
-		*/
+	*   Getters
+	*/
     public int getItemId() {
 		
         return itemID;

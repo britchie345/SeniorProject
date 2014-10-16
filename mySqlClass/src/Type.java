@@ -1,22 +1,22 @@
 
 public class Type {
 
-    private String name;
+	private String name;
     private String description;
 		
     private int typeID;
 
     /*
-		*   Setters
-		*/
+	*   Setters
+	*/
     public void setTypeId(int typeID) {
 		
-				this.typeID = typeID;
+    	this.typeID = typeID;
     }
     
     public void setName(String name) {
 		
-        this.name = name;
+    	this.name = name;
     }
     
     public void setDescription(String description) {
@@ -25,8 +25,8 @@ public class Type {
     }
 
     /*
-		*   Getters
-		*/
+	*   Getters
+	*/
     public int getTypeId() {
 		
         return typeID;

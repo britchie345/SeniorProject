@@ -5,15 +5,15 @@ import java.util.Scanner;
 
 public class mySqlClass {
 
-		//This is java driver tells what type of database we are accessing
-		private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	//This is java driver tells what type of database we are accessing
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
    
-		//Tells location of database we are accessing
-		private static final String DB_URL = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql554700" ;
+	//Tells location of database we are accessing
+	private static final String DB_URL = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql554700" ;
    
-		//Password and user name for database
-		private static final String USER = "sql554700";
-		private static final String PASS = "kI3!hS8!";
+	//Password and user name for database
+	private static final String USER = "sql554700";
+	private static final String PASS = "kI3!hS8!";
    
     private Connection conn = null;
     
@@ -47,8 +47,8 @@ public class mySqlClass {
 		
     /*  
     *   Get all for MENU_ITEM table returns 
-		*   arraylist of all items in MENU_ITEM
-		*/
+	*   arraylist of all items in MENU_ITEM
+	*/
     public ArrayList getAllMenu_Item()
     {
       //Intialize arrayList and statement for use
@@ -110,8 +110,8 @@ public class mySqlClass {
     }
     
     /*
-		*   function gets single record from MENU_ITEM table
-		*/
+	*   function gets single record from MENU_ITEM table
+	*/
     public ArrayList getSingleMenu_Item(int id)
     {
         ArrayList queryResults = new ArrayList();
@@ -173,8 +173,8 @@ public class mySqlClass {
     }
     
     /*
-		*   Insert entry into MENU_ITEM table
-		*/
+	*   Insert entry into MENU_ITEM table
+	*/
     public void insertIntoMenu_Item(Menu_Item arg)
     {
         
@@ -333,8 +333,8 @@ public class mySqlClass {
     /*******TYPE Table Functions*******/
 		
     /*
-		*   Returns the whole table for TYPES
-		*/
+	*   Returns the whole table for TYPES
+	*/
     public ArrayList getAllType()
     {
       //Intialize arrayList and statement for use
@@ -393,7 +393,7 @@ public class mySqlClass {
       return queryResults;
     }
     
-		public ArrayList getSingleType(int id)
+	public ArrayList getSingleType(int id)
     {
         ArrayList queryResults = new ArrayList();
         //Prepared Statement variable for Prepared SQL statements
@@ -452,10 +452,10 @@ public class mySqlClass {
       return queryResults;
     }
 
-		/*
-		*   Insert entry into MENU_ITEM table
-		*/
-		public void insertIntoType(Type arg)
+	/*
+	*   Insert entry into MENU_ITEM table
+	*/
+	public void insertIntoType(Type arg)
     {
         
         //Prepared Statement variable for Prepared SQL statements
@@ -655,8 +655,8 @@ public class mySqlClass {
     }
     
     /*
-		*   function gets single record from MENU_ITEM table
-		*/
+	*   function gets single record from MENU_ITEM table
+	*/
     public ArrayList getSingleTypeIncluded(int id)
     {
         ArrayList queryResults = new ArrayList();
@@ -718,8 +718,8 @@ public class mySqlClass {
     
     
     /*
-		*   Insert entry into MENU_ITEM table
-		*/
+	*   Insert entry into MENU_ITEM table
+	*/
     public void insertIntoType_Included(typeIncluded arg)
     {
         
@@ -813,10 +813,10 @@ public class mySqlClass {
       }//end try    
     } 
 		
-		/*
-		*   Get all for MENU_ITEM table returns 
-		*   arraylist of all items in MENU_ITEM
-		*/
+	/*
+	*   Get all for MENU_ITEM table returns 
+	*   arraylist of all items in MENU_ITEM
+	*/
     public ArrayList getAllItemType()
     {
       //Intialize arrayList and statement for use

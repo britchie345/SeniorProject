@@ -1,44 +1,44 @@
 
 public class typeIncluded {
 
-		private int typeOne;
-		private int typeTwo;
-		private int number;
+	private int typeOne;
+	private int typeTwo;
+	private int number;
 		
-    /*
-		*   Setters
-		*/
-		public void setTypeOne(int typeOne) {
-						
-				this.typeOne = typeOne;
-		}
+	/*
+	*   Setters
+	*/
+	public void setTypeOne(int typeOne) {
+		
+		this.typeOne = typeOne;
+	}
             
-		public void setTypeTwo(int typeTwo) {
+	public void setTypeTwo(int typeTwo) {
 						
-				this.typeTwo = typeTwo;
-		}
+		this.typeTwo = typeTwo;
+	}
             
-		public void setNumber(int number) {
+	public void setNumber(int number) {
 						
-				this.number = number;
-		}
+		this.number = number;
+	}
 		
-    /*
-		*   Getters
-		*/
-		public int getTypeOne() {
+	/*
+	*   Getters
+	*/
+	public int getTypeOne() {
 						
-				return typeOne;
-		}
+		return typeOne;
+	}
 
-		public int getTypeTwo() {
+	public int getTypeTwo() {
 						
-				return typeTwo;
-		}
+		return typeTwo;
+	}
 
-		public int getNumber() {
+	public int getNumber() {
 		
-				return number;
-		}   
+		return number;
+	}   
     
 }
