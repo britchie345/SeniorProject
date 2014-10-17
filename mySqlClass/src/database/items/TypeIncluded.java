@@ -1,5 +1,6 @@
+package database.items;
 
-public class typeIncluded {
+public class TypeIncluded {
 
 	private int typeOne;
 	private int typeTwo;

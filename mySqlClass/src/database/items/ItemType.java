@@ -1,5 +1,6 @@
+package database.items;
 
-public class Item_Type {
+public class ItemType {
 
 	private int itemID;
 	private int typeID;

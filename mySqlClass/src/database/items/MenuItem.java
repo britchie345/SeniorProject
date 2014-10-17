@@ -1,5 +1,6 @@
+package database.items;
 
-public class Menu_Item {
+public class MenuItem {
 
 	private int id;
 	private int calories;

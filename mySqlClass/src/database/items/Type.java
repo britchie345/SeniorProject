@@ -1,3 +1,4 @@
+package database.items;
 
 public class Type {
 
