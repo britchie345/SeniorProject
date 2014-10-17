@@ -1,34 +1,16 @@
 package database.items;
 
-public class ItemType {
+import java.util.ArrayList;
 
-	private int itemID;
-	private int typeID;
+public class ItemType extends Table {
 	
-	/*
-	*   Setters
-	*/
-	public void setItemId(int itemID) {
-	
-		this.itemID = itemID;
-	}
-	
-	public void setTypeId(int typeID) {
-	
-		this.typeID = typeID;
-	}
-	
-	/*
-	*   Getters
-	*/
-	public int getItemId() {
-	
-		return itemID;
-	}
-	
-	public int getTypeId() {
-	
-		return typeID;
+	@SuppressWarnings("serial")
+	public ItemType() {
+		
+		items.put("ITEM_ID",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("TYPE_ID",
+				new ArrayList<String>(){{ add(""); add("int"); }});
 	}
 	
 }

@@ -1,46 +1,18 @@
 package database.items;
 
-public class Type {
+import java.util.ArrayList;
 
-	private String name;
-	private String description;
-		
-	private int typeID;
+public class Type extends Table {
 
-	/*
-	*   Setters
-	*/
-	public void setTypeId(int typeID) {
+	@SuppressWarnings("serial")
+	public Type() {
 		
-		this.typeID = typeID;
-	}
-	
-	public void setName(String name) {
-		
-		this.name = name;
-	}
-	
-	public void setDescription(String description) {
-		
-		this.description = description;
-	}
-
-	/*
-	*   Getters
-	*/
-	public int getTypeId() {
-		
-		return typeID;
-	}
-
-	public String getName() {
-		
-		return name;
-	}
-
-	public String getDescription() {
-		
-		return description;
+		items.put("NAME",
+				new ArrayList<String>(){{ add(""); add("String"); }});
+		items.put("DESCRIPTION",
+				new ArrayList<String>(){{ add(""); add("String"); }});
+		items.put("TYPE_ID",
+				new ArrayList<String>(){{ add(""); add("int"); }});
 	}
 	
 }

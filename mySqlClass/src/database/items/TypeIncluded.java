@@ -1,45 +1,18 @@
 package database.items;
 
-public class TypeIncluded {
+import java.util.ArrayList;
 
-	private int typeOne;
-	private int typeTwo;
-	private int number;
+public class TypeIncluded extends Table {
 		
-	/*
-	*   Setters
-	*/
-	public void setTypeOne(int typeOne) {
+	@SuppressWarnings("serial")
+	public TypeIncluded() {
 		
-		this.typeOne = typeOne;
+		items.put("TYPEONE",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("TYPETWO",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("NUMBER",
+				new ArrayList<String>(){{ add(""); add("int"); }});
 	}
-            
-	public void setTypeTwo(int typeTwo) {
-						
-		this.typeTwo = typeTwo;
-	}
-            
-	public void setNumber(int number) {
-						
-		this.number = number;
-	}
-		
-	/*
-	*   Getters
-	*/
-	public int getTypeOne() {
-						
-		return typeOne;
-	}
-
-	public int getTypeTwo() {
-						
-		return typeTwo;
-	}
-
-	public int getNumber() {
-		
-		return number;
-	}   
     
 }

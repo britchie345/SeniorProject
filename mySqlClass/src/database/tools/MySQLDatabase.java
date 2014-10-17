@@ -183,6 +183,7 @@ public class MySQLDatabase {
         }
     }
     
+    
     /*
 	*   Insert entry into MENU_ITEM table
 	*/
@@ -294,7 +295,7 @@ public class MySQLDatabase {
         {
             connection();
             String sql2;
-            sql2 = "INSERT INTO TYPE "+ "(TYPE_ID,NAME,DESCRIPTION) VALUES" + "( ?, ?, ?)";
+            sql2 = "INSERT INTO TYPE (TYPE_ID,NAME,DESCRIPTION) VALUES ( ?, ?, ?)";
             statement = connection.prepareStatement(sql2);
             
             //Inserts value into SQL query for ?
@@ -346,7 +347,7 @@ public class MySQLDatabase {
         {
             connection();
             String sql2;
-            sql2 = "UPDATE TYPE "+ "SET TYPE_ID=?,NAME=?,DESCRIPTION=? WHERE TYPE_ID=?";
+            sql2 = "UPDATE TYPE SET TYPE_ID=?,NAME=?,DESCRIPTION=? WHERE TYPE_ID=?";
             statement = connection.prepareStatement(sql2);
             
             //Inserts value into SQL query for ?

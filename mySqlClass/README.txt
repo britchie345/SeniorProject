@@ -1,1 +1,0 @@
-To run the mySqlClass project you need to add mysql-connector-java-5.1.33-bin.jar to your ClassPath.

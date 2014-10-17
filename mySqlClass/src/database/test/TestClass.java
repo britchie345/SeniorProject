@@ -19,24 +19,27 @@ public class TestClass {
 		
 		//ArrayList<String> x = database.getAllItemType();
 		
-		//for(String i: x)
-		//	System.out.println(i);
+		ArrayList<String> x = database.getAllType_Included();
 		
+		for(String i: x)
+			System.out.println(i);
+		
+		/*
 		Map<String, String> items = new HashMap<String, String>();
 		
-		//items.put("ITEM_ID", "int");
-		//items.put("NAME", "String");
-		//items.put("MENU_DESC", "String");
-		//items.put("PRICE", "Double");
-		
 		items.put("ITEM_ID", "int");
-		items.put("TYPE_ID", "String");
+		items.put("NAME", "String");
+		items.put("MENU_DESC", "String");
+		items.put("PRICE", "Double");
+		
+		//items.put("ITEM_ID", "int");
+		//items.put("TYPE_ID", "String");
 
 	    //boolean all, List<Integer> idNumber, String itemType, Map<String, String> item
 		
 		try {
 			
-			//ArrayList<String> test = (ArrayList<String>) database.getItems(true, null, "MENU_ITEM", items);
+			ArrayList<String> test = (ArrayList<String>) database.getItems(true, null, "MENU_ITEM", items);
 			
 			ArrayList<Integer> IDs = new ArrayList<Integer>();
 			IDs.add(1);
@@ -46,7 +49,7 @@ public class TestClass {
 
 			//ArrayList<String> test = database.getSingleMenu_Item(1);
 			
-			ArrayList<String> test = (ArrayList<String>) database.getItems(false, IDs, "ITEM_TYPE", items);
+			//ArrayList<String> test = (ArrayList<String>) database.getItems(false, IDs, "ITEM_TYPE", items);
 			
 			for(String index: test)
 				System.out.println(index);
@@ -56,8 +59,7 @@ public class TestClass {
 			
 			e.printStackTrace();
 		}
-		
-		
+		*/
 		
 		System.out.println("Finished");
 	}

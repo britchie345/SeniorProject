@@ -1,124 +1,34 @@
 package database.items;
 
-public class MenuItem {
 
-	private int id;
-	private int calories;
-	private int onmenu;
-	private int spicy;
-	private int recommended;
-	
-	private double price;
-	
-	private String name;
-	private String menu_Desc;
-	private String Description;
-	private String cooktime;
-	
-	/*
-	*   Setters
-	*/
-	public void setId(int id) {
-	
-		this.id = id;
-	}
-	
-	public void setName(String name) {
-			
-		this.name = name;
-	}
-          
-	public void setMenuDesc(String menu_Desc) {
-			
-		this.menu_Desc = menu_Desc;
-	}
-          
-	public void setDescription(String Description) {
-			
-		this.Description = Description;
-	}
-          
-	public void setPrice(double price) {
-			
-		this.price = price;
-	}
-          
-	public void setCalories(int calories) {
-			
-		this.calories = calories;
-	}
-          
-	public void setOnMenu(int onmenu) {
-			
-		this.onmenu = onmenu;
-	}
-          
-	public void setCookTime(String cooktime) {
-			
-		this.cooktime = cooktime;
-	}
-          
-	public void setSpicy(int spicy) {
-			
-		this.spicy = spicy;
-	}
-          
-	public void setRecommended(int recommended) {
-	
-		this.recommended = recommended;
-	}
-	
-	/*
-	*   Getters
-	*/
-	public int getId() {
-			
-		return id;
-	}
-			
-	public String getName() {
-			
-		return name;
-	}
-			
-	public String getMenuDesc() {
-			
-		return menu_Desc;
-	}
-	
-	public String getDescription() {
-			
-		return Description;
-	}
-	
-	public double getPrice() {
-			
-		return price;
-	}
-	
-	public int getCalories() {
-			
-		return calories;
-	}
-	
-	public int getOnMenu() {
-			
-		return onmenu;
-	}
+import java.util.ArrayList;
 
-	public String getCookTime() {
-			
-		return cooktime;
-	}
 
-	public int getSpicy() {
-			
-		return spicy;
-	}
-
-	public int getRecommended() {
+public class MenuItem extends Table {
 	
-		return recommended;
+	@SuppressWarnings("serial")
+	public MenuItem() {
+		
+		items.put("ITEM_ID",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("CALORIES",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("ONMENU",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("SPICY",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("RECOMMENDED",
+				new ArrayList<String>(){{ add(""); add("int"); }});
+		items.put("PRICE",
+				new ArrayList<String>(){{ add(""); add("Double"); }});
+		items.put("NAME",
+				new ArrayList<String>(){{ add(""); add("String"); }});
+		items.put("MENU_DESC",
+				new ArrayList<String>(){{ add(""); add("String"); }});
+		items.put("DESCRIPTION",
+				new ArrayList<String>(){{ add(""); add("String"); }});
+		items.put("COOKTIME",
+				new ArrayList<String>(){{ add(""); add("String"); }});
 	}
 	
 }
