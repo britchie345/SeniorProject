@@ -2,29 +2,18 @@ package database.test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import database.tools.MySQLDatabase;
 
 
 public class TestClass {
 
+	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 		
 		MySQLDatabase database = new MySQLDatabase();
 		
-		//ArrayList<String> x = database.getAllMenu_Item();
-		
-		//ArrayList<String> x = database.getAllItemType();
-		
-		ArrayList<String> x = database.getAllType_Included();
-		
-		for(String i: x)
-			System.out.println(i);
-		
-		/*
 		Map<String, String> items = new HashMap<String, String>();
 		
 		items.put("ITEM_ID", "int");
@@ -38,6 +27,24 @@ public class TestClass {
 	    //boolean all, List<Integer> idNumber, String itemType, Map<String, String> item
 		
 		try {
+			
+			
+			HashMap<String, ArrayList<String>> item = new HashMap<String, ArrayList<String>>();
+				
+			item.put("ITEM_ID", new ArrayList<String>(){{ add("1"); add("int"); }});
+			item.put("PRICE", new ArrayList<String>(){{ add("200.59"); add("Double"); }});
+			item.put("NAME", new ArrayList<String>(){{ add("MyAwesomeCOKE"); add("String"); }});
+			
+			
+			ArrayList<String> x = item.get("ITEM_ID");
+			System.out.println(x.get(0) + ", " + x.get(1));
+			
+			database.updateItems(item, "MENU_ITEM");
+			//database.insertItem(item, "MENU_ITEM");
+			//database.deleteItem("MENU_ITEM", 1);
+			
+			
+			System.out.println("\n************\n\n");
 			
 			ArrayList<String> test = (ArrayList<String>) database.getItems(true, null, "MENU_ITEM", items);
 			
@@ -59,7 +66,7 @@ public class TestClass {
 			
 			e.printStackTrace();
 		}
-		*/
+		
 		
 		System.out.println("Finished");
 	}

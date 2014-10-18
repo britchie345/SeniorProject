@@ -1,16 +1,10 @@
 package database.tools;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import database.items.ItemType;
-import database.items.MenuItem;
-import database.items.Type;
-import database.items.TypeIncluded;
 
 
 public class MySQLDatabase {
@@ -24,22 +18,20 @@ public class MySQLDatabase {
    
 	private Connection connection = null;
     
-    public void connection()
-    {
+    public void connection() {
    
         //Try to establish connection
-         try{
+         try {
+        	 
             //Register JDBC driver i.e. what type of database
             Class.forName("com.mysql.jdbc.Driver");
 
             //Open a connection
             connection = DriverManager.getConnection(DB_URL,USER,PASS);
    
-        }catch(SQLException e){
-        	
+        }catch(SQLException e){ 
             e.printStackTrace();
-        }catch(Exception e){
-        	
+        }catch(Exception e){ 
             e.printStackTrace();
         }
     }
@@ -49,14 +41,12 @@ public class MySQLDatabase {
      *    idNumber: Pass "null" if "all=true".
      *              Otherwise pass as many idNumbers
      *              as you want to extract.
-     *    itemType: Pass the Items enumeration value
-     *              of what database item you want.
+     *    itemType: Pass the Items table name.
      *    item:     Map<k,v>: "k=item", "v=data type"
-     *              e.g., "k="DESCRIPTION"", "v="String""         
+     *              e.g., "k="ITEM_ID"", "v="int""         
      */
-    public List<String> getItems(boolean all, List<Integer> idNumber, String itemType, Map<String, String> item) throws SQLException
-    {
-      //Initialize arrayList and statement for use
+    public List<String> getItems(boolean all, List<Integer> idNumber, String itemType, Map<String, String> item) throws SQLException {
+      
       ArrayList<String> queryResults = new ArrayList<String>();
 
       connection();
@@ -64,7 +54,6 @@ public class MySQLDatabase {
 	  boolean firstValue=true;
       String query = "SELECT ";
       
-      //Create the MySQL query
       if( all ) {
   		
     	  for(String index: keys) {
@@ -90,13 +79,15 @@ public class MySQLDatabase {
 				  String dataType = item.get(index2);
 				  
 				  if( dataType.equals("int") || dataType.equals("Integer") )
-					  queryResults.add(Integer.toString(getInt(rs, index2)));
+					  queryResults.add(Integer.toString(rs.getInt(index2)));
 				  
 				  else if( dataType.equals("Double") )
-					  queryResults.add(Double.toString(getDouble(rs, index2)));
+					  queryResults.add(Double.toString(rs.getDouble(index2)));
 				  
 				  else if( dataType.equals("String") )
-					  queryResults.add(getString(rs, index2));
+					  queryResults.add(rs.getString(index2));
+				  else
+					  System.out.println("Read Error - Datatype Unknown");
 			  }
 			  
 			  queryResults.add("\n");
@@ -112,8 +103,7 @@ public class MySQLDatabase {
   				
     			  query += index;
     			  firstValue=false;
-    		  }
-    		  else
+    		  } else 
     			  query += ", " + index;
     	  }
     	  
@@ -133,13 +123,13 @@ public class MySQLDatabase {
     				  String dataType = item.get(index2);
     				  
     				  if( dataType.equals("int") || dataType.equals("Integer") )
-    					  queryResults.add(Integer.toString(getInt(rs, index2)));
+    					  queryResults.add(Integer.toString(rs.getInt(index2)));
     				  
     				  else if( dataType.equals("Double") )
-    					  queryResults.add(Double.toString(getDouble(rs, index2)));
+    					  queryResults.add(Double.toString(rs.getDouble(index2)));
     				  
     				  else if( dataType.equals("String") )
-    					  queryResults.add(getString(rs, index2));
+    					  queryResults.add(rs.getString(index2));
     			  } 
     			  
 				  queryResults.add("\n");
@@ -151,20 +141,122 @@ public class MySQLDatabase {
       
       return queryResults;
     }
-    
-    private int getInt(ResultSet rs, String item) throws SQLException {
+
+    public void insertItem(Map<String, ArrayList<String>> item, String itemType) throws NumberFormatException, SQLException {   	
     	
-    	return rs.getInt(item);
+    	Set<String> keys = item.keySet();
+    	String query = "INSERT INTO " + itemType + " (";
+    	boolean firstValue = true;
+        
+    	for(String index: keys) {
+			
+    		if(firstValue) {
+    			query += index;
+    			firstValue=false;
+    		} else
+    			query += "," + index;
+    	}
+	  
+    	query += ") VALUES ( ";
+    	firstValue = true;
+    	
+    	for(@SuppressWarnings("unused") String index: keys) {
+    		if(firstValue) {
+				
+    			query += "?";
+    			firstValue=false;
+    		} else
+    			query += ", ?";	
+    	}
+    	
+    	query += ")";
+        
+    	connection();
+    	PreparedStatement statement = connection.prepareStatement(query);
+            
+    	int count=0;
+    	for(String index: keys) { count++;
+            	
+    		ArrayList<String> hold = item.get(index);
+            	
+    		if(hold.get(1).equals("int") || hold.get(1).equals("Integer"))
+    			statement.setInt(count, Integer.parseInt(hold.get(0)));
+            	
+            else if(hold.get(1).equals("Double"))
+            	statement.setDouble(count, Double.parseDouble(hold.get(0)));
+            	
+            else if(hold.get(1).equals("String"))
+            	statement.setString(count, hold.get(0));
+            	
+            else
+				System.out.println("Insert Error - Datatype Unknown");
+    	}
+
+        statement.executeUpdate();
+         
+        closeResources(statement, connection);	  
     }
     
-    private Double getDouble(ResultSet rs, String item) throws SQLException {
+    public void deleteItem(String itemType, int idValue) throws SQLException {
     	
-    	return rs.getDouble(item);
+    	connection();
+    	String query = "DELETE FROM " + itemType + " WHERE ITEM_ID=?";
+    	PreparedStatement statement = connection.prepareStatement(query);
+            
+    	statement.setInt(1, idValue);
+    	statement.executeUpdate();
+
+    	closeResources(statement, connection); 
     }
     
-    private String getString(ResultSet rs, String item) throws SQLException {
+    public void updateItems(Map<String, ArrayList<String>> item, String itemType) throws SQLException {
     	
-    	return rs.getString(item);
+    	Set<String> keys = item.keySet();
+    	String query = "UPDATE " + itemType + " SET ";
+    	boolean firstValue = true;
+        
+    	for(String index: keys) {
+			
+    		if(firstValue) {
+    			query += index + "=?";
+    			firstValue=false;
+    		} else
+    			query += "," + index + "=?";
+    	}
+    	
+    	query += " WHERE ITEM_ID=?";
+        
+    	connection();
+    	PreparedStatement statement = connection.prepareStatement(query);
+        
+    	int itemID = 0;
+    	int count=0;
+    	for(String index: keys) { count++;
+            	
+    		ArrayList<String> hold = item.get(index);
+    		
+			if(index.equals("ITEM_ID"))
+				itemID = Integer.parseInt(hold.get(0));
+            	
+    		if(hold.get(1).equals("int") || hold.get(1).equals("Integer"))
+    			statement.setInt(count, Integer.parseInt(hold.get(0)));
+            	
+            else if(hold.get(1).equals("Double"))
+            	statement.setDouble(count, Double.parseDouble(hold.get(0)));
+            	
+            else if(hold.get(1).equals("String"))
+            	statement.setString(count, hold.get(0));
+            	
+            else
+				System.out.println("Insert Error - Datatype Unknown");
+
+    	}
+    	
+    	statement.setInt(count+1, itemID);
+
+        statement.executeUpdate();
+         
+        closeResources(statement, connection);
     }
     
     private void closeResources(Statement statement, Connection connection) {
@@ -181,385 +273,6 @@ public class MySQLDatabase {
         }catch(SQLException e) {
              e.printStackTrace();
         }
-    }
-    
-    
-    /*
-	*   Insert entry into MENU_ITEM table
-	*/
-    public void insertIntoMenu_Item(MenuItem arg)
-    {
-        
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "INSERT INTO MENU_ITEM "+ "(ITEM_ID,NAME,MENU_DESC,DESCRIPTION,PRICE,CALORIES,ONMENU,COOKTIME,SPICY,RECOMMENDED) VALUES" + "( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1,arg.getId());
-            statement.setString(2,arg.getName());
-            statement.setString(3,arg.getMenuDesc());
-            statement.setString(4,arg.getDescription());
-            statement.setDouble(5,arg.getPrice());
-            statement.setInt(6,arg.getCalories());
-            statement.setInt(7,arg.getOnMenu());
-            statement.setString(8,arg.getCookTime());
-            statement.setInt(9,arg.getSpicy());
-            statement.setInt(10,arg.getRecommended());
-            //Executes query
-            statement.executeUpdate();
-             
-        }catch(SQLException e) { 
-            e.printStackTrace();
-        }catch(Exception e) { 
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }  
-    }
-    
-    public void deleteMenu_Item(int id)
-    {
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "DELETE FROM MENU_ITEM WHERE ITEM_ID=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1, id);
-            //Executes query
-             statement.executeUpdate();
-             
-        }catch(SQLException e) { 
-            e.printStackTrace();
-        }catch(Exception e) { 
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }   
-    }
-		
-    public void updateMenu_Item(MenuItem arg)
-    {
-      //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "UPDATE MENU_ITEM "+ "SET ITEM_ID=?,NAME=?,MENU_DESC=?,DESCRIPTION=?,PRICE=?,CALORIES=?,ONMENU=?,COOKTIME=?,SPICY=?,RECOMMENDED=? WHERE ITEM_ID=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1,arg.getId());
-            statement.setString(2,arg.getName());
-            statement.setString(3,arg.getMenuDesc());
-            statement.setString(4,arg.getDescription());
-            statement.setDouble(5,arg.getPrice());
-            statement.setInt(6,arg.getCalories());
-            statement.setInt(7,arg.getOnMenu());
-            statement.setString(8,arg.getCookTime());
-            statement.setInt(9,arg.getSpicy());
-            statement.setInt(10,arg.getRecommended());
-            statement.setInt(11,arg.getId());
-            //Executes query
-            statement.executeUpdate();
-             
-        }catch(SQLException e) { 
-            e.printStackTrace();
-        }catch(Exception e) { 
-            e.printStackTrace();
-        }finally
-        {
-        	  closeResources(statement, connection);
-      }   
-    }
-
-	/*
-	*   Insert entry into MENU_ITEM table
-	*/
-	public void insertIntoType(Type arg)
-    {
-        
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "INSERT INTO TYPE (TYPE_ID,NAME,DESCRIPTION) VALUES ( ?, ?, ?)";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1,arg.getTypeId());
-            statement.setString(2,arg.getName());
-            statement.setString(3,arg.getDescription());
-            //Executes query
-            statement.executeUpdate();
-             
-        }catch(SQLException e) { 
-            e.printStackTrace();
-        }catch(Exception e) { 
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      } 
-    }
-    
-    public void deleteType(int id)
-    {
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "DELETE FROM TYPE WHERE TYPE_ID=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1, id);
-            //Executes query
-             statement.executeUpdate();
-             
-        }catch(SQLException e) { 
-            e.printStackTrace();
-        }catch(Exception e) { 
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }    
-    }
-		
-    public void updateType(Type arg)
-    {
-      //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "UPDATE TYPE SET TYPE_ID=?,NAME=?,DESCRIPTION=? WHERE TYPE_ID=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1,arg.getTypeId());
-            statement.setString(2,arg.getName());
-            statement.setString(4,arg.getDescription());
-            //Executes query
-            statement.executeUpdate();
-             
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }  
-    }
-    
-    
-    public ArrayList<String> getAllType_Included()
-    {
-      //Intialize arrayList and statement for use
-      ArrayList<String> queryResults = new ArrayList<String>();  
-      Statement statement=null;
-      try
-      {
-            connection();
-            statement = connection.createStatement();
-            //Createst String that holds SQL query
-            String sql;
-            sql = "SELECT * FROM TYPE_INCLUDED";
-      
-            //Returns the results of query in a special class
-            ResultSet rs = statement.executeQuery(sql);
-      
-            while(rs.next())
-            {
-                //Retrieves values by column name
-                int typeOne  = rs.getInt("TYPE_ONE");
-                int typeTwo = rs.getInt("TYPE_TWO");
-                int number = rs.getInt("NUMBER");
-               
-                //Adds results to queryList to be returned
-                queryResults.add(Integer.toString(typeOne));
-                queryResults.add(Integer.toString(typeTwo));
-                queryResults.add(Integer.toString(number));
-            }
-      
-      }catch(SQLException e) {
-            e.printStackTrace();
-      }catch(Exception e) {
-            e.printStackTrace();
-      }finally {
-      	  closeResources(statement, connection);
-      }
-      return queryResults;
-    }
-    
-    /*
-	*   function gets single record from MENU_ITEM table
-	*/
-    public ArrayList getSingleTypeIncluded(int id)
-    {
-        ArrayList queryResults = new ArrayList();
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "SELECT * FROM TYPE_INCLUDED WHERE TYPE_ONE=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1, id);
-            //Executes query
-             ResultSet rs2 = statement.executeQuery();
-             
-             while(rs2.next())
-             {
-                //Retrieves values by column name
-                int typeOne  = rs2.getInt("TYPE_ONE");
-                int typeTwo = rs2.getInt("TYPE_TWO");
-                int number = rs2.getInt("NUMBER");
-               
-                //Adds results to queryList to be returned
-                queryResults.add(typeOne);
-                queryResults.add(typeTwo);
-                queryResults.add(number);
-             }
-             
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }  
-      return queryResults;
-    }
-    
-    
-    /*
-	*   Insert entry into MENU_ITEM table
-	*/
-    public void insertIntoType_Included(TypeIncluded arg)
-    {
-        
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "INSERT INTO TYPE_INCLUDED "+ "(TYPE_ONE,TYPE_TWO,NUMBER) VALUES" + "( ?, ?, ?)";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1,arg.getTypeOne());
-            statement.setInt(2,arg.getTypeTwo());
-            statement.setInt(3,arg.getNumber());
-            //Executes query
-            statement.executeUpdate();
-             
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }
-    }
-    
-    public void deleteType_Included(int id,int id2)
-    {
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "DELETE FROM TYPE_INCLUDED WHERE TYPE_ONE=? AND TYPE_TWO=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1, id);
-            statement.setInt(2, id2);
-            //Executes query
-             statement.executeUpdate();
-             
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      }   
-    }
-    
-    //Insert entry into MENU_ITEM table
-    public void insertIntoItem_Type(ItemType arg)
-    {
-        
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "INSERT INTO ITEM_TYPE "+ "(ITEM_ID,TYPE_ID) VALUES" + "( ?, ?)";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1,arg.getItemId());
-            statement.setInt(2,arg.getTypeId());
-   
-            //Executes query
-            statement.executeUpdate();
-             
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-        	  closeResources(statement, connection);
-      } 
-    }
-    
-    public void deleteItem_Type(int id, int id2)
-    {
-        //Prepared Statement variable for Prepared SQL statements
-        PreparedStatement statement= null;
-         try
-        {
-            connection();
-            String sql2;
-            sql2 = "DELETE FROM ITEM_TYPE WHERE ITEM_ID=? AND TYPE_ID=?";
-            statement = connection.prepareStatement(sql2);
-            
-            //Inserts value into SQL query for ?
-            statement.setInt(1, id);
-            statement.setInt(2, id2);
-            //Executes query
-             statement.executeUpdate();
-             
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }catch(Exception e) {
-            e.printStackTrace();
-        }finally {
-      	  closeResources(statement, connection);
-        }    
     }
     
 }
