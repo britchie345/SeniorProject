@@ -3,17 +3,8 @@ package restauto.manager.menu.levelc.view;
 import restauto.manager.menu.levelc.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
-public class ManagerLoginController {
-
-    @FXML
-    private TextField username;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private Button login;
+public class HomePageController {
     
     // Reference to the main application.
     private MainApp mainApp;
@@ -22,7 +13,7 @@ public class ManagerLoginController {
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public ManagerLoginController() {
+    public HomePageController() {
     }
 	
     /**
@@ -43,40 +34,20 @@ public class ManagerLoginController {
     }
     
     /**
-	 * Called when the user clicks the login button.
+	 * Called when the user clicks the database button.
 	 */
 	@FXML
-	private void handleLogin() {
+	private void handleDatabase() {
 	    
-		mainApp.showHomePageOverview();
+		mainApp.showLevelaOverview();
 	}
-    
 	
+	/**
+	 * Called when the user clicks the reports button.
+	 */
+	@FXML
+	private void handleReports() {
+
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

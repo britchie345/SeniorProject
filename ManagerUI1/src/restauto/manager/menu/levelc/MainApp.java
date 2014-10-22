@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import restauto.manager.menu.levelc.model.Levelc;
+import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
 import restauto.manager.menu.levelc.view.LevelbOverviewController;
 import restauto.manager.menu.levelc.view.LevelcEditDialogController;
@@ -109,6 +110,28 @@ public class MainApp extends Application {
     }
     
     /**
+     * Shows the HomePage overview inside the root layout.
+     */
+    public void showHomePageOverview() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/HomePage.fxml"));
+            AnchorPane homePageOverview = (AnchorPane) loader.load();
+
+            // Set levela overview into the center of root layout.
+            rootLayout.setCenter(homePageOverview);
+
+            // Give the controller access to the main app.
+            HomePageController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
      * Shows the levela overview inside the root layout.
      */
     public void showLevelaOverview() {
@@ -118,7 +141,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("view/LevelaOverview.fxml"));
             AnchorPane levelaOverview = (AnchorPane) loader.load();
 
-            // Set levela overview into the center of root layout.
+            // Set levelb overview into the center of root layout.
             rootLayout.setCenter(levelaOverview);
 
             // Give the controller access to the main app.

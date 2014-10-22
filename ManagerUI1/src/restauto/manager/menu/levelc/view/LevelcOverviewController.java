@@ -160,7 +160,6 @@ public class LevelcOverviewController {
 	private void handleBackward() {
 		
 		mainApp.showLevelbOverview();
-		System.out.println("Back Clicked");
 	}
     
 }
