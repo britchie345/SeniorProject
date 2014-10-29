@@ -2,9 +2,12 @@ package database.tools;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import database.items.Table;
 
 
 public class MySQLDatabase {
@@ -17,6 +20,7 @@ public class MySQLDatabase {
 	private static final String PASS = "kI3!hS8!";
    
 	private Connection connection = null;
+    private Table table = new Table();
     
     public void connection() {
    
@@ -41,13 +45,15 @@ public class MySQLDatabase {
      *    idNumber: Pass "null" if "all=true".
      *              Otherwise pass as many idNumbers
      *              as you want to extract.
-     *    itemType: Pass the Items table name.
-     *    item:     Map<k,v>: "k=item", "v=data type"
-     *              e.g., "k="ITEM_ID"", "v="int""         
+     *    itemType: Pass the Items table name.     
      */
-    public List<String> getItems(boolean all, List<Integer> idNumber, String itemType, Map<String, String> item) throws SQLException {
+    public ArrayList<LinkedHashMap<String, ArrayList<String>>> getItems(boolean all, List<Integer> idNumber, String itemType) throws SQLException {
       
-      ArrayList<String> queryResults = new ArrayList<String>();
+    	LinkedHashMap<String, String> item = table.getTableAttributeValuePair(itemType);
+    
+ 	  //New
+      ArrayList<LinkedHashMap<String, ArrayList<String>>> results
+      		= new ArrayList<LinkedHashMap<String, ArrayList<String>>>();
 
       connection();
 	  Set<String> keys = item.keySet();
@@ -72,74 +78,88 @@ public class MySQLDatabase {
     	  Statement statement = connection.createStatement();
     	  ResultSet rs = statement.executeQuery(query);
     	  
+    	  //New
+    	  LinkedHashMap<String, ArrayList<String>> temp2 = null;
+    	  
 		  while(rs.next()) {
+			 
+			  //New
+			  temp2 = new LinkedHashMap<String, ArrayList<String>>();
+			  ArrayList<String> temp1 = null;
 			  
 			  for(String index2: keys) {
 				  
+				  //New
+				  temp1 = new ArrayList<String>();
+				 
 				  String dataType = item.get(index2);
 				  
 				  if( dataType.equals("int") || dataType.equals("Integer") )
-					  queryResults.add(Integer.toString(rs.getInt(index2)));
-				  
+					  temp1.add(Integer.toString(rs.getInt(index2)));
 				  else if( dataType.equals("Double") )
-					  queryResults.add(Double.toString(rs.getDouble(index2)));
-				  
+					  temp1.add(Double.toString(rs.getDouble(index2)));
 				  else if( dataType.equals("String") )
-					  queryResults.add(rs.getString(index2));
+					  temp1.add(rs.getString(index2));
 				  else
-					  System.out.println("Read Error - Datatype Unknown");
+					  temp1.add("Read Error");
+				  
+				  temp1.add(dataType);
+				  temp2.put(index2, temp1);
 			  }
 			  
-			  queryResults.add("\n");
+			  results.add(temp2);
 		  }
-    	  
+		  
     	  closeResources(statement, connection);
       }
-      else {
-    	  
-    	  for(String index: keys) {
-    			
-    		  if(firstValue) {
-  				
-    			  query += index;
-    			  firstValue=false;
-    		  } else 
-    			  query += ", " + index;
-    	  }
-    	  
-    	  query += " FROM " + itemType + " WHERE ITEM_ID=?";
-
-		  PreparedStatement statement = connection.prepareStatement(query);
-
-    	  for(int index: idNumber) {
-    		  
-    		  statement.setInt(1, index);
-    		  ResultSet rs = statement.executeQuery();
- 
-    		  while(rs.next()) {
-    			  
-    			  for(String index2: keys) {
-    				  
-    				  String dataType = item.get(index2);
-    				  
-    				  if( dataType.equals("int") || dataType.equals("Integer") )
-    					  queryResults.add(Integer.toString(rs.getInt(index2)));
-    				  
-    				  else if( dataType.equals("Double") )
-    					  queryResults.add(Double.toString(rs.getDouble(index2)));
-    				  
-    				  else if( dataType.equals("String") )
-    					  queryResults.add(rs.getString(index2));
-    			  } 
-    			  
-				  queryResults.add("\n");
-    		  }
-    	  }
-    	  
-		  closeResources(statement, connection);
-      }
+//      else {
+//    	  
+//    	  for(String index: keys) {
+//    			
+//    		  if(firstValue) {
+//  				
+//    			  query += index;
+//    			  firstValue=false;
+//    		  } else 
+//    			  query += ", " + index;
+//    	  }
+//    	  
+//    	  query += " FROM " + itemType + " WHERE ITEM_ID=?";
+//
+//		  PreparedStatement statement = connection.prepareStatement(query);
+//
+//    	  for(int index: idNumber) {
+//    		  
+//    		  statement.setInt(1, index);
+//    		  ResultSet rs = statement.executeQuery();
+// 
+//    		  while(rs.next()) {
+//    			  
+//    			  for(String index2: keys) {
+//    				  
+//    				  String dataType = item.get(index2);
+//    				  
+//    				  if( dataType.equals("int") || dataType.equals("Integer") )
+//    					  queryResults.add(Integer.toString(rs.getInt(index2)));
+//    				  
+//    				  else if( dataType.equals("Double") )
+//    					  queryResults.add(Double.toString(rs.getDouble(index2)));
+//    				  
+//    				  else if( dataType.equals("String") )
+//    					  queryResults.add(rs.getString(index2));
+//    			  } 
+//    			  
+//				  queryResults.add("\n");
+//    		  }
+//    	  }
+//    	  
+//		  closeResources(statement, connection);
+//      }
+//      
+      //return queryResults;
       
-      return queryResults;
+      //New
+      return results;
     }
 
     public void insertItem(Map<String, ArrayList<String>> item, String itemType) throws NumberFormatException, SQLException {   	

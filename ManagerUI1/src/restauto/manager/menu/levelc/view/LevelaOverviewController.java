@@ -1,7 +1,7 @@
 package restauto.manager.menu.levelc.view;
 
 import restauto.manager.menu.levelc.MainApp;
-import restauto.manager.menu.levelc.model.Levelc;
+import restauto.manager.menu.levelc.model.Type;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -10,9 +10,9 @@ import javafx.scene.control.TableView;
 public class LevelaOverviewController {
 	
 	@FXML
-    private TableView<Levelc> typebTable;
+    private TableView<Type> typebTable;
     @FXML
-    private TableColumn<Levelc, String> nameColumn;
+    private TableColumn<Type, String> nameColumn;
     
     @FXML
     private Label typeID;
@@ -39,13 +39,16 @@ public class LevelaOverviewController {
      */
     @FXML
     private void initialize() {
-//    	// Initialize the levelb table with the one column.
-//        nameColumn.setCellValueFactory(
-//                cellData -> cellData.getValue().firstNameProperty());
-//        
-//        // Listen for selection changes and show the person details when changed.
-//        typebTable.getSelectionModel().selectedItemProperty().addListener(
-//                (observable, oldValue, newValue) -> showPersonDetails(newValue));
+    	// Initialize the levelb table with the one column.
+        nameColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getNameProperty());
+        
+        // Clear person details.
+        showTypeDetails(null);
+        
+        // Listen for selection changes and show the person details when changed.
+        typebTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showTypeDetails(newValue));
     }
     
     /**
@@ -55,6 +58,9 @@ public class LevelaOverviewController {
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        
+     // Add observable list data to the table
+        typebTable.setItems(mainApp.getTypeData());
     }
     
     /**
@@ -64,13 +70,13 @@ public class LevelaOverviewController {
      * @param levelb the person or null
      */
 	@SuppressWarnings("unused")
-	private void showPersonDetails(Levelc c) {
+	private void showTypeDetails(Type c) {
         if (c != null) {
             // Fill the labels with info from the person object.
-        	typeID.setText(c.getFirstName());
-        	name.setText(c.getLastName());
-        	descripton.setText(c.getStreet());
-            totalSubItems.setText(c.getCity());
+        	typeID.setText(c.getID());
+        	name.setText(c.getName());
+        	descripton.setText(c.getDescription());
+            totalSubItems.setText("");
         } else {
             // Person is null, remove all the text.
         	typeID.setText("");

@@ -7,7 +7,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
+import restauto.manager.database.tools.MySQLDatabase;
+import restauto.manager.database.tools.Populate;
 import restauto.manager.menu.levelc.model.Levelc;
 import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
@@ -15,6 +20,7 @@ import restauto.manager.menu.levelc.view.LevelbOverviewController;
 import restauto.manager.menu.levelc.view.LevelcEditDialogController;
 import restauto.manager.menu.levelc.view.LevelcOverviewController;
 import restauto.manager.menu.levelc.view.ManagerLoginController;
+import restauto.manager.menu.levelc.model.Type;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -30,11 +36,33 @@ public class MainApp extends Application {
      * The data as an observable list of Levelcs.
      */
     private ObservableList<Levelc> levelcData = FXCollections.observableArrayList();
+    private Populate populator = new Populate();
+    private MySQLDatabase database = new MySQLDatabase();
+    
+    private ObservableList<Type> type = FXCollections.observableArrayList();
 
     /**
      * Constructor
      */
     public MainApp() {
+    	
+    	//type = populator.getType("TYPE");
+    	
+		ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+		try {
+			table = database.getItems(true, null, "TYPE");
+		} catch (SQLException e) {
+			System.out.println("\n\nSOMETHING FAILED****\n\n");
+		}
+		
+		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+			type.add(new Type(
+						index1.get("TYPE_ID").get(0),
+						index1.get("NAME").get(0),
+						//index1.get("DESCRIPTION").get(0))
+						" ")
+					);
+    	
         // Add some sample data
         levelcData.add(new Levelc("344", "Burger"));
         levelcData.add(new Levelc("345", "Filet Mignonet"));
@@ -55,6 +83,10 @@ public class MainApp extends Application {
         return levelcData;
     }
 
+    public ObservableList<Type> getTypeData() {
+        return type;
+    }
+    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
