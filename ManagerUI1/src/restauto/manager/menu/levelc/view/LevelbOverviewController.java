@@ -152,7 +152,7 @@ public class LevelbOverviewController {
 	@FXML
 	private void handleForward() {
 	    
-		mainApp.showLevelcOverview();
+		//mainApp.showLevelcOverview();
 	}
     
 }

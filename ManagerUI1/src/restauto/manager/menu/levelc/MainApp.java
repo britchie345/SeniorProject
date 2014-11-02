@@ -14,12 +14,14 @@ import java.util.LinkedHashMap;
 import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.database.tools.Populate;
 import restauto.manager.menu.levelc.model.Levelc;
+import restauto.manager.menu.levelc.model.Menu_Item;
 import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
 import restauto.manager.menu.levelc.view.LevelbOverviewController;
 import restauto.manager.menu.levelc.view.LevelcEditDialogController;
 import restauto.manager.menu.levelc.view.LevelcOverviewController;
 import restauto.manager.menu.levelc.view.ManagerLoginController;
+import restauto.manager.menu.levelc.view.MenuItemEditDialogController;
 import restauto.manager.menu.levelc.model.Type;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,10 +38,14 @@ public class MainApp extends Application {
      * The data as an observable list of Levelcs.
      */
     private ObservableList<Levelc> levelcData = FXCollections.observableArrayList();
-    private Populate populator = new Populate();
+    //private Populate populator = new Populate();
     private MySQLDatabase database = new MySQLDatabase();
     
     private ObservableList<Type> type = FXCollections.observableArrayList();
+    private ObservableList<Menu_Item> menuItem = FXCollections.observableArrayList();
+    
+    private ObservableList<Menu_Item> clickedMenuItems = FXCollections.observableArrayList();
+    
 
     /**
      * Constructor
@@ -47,8 +53,9 @@ public class MainApp extends Application {
     public MainApp() {
     	
     	//type = populator.getType("TYPE");
-    	
 		ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+    	
+    	/*** Get All Types From The Database ***/
 		try {
 			table = database.getItems(true, null, "TYPE");
 		} catch (SQLException e) {
@@ -62,6 +69,44 @@ public class MainApp extends Application {
 						//index1.get("DESCRIPTION").get(0))
 						" ")
 					);
+		
+		/*** Get All Menu Items From The Database ***/
+		try {
+			table = database.getItems(true, null, "MENU_ITEM");
+		} catch (SQLException e) {
+			System.out.println("\n\nSOMETHING FAILED****\n\n");
+		}		
+		
+		for(LinkedHashMap<String, ArrayList<String>> index1: table) {
+			menuItem.add(new Menu_Item(
+						index1.get("ITEM_ID").get(0),
+						index1.get("CALORIES").get(0),
+						index1.get("ONMENU").get(0),
+						index1.get("SPICY").get(0),
+						index1.get("RECOMMENDED").get(0),
+						index1.get("PRICE").get(0),
+						index1.get("NAME").get(0),
+						//index1.get("MENU_DESC").get(0),
+						" ",
+						index1.get("DESCRIPTION").get(0),
+						//index1.get("COOKTIME").get(0))
+						" ")
+					);
+			
+			/*** For Testing The Database ***/
+//			print("************************\n");
+//			print(index1.get("ITEM_ID").get(0));
+//			print(index1.get("CALORIES").get(0));
+//			print(index1.get("ONMENU").get(0));
+//			print(index1.get("SPICY").get(0));
+//			print(index1.get("RECOMMENDED").get(0));
+//			print(index1.get("PRICE").get(0));
+//			print(index1.get("NAME").get(0));
+//			//print(index1.get("MENU_DESC").get(0));
+//			print(index1.get("DESCRIPTION").get(0));
+//			//print(index1.get("COOKTIME").get(0)));
+//			print("************************\n\n");	
+		}
     	
         // Add some sample data
         levelcData.add(new Levelc("344", "Burger"));
@@ -76,15 +121,19 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns the data as an observable list of Levelcs. 
+     * Returns the data as an observable list. 
      * @return
      */
     public ObservableList<Levelc> getLevelcData() {
         return levelcData;
     }
-
     public ObservableList<Type> getTypeData() {
         return type;
+    }
+    public ObservableList<Menu_Item> getMenuItems() {
+    	
+        //return menuItem;
+    	return clickedMenuItems;
     }
     
     @Override
@@ -210,7 +259,8 @@ public class MainApp extends Application {
     /**
      * Shows the levelc overview inside the root layout.
      */
-    public void showLevelcOverview() {
+    //public void showLevelcOverview() {
+    public void showLevelcOverview(String clickedID) {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -222,7 +272,8 @@ public class MainApp extends Application {
 
             // Give the controller access to the main app.
             LevelcOverviewController controller = loader.getController();
-            controller.setMainApp(this);
+            //controller.setMainApp(this);
+            controller.setMainApp(this, clickedID);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -266,6 +317,36 @@ public class MainApp extends Application {
             return false;
         }
     }
+    
+    public boolean showMenuItemEditDialog(Menu_Item menuItem) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/MenuItemEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Menu Item");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Menu Item into the controller.
+            MenuItemEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setMenuItem(menuItem);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * Returns the main stage.
@@ -278,4 +359,42 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    /**
+     * Filter through all the menu items
+     * and create a new container for
+     * just the menu items in the category
+     * of the type which was clicked
+     * @param clickedID
+     */
+    public void clickedMenuItems(String clickedID) {
+    	
+    	
+    	clickedMenuItems = FXCollections.observableArrayList();
+    	
+    	ArrayList<String> matchedTypes = new ArrayList<String>();
+
+		ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+		
+		/*** Get All Menu Items From The Database ***/
+		try {
+			table = database.getItems(true, null, "ITEM_TYPE");
+		} catch (SQLException e) {
+			print("\n\nSOMETHING FAILED****\n\n");
+		}
+    	
+		for(LinkedHashMap<String, ArrayList<String>> index: table)
+			if(index.get("TYPE_ID").get(0).equals(clickedID))
+				matchedTypes.add(index.get("ITEM_ID").get(0));
+		
+    	for(Menu_Item index: menuItem)
+    		for(String neededID: matchedTypes)
+    			if(index.getItemID().equals(neededID))
+    				clickedMenuItems.add(index);
+    }
+    
+    static void print(String string) {
+    	System.out.println("\n\n" + string + "\n\n");
+    }
+    
 }

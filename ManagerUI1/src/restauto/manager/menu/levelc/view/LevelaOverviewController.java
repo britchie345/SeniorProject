@@ -25,6 +25,9 @@ public class LevelaOverviewController {
     
     // Reference to the main application.
     private MainApp mainApp;
+    
+    // Save the clicked items id
+    private String clickedID="";
 
     /**
      * The constructor.
@@ -49,6 +52,11 @@ public class LevelaOverviewController {
         // Listen for selection changes and show the person details when changed.
         typebTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showTypeDetails(newValue));
+        
+        // Listen for selection changes and save clicked information
+        // for when the forward button is clicked.
+        typebTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> clickedID = newValue.getID());
     }
     
     /**
@@ -116,8 +124,18 @@ public class LevelaOverviewController {
 	 */
 	@FXML
 	private void handleForward() {
+		
+		//print("\n\n" + clickedID + "\n\n");
+    	mainApp.clickedMenuItems(clickedID);
 	    
-		mainApp.showLevelbOverview();
+		/**
+		 *  This needs to be changed
+		 *  back to showLevelbOverview
+		 *  once we figure out how to
+		 *  check for sub_types
+		 */
+		//mainApp.showLevelbOverview();
+		mainApp.showLevelcOverview(clickedID);
 	}
 	
 	/**
@@ -127,6 +145,10 @@ public class LevelaOverviewController {
 	private void handleNew() {
 	    
 	}
+	
+    static void print(String string) {
+    	System.out.println(string);
+    }
 
 }
 
