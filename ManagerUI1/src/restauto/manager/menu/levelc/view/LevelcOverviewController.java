@@ -1,6 +1,6 @@
 package restauto.manager.menu.levelc.view;
 
-//import org.controlsfx.dialog.Dialogs;
+import org.controlsfx.dialog.Dialogs;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,27 +14,35 @@ import restauto.manager.menu.levelc.model.Menu_Item;
 public class LevelcOverviewController {
     @FXML
     //private TableView<Levelc> personTable;
-    private TableView<Menu_Item> personTable;
+    private TableView<Menu_Item> menuItemTable;
     @FXML
     //private TableColumn<Levelc, String> firstNameColumn;
-    private TableColumn<Menu_Item, String> firstNameColumn;
+    private TableColumn<Menu_Item, String> nameColumn;
     @FXML
     //private TableColumn<Levelc, String> lastNameColumn;
-    private TableColumn<Menu_Item, String> lastNameColumn;
+    private TableColumn<Menu_Item, String> idColumn;
 
     @FXML
-    private Label firstNameLabel;
+    private Label idLabel;
     @FXML
-    private Label lastNameLabel;
+    private Label nameLabel;
     @FXML
-    private Label streetLabel;
+    private Label priceLabel;
     @FXML
-    private Label postalCodeLabel;
+    private Label caloriesLabel;
     @FXML
-    private Label cityLabel;
+    private Label onMenuLabel;
     @FXML
-    private Label birthdayLabel;
-
+    private Label cookTimeLabel;
+    @FXML
+    private Label desciptionLabel;
+    @FXML
+    private Label menuDescLabel;
+    @FXML
+    private Label spicyLabel;
+    @FXML
+    private Label recomendedLabel;
+    
     // Reference to the main application.
     private MainApp mainApp;
 
@@ -51,17 +59,18 @@ public class LevelcOverviewController {
      */
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
-        firstNameColumn.setCellValueFactory(
+    	
+        // Initialize the Menu Item table with the two columns.
+        nameColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getNameProperty());
-        lastNameColumn.setCellValueFactory(
+        idColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getItemIDProperty());
 
-        // Clear person details.
+        // Clear Menu Item details.
         showPersonDetails(null);
 
-        // Listen for selection changes and show the person details when changed.
-        personTable.getSelectionModel().selectedItemProperty().addListener(
+        // Listen for selection changes and show the Menu Item details when changed.
+        menuItemTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showPersonDetails(newValue));
     }
 
@@ -75,43 +84,43 @@ public class LevelcOverviewController {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
-        //personTable.setItems(mainApp.getLevelcData());
-        
-        personTable.setItems(mainApp.getMenuItems());
+        menuItemTable.setItems(mainApp.getMenuItems());
     }
     
     /**
-     * Fills all text fields to show details about the person.
-     * If the specified person is null, all text fields are cleared.
+     * Fills all text fields to show details about the Menu Item.
+     * If the specified Menu Item is null, all text fields are cleared.
      * 
-     * @param person the person or null
+     * @param The Menu Item or null
      */
-	//private void showPersonDetails(Levelc c) {
     private void showPersonDetails(Menu_Item c) {
         if (c != null) {
-            // Fill the labels with info from the person object.
-//            firstNameLabel.setText(c.getFirstName());
-//            lastNameLabel.setText(c.getLastName());
-//            streetLabel.setText(c.getStreet());
-//            postalCodeLabel.setText(Integer.toString(c.getPostalCode()));
-//            cityLabel.setText(c.getCity());
-//            birthdayLabel.setText(c.getBirthday());
         	
-          firstNameLabel.setText(c.getName());
-          lastNameLabel.setText(c.getItemID());
-          streetLabel.setText(c.getCalories());
-          postalCodeLabel.setText(c.getSpicy());
-          cityLabel.setText(c.getDescription());
-          birthdayLabel.setText(c.getPrice());
+            // Fill the labels with info from the Menu_Item object.
+        	idLabel.setText         (c.getItemID());
+        	nameLabel.setText       (c.getName());
+        	priceLabel.setText      (c.getPrice());
+        	caloriesLabel.setText   (c.getCalories());
+        	onMenuLabel.setText     (c.getOnMenu());
+        	cookTimeLabel.setText   (c.getCookTime());
+        	desciptionLabel.setText (c.getDescription());
+        	menuDescLabel.setText   (c.getMenuDesc());
+        	spicyLabel.setText      (c.getSpicy());
+        	recomendedLabel.setText (c.getRecomended());
         	
         } else {
-            // Person is null, remove all the text.
-            firstNameLabel.setText("");
-            lastNameLabel.setText("");
-            streetLabel.setText("");
-            postalCodeLabel.setText("");
-            cityLabel.setText("");
-            birthdayLabel.setText("");
+	
+            // Menu Item is null, remove all the text.
+        	idLabel.setText         ("");
+        	nameLabel.setText       ("");
+        	priceLabel.setText      ("");
+        	caloriesLabel.setText   ("");
+        	onMenuLabel.setText     ("");
+        	cookTimeLabel.setText   ("");
+        	desciptionLabel.setText ("");
+        	menuDescLabel.setText   ("");
+        	spicyLabel.setText      ("");
+        	recomendedLabel.setText ("");
         }
     }
 	
@@ -120,60 +129,54 @@ public class LevelcOverviewController {
 	 */
 	@FXML
 	private void handleDeletePerson() {
-//	    int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-//	    if (selectedIndex >= 0) {
-//	        personTable.getItems().remove(selectedIndex);
-//	    } else {
-//	        // Nothing selected.
-//	        Dialogs.create()
-//	            .title("No Selection")
-//	            .masthead("No Person Selected")
-//	            .message("Please select a person in the table.")
-//	            .showWarning();
-//	    }
+	    int selectedIndex = menuItemTable.getSelectionModel().getSelectedIndex();
+	    if (selectedIndex >= 0) {
+	    	menuItemTable.getItems().remove(selectedIndex);
+	    } else {
+	        // Nothing selected.
+	        Dialogs.create()
+	            .title("No Selection")
+	            .masthead("No Menu Item Selected")
+	            .message("Please select a Menu Item in the table.")
+	            .showWarning();
+	    }
 	}
 	
 	/**
 	 * Called when the user clicks the new button. Opens a dialog to edit
-	 * details for a new person.
+	 * details for a new Menu_Item.
 	 */
 	@FXML
-	private void handleNewPerson() {
-//	    Levelc tempPerson = new Levelc();
-//	    boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
-//	    if (okClicked) {
-//	        mainApp.getLevelcData().add(tempPerson);
-//	    }
+	private void handleNewMenuItem() {
 		
-//	    Menu_Item tempPerson = new Menu_Item();
-//	    boolean okClicked = mainApp.showMenuItemEditDialog(tempPerson);
-//	    if (okClicked) {
-//	        mainApp.getLevelcData().add(tempPerson);
-//	    }
-		
+	    Menu_Item tempMenuItem = new Menu_Item();
+	    boolean okClicked = mainApp.showMenuItemEditDialog(tempMenuItem);
+	    if (okClicked) {
+	        mainApp.getMenuItems().add(tempMenuItem);
+	    }	
 	}
 
 	/**
 	 * Called when the user clicks the edit button. Opens a dialog to edit
-	 * details for the selected person.
+	 * details for the selected Menu_Item.
 	 */
 	@FXML
 	private void handleEditPerson() {
-//		Levelc selectedPerson = personTable.getSelectionModel().getSelectedItem();
-//	    if (selectedPerson != null) {
-//	        boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
-//	        if (okClicked) {
-//	            showPersonDetails(selectedPerson);
-//	        }
-//
-//	    } else {
-//	        // Nothing selected.
-//	        Dialogs.create()
-//	            .title("No Selection")
-//	            .masthead("No Person Selected")
-//	            .message("Please select a person in the table.")
-//	            .showWarning();
-//	    }
+		Menu_Item selectedPerson = menuItemTable.getSelectionModel().getSelectedItem();
+	    if (selectedPerson != null) {
+	        boolean okClicked = mainApp.showMenuItemEditDialog(selectedPerson);
+	        if (okClicked) {
+	            showPersonDetails(selectedPerson);
+	        }
+
+	    } else {
+	        // Nothing selected.
+	        Dialogs.create()
+	            .title("No Selection")
+	            .masthead("No Menu Item Selected")
+	            .message("Please select a Menu Item in the table.")
+	            .showWarning();
+	    }
 	}
 	
 	/**
@@ -185,5 +188,5 @@ public class LevelcOverviewController {
 		//mainApp.showLevelbOverview();
 		mainApp.showLevelaOverview();
 	}
-    
+ 
 }

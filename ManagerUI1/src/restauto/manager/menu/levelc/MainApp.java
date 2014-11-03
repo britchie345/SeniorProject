@@ -44,7 +44,7 @@ public class MainApp extends Application {
     private ObservableList<Type> type = FXCollections.observableArrayList();
     private ObservableList<Menu_Item> menuItem = FXCollections.observableArrayList();
     
-    private ObservableList<Menu_Item> clickedMenuItems = FXCollections.observableArrayList();
+    public ObservableList<Menu_Item> clickedMenuItems = FXCollections.observableArrayList();
     
 
     /**

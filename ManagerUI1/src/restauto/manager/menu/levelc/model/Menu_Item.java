@@ -22,7 +22,7 @@ public class Menu_Item {
      * Simple constructor.
      */
     public Menu_Item() {
-        this("", "", "", "", "", "", "", "", "", "");
+        this(null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
