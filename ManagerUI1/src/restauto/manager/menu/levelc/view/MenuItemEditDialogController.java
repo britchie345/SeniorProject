@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 import restauto.manager.menu.levelc.model.Menu_Item;
 
-@SuppressWarnings("deprecation")
 public class MenuItemEditDialogController {
 
     @FXML
@@ -57,9 +56,9 @@ public class MenuItemEditDialogController {
     }
 
     /**
-     * Sets the person to be edited in the dialog.
+     * Sets the Menu Item to be edited in the dialog.
      * 
-     * @param person
+     * @param Menu Item
      */
     public void setMenuItem(Menu_Item menuItem) {
     	
@@ -93,16 +92,16 @@ public class MenuItemEditDialogController {
     private void handleOk() {
     	
         //if (isInputValid()) {
-    	menuItem.setItemID(idField.getText());         
-        menuItem.setName(nameField.getText());       
-        menuItem.setCalories(caloriesField.getText());   
-        menuItem.setOnMenu(onMenuField.getText());     
-        menuItem.setSpicy(spicyField.getText());      
-        menuItem.setRecomended(recomendedField.getText()); 
-        menuItem.setPrice(priceField.getText());      
-        menuItem.setMenuDesc(menuDescField.getText());   
+    	menuItem.setItemID     (idField.getText());         
+        menuItem.setName       (nameField.getText());       
+        menuItem.setCalories   (caloriesField.getText());   
+        menuItem.setOnMenu     (onMenuField.getText());     
+        menuItem.setSpicy      (spicyField.getText());      
+        menuItem.setRecomended (recomendedField.getText()); 
+        menuItem.setPrice      (priceField.getText());      
+        menuItem.setMenuDesc   (menuDescField.getText());   
         menuItem.setDescription(descriptionField.getText());
-        menuItem.setCookTime(cookTimeField.getText());  
+        menuItem.setCookTime   (cookTimeField.getText());  
 
             okClicked = true;
             dialogStage.close();

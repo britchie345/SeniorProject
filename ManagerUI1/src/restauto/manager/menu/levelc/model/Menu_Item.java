@@ -55,8 +55,8 @@ public class Menu_Item {
     public void setCalories(String calories) {
         this.calories.set(calories);
     }
-    public void setOnMenu(String itemID) {
-        this.itemID.set(itemID);
+    public void setOnMenu(String onMenu) {
+        this.onMenu.set(onMenu);
     }
     public void setSpicy(String spicy) {
         this.spicy.set(spicy);

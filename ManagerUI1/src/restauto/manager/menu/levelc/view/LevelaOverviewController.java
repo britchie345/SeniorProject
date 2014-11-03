@@ -46,10 +46,10 @@ public class LevelaOverviewController {
         nameColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getNameProperty());
         
-        // Clear person details.
+        // Clear type details.
         showTypeDetails(null);
         
-        // Listen for selection changes and show the person details when changed.
+        // Listen for selection changes and show the type details when changed.
         typebTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showTypeDetails(newValue));
         
@@ -75,18 +75,17 @@ public class LevelaOverviewController {
      * Fills all text fields to show details about the typeb item.
      * If the specified item is null, all text fields are cleared.
      * 
-     * @param levelb the person or null
+     * @param levelb the type or null
      */
-	@SuppressWarnings("unused")
 	private void showTypeDetails(Type c) {
         if (c != null) {
-            // Fill the labels with info from the person object.
+            // Fill the labels with info from the type object.
         	typeID.setText(c.getID());
         	name.setText(c.getName());
         	descripton.setText(c.getDescription());
             totalSubItems.setText("");
         } else {
-            // Person is null, remove all the text.
+            // type is null, remove all the text.
         	typeID.setText("");
         	name.setText("");
         	descripton.setText("");
@@ -126,7 +125,7 @@ public class LevelaOverviewController {
 	private void handleForward() {
 		
 		//print("\n\n" + clickedID + "\n\n");
-    	mainApp.clickedMenuItems(clickedID);
+    	//mainApp.clickedMenuItems(clickedID);
 	    
 		/**
 		 *  This needs to be changed

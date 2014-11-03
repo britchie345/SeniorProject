@@ -2,7 +2,6 @@ package restauto.manager.menu.levelc.view;
 
 import restauto.manager.menu.levelc.MainApp;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 public class HomePageController {
     

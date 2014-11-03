@@ -1,11 +1,17 @@
 package restauto.manager.menu.levelc.view;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import org.controlsfx.dialog.Dialogs;
 
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.menu.levelc.MainApp;
 //import restauto.manager.menu.levelc.model.Levelc;
 import restauto.manager.menu.levelc.model.Menu_Item;
@@ -45,6 +51,9 @@ public class LevelcOverviewController {
     
     // Reference to the main application.
     private MainApp mainApp;
+    
+    // Hold the Type ID from Levela
+    String clickedID;
 
     /**
      * The constructor.
@@ -81,7 +90,12 @@ public class LevelcOverviewController {
      */
     //public void setMainApp(MainApp mainApp) {
     public void setMainApp(MainApp mainApp, String clickedID) {
+    	
+    	//Save reference to main app
         this.mainApp = mainApp;
+        
+        //Save reference to Type clicked on in Levela
+        this.clickedID = clickedID;
 
         // Add observable list data to the table
         menuItemTable.setItems(mainApp.getMenuItems());
@@ -131,7 +145,18 @@ public class LevelcOverviewController {
 	private void handleDeletePerson() {
 	    int selectedIndex = menuItemTable.getSelectionModel().getSelectedIndex();
 	    if (selectedIndex >= 0) {
+	    	
+	    	Menu_Item selectedMenuItem = menuItemTable.getSelectionModel().getSelectedItem();
+	    	MySQLDatabase database = new MySQLDatabase();
+			try {
+				database.deleteItem("MENU_ITEM", Integer.parseInt(selectedMenuItem.getItemID()));
+				database.deleteItem("ITEM_TYPE", Integer.parseInt(selectedMenuItem.getItemID()));
+			} catch (NumberFormatException | SQLException e) {
+				e.printStackTrace();
+			}
+	    	
 	    	menuItemTable.getItems().remove(selectedIndex);
+	    	
 	    } else {
 	        // Nothing selected.
 	        Dialogs.create()
@@ -146,6 +171,7 @@ public class LevelcOverviewController {
 	 * Called when the user clicks the new button. Opens a dialog to edit
 	 * details for a new Menu_Item.
 	 */
+	@SuppressWarnings("serial")
 	@FXML
 	private void handleNewMenuItem() {
 		
@@ -153,6 +179,34 @@ public class LevelcOverviewController {
 	    boolean okClicked = mainApp.showMenuItemEditDialog(tempMenuItem);
 	    if (okClicked) {
 	        mainApp.getMenuItems().add(tempMenuItem);
+	        
+	        /***************************************/
+	        //Add new Menu Item to database Menu_Item table
+			LinkedHashMap<String, ArrayList<String>> item = new LinkedHashMap<String, ArrayList<String>>();
+			item.put("ITEM_ID",     new ArrayList<String>(){{ add(tempMenuItem.getItemID());      add("int"); }});
+			item.put("CALORIES",    new ArrayList<String>(){{ add(tempMenuItem.getCalories());    add("int"); }});
+			item.put("ONMENU",      new ArrayList<String>(){{ add(tempMenuItem.getOnMenu());      add("int"); }});
+			item.put("SPICY",       new ArrayList<String>(){{ add(tempMenuItem.getSpicy());       add("int"); }});
+			item.put("RECOMMENDED", new ArrayList<String>(){{ add(tempMenuItem.getRecomended());  add("int"); }});
+			item.put("PRICE",       new ArrayList<String>(){{ add(tempMenuItem.getPrice());       add("Double"); }});
+			item.put("NAME",        new ArrayList<String>(){{ add(tempMenuItem.getName());        add("String"); }});
+			item.put("MENU_DESC",   new ArrayList<String>(){{ add(tempMenuItem.getMenuDesc());    add("String"); }});
+			item.put("DESCRIPTION", new ArrayList<String>(){{ add(tempMenuItem.getDescription()); add("String"); }});
+			item.put("COOKTIME",    new ArrayList<String>(){{ add(tempMenuItem.getCookTime());    add("String"); }});
+	        
+			//Add new Menu Item to database Link Table
+			LinkedHashMap<String, ArrayList<String>> link = new LinkedHashMap<String, ArrayList<String>>();
+			link.put("ITEM_ID", new ArrayList<String>(){{ add(tempMenuItem.getItemID()); add("int"); }});
+			link.put("TYPE_ID", new ArrayList<String>(){{ add(clickedID);                add("int"); }});
+			
+			MySQLDatabase database = new MySQLDatabase();
+			try {
+				database.insertItem(item, "MENU_ITEM");
+				database.insertItem(link, "ITEM_TYPE");
+			} catch (NumberFormatException | SQLException e) {
+				e.printStackTrace();
+			}
+			/***************************************/
 	    }	
 	}
 
@@ -160,13 +214,43 @@ public class LevelcOverviewController {
 	 * Called when the user clicks the edit button. Opens a dialog to edit
 	 * details for the selected Menu_Item.
 	 */
+	@SuppressWarnings("serial")
 	@FXML
 	private void handleEditPerson() {
-		Menu_Item selectedPerson = menuItemTable.getSelectionModel().getSelectedItem();
-	    if (selectedPerson != null) {
-	        boolean okClicked = mainApp.showMenuItemEditDialog(selectedPerson);
+		Menu_Item selectedMenuItem = menuItemTable.getSelectionModel().getSelectedItem();
+	    if (selectedMenuItem != null) {
+	        boolean okClicked = mainApp.showMenuItemEditDialog(selectedMenuItem);
 	        if (okClicked) {
-	            showPersonDetails(selectedPerson);
+	            showPersonDetails(selectedMenuItem);
+	            
+		        /***************************************/
+		        //Add new Menu Item to database Menu_Item table
+				LinkedHashMap<String, ArrayList<String>> item = new LinkedHashMap<String, ArrayList<String>>();
+				item.put("ITEM_ID",     new ArrayList<String>(){{ add(selectedMenuItem.getItemID());      add("int"); }});
+				item.put("CALORIES",    new ArrayList<String>(){{ add(selectedMenuItem.getCalories());    add("int"); }});
+				item.put("ONMENU",      new ArrayList<String>(){{ add(selectedMenuItem.getOnMenu());      add("int"); }});
+				item.put("SPICY",       new ArrayList<String>(){{ add(selectedMenuItem.getSpicy());       add("int"); }});
+				item.put("RECOMMENDED", new ArrayList<String>(){{ add(selectedMenuItem.getRecomended());  add("int"); }});
+				item.put("PRICE",       new ArrayList<String>(){{ add(selectedMenuItem.getPrice());       add("Double"); }});
+				item.put("NAME",        new ArrayList<String>(){{ add(selectedMenuItem.getName());        add("String"); }});
+				item.put("MENU_DESC",   new ArrayList<String>(){{ add(selectedMenuItem.getMenuDesc());    add("String"); }});
+				item.put("DESCRIPTION", new ArrayList<String>(){{ add(selectedMenuItem.getDescription()); add("String"); }});
+				item.put("COOKTIME",    new ArrayList<String>(){{ add(selectedMenuItem.getCookTime());    add("String"); }});
+		        
+				//Add new Menu Item to database Link Table
+				LinkedHashMap<String, ArrayList<String>> link = new LinkedHashMap<String, ArrayList<String>>();
+				link.put("ITEM_ID", new ArrayList<String>(){{ add(selectedMenuItem.getItemID()); add("int"); }});
+				link.put("TYPE_ID", new ArrayList<String>(){{ add(clickedID);                add("int"); }});
+				
+				MySQLDatabase database = new MySQLDatabase();
+				try {
+					database.updateItems(item, "MENU_ITEM");
+					database.updateItems(link, "ITEM_TYPE");
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
+				/***************************************/   
+	            
 	        }
 
 	    } else {
