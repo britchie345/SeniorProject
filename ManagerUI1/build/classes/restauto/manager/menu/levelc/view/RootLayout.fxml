@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.RootLayoutController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+          <Menu fx:id="file" mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="returnHome" mnemonicParsing="false" onAction="#handleReturnHome" text="Return Home" />
+              <MenuItem fx:id="logOut" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" /> 
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>                                 
+          <Menu fx:id="edit" mnemonicParsing="false" text="Edit">   
+            <items>                         
+                <MenuItem mnemonicParsing="false" text="Delete" />            
+            </items> 
+          </Menu>                              
+          <Menu mnemonicParsing="false" text="Help">
+            <items>                
+              <MenuItem fx:id="about" mnemonicParsing="false" onAction="#handleAbout" text="About" />
+            </items>
+          </Menu>           
+      </MenuBar>                                                      
+   </top>
+</BorderPane>
