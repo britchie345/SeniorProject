@@ -69,6 +69,7 @@ public class MainApp extends Application {
 		}
 		
 		//Clear the list so we start fresh
+		type.removeAll(type);
 		type.clear();
 		
 		for(LinkedHashMap<String, ArrayList<String>> index1: table)
