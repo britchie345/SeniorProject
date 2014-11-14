@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.cook.display.view.HomePageController">
+   <children>
+      <Pane layoutX="-211.0" layoutY="-144.0" prefHeight="56.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="35.0" layoutY="32.0" styleClass="label-header" stylesheets="@DarkTheme.css" text="Kitchen Window">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="500.0" prefWidth="500.0" spacing="50.0">
+               <children>
+                  <VBox spacing="25.0">
+                     <children>
+                        <Button layoutX="79.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleBar" prefHeight="70.0" prefWidth="200.0" stylesheets="@DarkTheme.css" text="Bar">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="63.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleGrill" prefHeight="70.0" prefWidth="200.0" text="Grill">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleFryer" prefHeight="70.0" prefWidth="200.0" text="Fryer">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleSalad" prefHeight="70.0" prefWidth="200.0" text="Salad">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <VBox spacing="25.0">
+                     <children>
+                        <Button layoutX="79.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleBeverage" prefHeight="70.0" prefWidth="200.0" stylesheets="@DarkTheme.css" text="Beverage">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="63.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleOven" prefHeight="70.0" prefWidth="200.0" text="Oven">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleFlatTop" prefHeight="70.0" prefWidth="200.0" text="Flat Top">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleExpodite" prefHeight="70.0" prefWidth="200.0" text="Expodite">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="50.0" top="150.0" />
+               </padding>
+            </HBox>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
