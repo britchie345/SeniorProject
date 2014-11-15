@@ -5,23 +5,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="700.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="700.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" fx:controller="restauto.manager.menu.levelc.view.RootLayoutController" >
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+          <Menu fx:id="file" mnemonicParsing="false" text="File">
+            <items>              
+              <MenuItem fx:id="returnHome" mnemonicParsing="false" text="Return Home" onAction="#handleReturnHome"  />
+              <MenuItem fx:id="logOut" mnemonicParsing="false" text="Log Out" onAction="#handleLogOut" />
+              <MenuItem fx:id="close" mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu fx:id="edit" mnemonicParsing="false" text="Edit View">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <CheckMenuItem fx:id="id" mnemonicParsing="false" text="ID"  onAction="#handleChangeViewType" selected="true"  />
+              <CheckMenuItem fx:id="type" mnemonicParsing="false" text="Type" onAction="#handleChangeViewType"  selected="true"  />
+              
+              <CheckMenuItem fx:id="id2" mnemonicParsing="false" text="ID"  onAction="#handleChangeViewItem"  selected="true"  />
+              <CheckMenuItem fx:id="type2" mnemonicParsing="false" text="Name"  onAction="#handleChangeViewItem" selected="true"  />
+              <CheckMenuItem fx:id="price" mnemonicParsing="false" text="Price" onAction="#handleChangeViewItem"  selected="false"  />
+              <CheckMenuItem fx:id="calories" mnemonicParsing="false" text="Calories" onAction="#handleChangeViewItem"  selected="false"  />                            
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="about" mnemonicParsing="false" text="About" onAction="#handleAbout"  />
             </items>
           </Menu>
         </menus>

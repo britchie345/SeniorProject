@@ -27,6 +27,11 @@ public class LevelcOverviewController {
     @FXML
     //private TableColumn<Levelc, String> lastNameColumn;
     private TableColumn<Menu_Item, String> idColumn;
+  //New andrew used for create other 2 columns on tableview
+    @FXML    
+    private TableColumn<Menu_Item, String> priceColumn;
+    @FXML
+    private TableColumn<Menu_Item, String> caloriesColumn;
 
     @FXML
     private Label idLabel;
@@ -74,6 +79,11 @@ public class LevelcOverviewController {
                 cellData -> cellData.getValue().getNameProperty());
         idColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getItemIDProperty());
+      //new andrew
+        priceColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getPriceProperty());
+        caloriesColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getCaloriesProperty());
 
         // Clear Menu Item details.
         showPersonDetails(null);
@@ -136,6 +146,28 @@ public class LevelcOverviewController {
         	spicyLabel.setText      ("");
         	recomendedLabel.setText ("");
         }
+    }
+    
+  //new andrew used to determine what columns to show or hide
+    public void setTable(int[] arg)
+    {
+        if(arg[0]==1)
+            idColumn.setVisible(true);
+        else
+            idColumn.setVisible(false);
+        
+         if(arg[1]==1)
+            nameColumn.setVisible(true);
+        else
+            nameColumn.setVisible(false);
+         if(arg[2]==1)
+            priceColumn.setVisible(true);
+        else
+            priceColumn.setVisible(false);
+         if(arg[3]==1)
+            caloriesColumn.setVisible(true);
+        else
+            caloriesColumn.setVisible(false);
     }
 	
 	/**
@@ -269,8 +301,8 @@ public class LevelcOverviewController {
 	@FXML
 	private void handleBackward() {
 		
-		//mainApp.showLevelbOverview();
-		mainApp.showLevelaOverview();
+		//mainApp.showLevelbOverview();			
+		mainApp.showLevelaOverviewBack();
 	}
  
 }

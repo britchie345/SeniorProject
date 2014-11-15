@@ -112,50 +112,60 @@ public class MySQLDatabase {
 		  
     	  closeResources(statement, connection);
       }
-//      else {
-//    	  
-//    	  for(String index: keys) {
-//    			
-//    		  if(firstValue) {
-//  				
-//    			  query += index;
-//    			  firstValue=false;
-//    		  } else 
-//    			  query += ", " + index;
-//    	  }
-//    	  
-//    	  query += " FROM " + itemType + " WHERE ITEM_ID=?";
-//
-//		  PreparedStatement statement = connection.prepareStatement(query);
-//
-//    	  for(int index: idNumber) {
-//    		  
-//    		  statement.setInt(1, index);
-//    		  ResultSet rs = statement.executeQuery();
-// 
-//    		  while(rs.next()) {
-//    			  
-//    			  for(String index2: keys) {
-//    				  
-//    				  String dataType = item.get(index2);
-//    				  
-//    				  if( dataType.equals("int") || dataType.equals("Integer") )
-//    					  queryResults.add(Integer.toString(rs.getInt(index2)));
-//    				  
-//    				  else if( dataType.equals("Double") )
-//    					  queryResults.add(Double.toString(rs.getDouble(index2)));
-//    				  
-//    				  else if( dataType.equals("String") )
-//    					  queryResults.add(rs.getString(index2));
-//    			  } 
-//    			  
-//				  queryResults.add("\n");
-//    		  }
-//    	  }
-//    	  
-//		  closeResources(statement, connection);
-//      }
-//      
+      else {
+    	  
+    	  for(String index: keys) {
+  			
+    		  if(firstValue) {
+  				
+    			  query += index;
+    			  firstValue=false;
+    		  } else 
+    			  query += ", " + index;
+    	  }
+    	  
+   	  query += " FROM " + itemType + " WHERE "+itemType+"_ID=?";
+
+		  PreparedStatement statement = connection.prepareStatement(query);
+                  
+                   LinkedHashMap<String, ArrayList<String>> temp2 = null;
+
+    	  for(int index: idNumber) {
+    		  
+   		  statement.setInt(1, index);
+    		  ResultSet rs = statement.executeQuery();
+
+   		  while(rs.next()) {
+   
+                      temp2 = new LinkedHashMap<String, ArrayList<String>>();
+                      ArrayList<String> temp1 = null;
+                      
+                      
+    			  for(String index2: keys) {
+    				  
+                                  temp1 = new ArrayList<String>();
+   				  String dataType = item.get(index2);
+    				  
+    				  if( dataType.equals("int") || dataType.equals("Integer") )
+					  temp1.add(Integer.toString(rs.getInt(index2)));
+				  else if( dataType.equals("Double") )
+					  temp1.add(Double.toString(rs.getDouble(index2)));
+				  else if( dataType.equals("String") )
+					  temp1.add(rs.getString(index2));
+				  else
+					  temp1.add("Read Error");
+                                  
+                                  temp1.add(dataType);
+				  temp2.put(index2, temp1);
+    			  } 
+    			  
+				  results.add(temp2);
+    		  }
+    	  }
+    	  
+		  closeResources(statement, connection);
+      }
+      
       //return queryResults;
       
       //New

@@ -20,6 +20,7 @@ import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
 //import restauto.manager.menu.levelc.view.LevelbOverviewController;
 //import restauto.manager.menu.levelc.view.LevelcEditDialogController;
+import restauto.manager.menu.levelc.view.RootLayoutController;
 import restauto.manager.menu.levelc.view.LevelcOverviewController;
 import restauto.manager.menu.levelc.view.ManagerLoginController;
 import restauto.manager.menu.levelc.view.MenuItemEditDialogController;
@@ -34,6 +35,14 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+  //New andrew used to keep track which screens to show and not show menu buttons
+    private boolean faded=true; 
+    private boolean returnHome=true;
+    private boolean editHide=false;
+    private boolean editHideLevelC=false;
+    private boolean editHideLevelA=false;
+    //New used to keep track of type when refreshing level c/ 
+    private String idHolder;
     
     /**
      * The data as an observable list of Levelcs.
@@ -54,7 +63,7 @@ public class MainApp extends Application {
     	
     	//getAllTypes();
 		//getAllMenuItems();
-    }
+    }    
     
     private void getAllTypes() {
     	
@@ -167,6 +176,14 @@ public class MainApp extends Application {
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
+          //new andrew used to set the view and avaibility of menu buttons
+            RootLayoutController controller = loader.getController();                       
+            controller.setMainApp(this);
+            controller.fadeOut(faded);
+            controller.setReturnHome(returnHome);
+            controller.hideEdit(editHide);
+            controller.hideLevelCItems(editHideLevelC);
+            controller.hideLevelAItems(editHideLevelA);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
@@ -179,6 +196,13 @@ public class MainApp extends Application {
      */
     public void showManagerLoginOverview() {
         try {
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=false;
+            returnHome=true;
+            faded=true;
+            editHideLevelC=false;
+            editHideLevelA=false;
+            initRootLayout();
         	
             // Load Manager Login overview.
             FXMLLoader loader = new FXMLLoader();
@@ -202,6 +226,13 @@ public class MainApp extends Application {
      */
     public void showHomePageOverview() {
         try {
+        	 //new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=false;
+            returnHome=true;
+            faded=false;
+            editHideLevelC=false;
+            editHideLevelA=false;
+            initRootLayout();
             // Load Home Page overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/HomePage.fxml"));
@@ -224,7 +255,13 @@ public class MainApp extends Application {
      */
     public void showLevelaOverview() {
         try {
-        	
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=true;
+            returnHome=false;
+            faded=false;
+            editHideLevelC=false;
+            editHideLevelA=true;
+            initRootLayout();
         	//Update all the Types
         	getAllTypes();
         	
@@ -244,6 +281,67 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
+    //New Andrew used to go backwards from level c without clearing type Observable list
+    public void showLevelaOverviewBack() {
+        try {
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=true;
+            returnHome=false;
+            faded=false;
+            editHideLevelC=false;
+            editHideLevelA=true;
+            initRootLayout();
+        	
+        	
+            // Load First Level overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/LevelaOverview.fxml"));
+            AnchorPane levelaOverview = (AnchorPane) loader.load();
+
+            // Set levelb overview into the center of root layout.
+            rootLayout.setCenter(levelaOverview);
+
+            // Give the controller access to the main app.
+            LevelaOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+  //new andrew used for when a user clicks a table edit button to refresh the new table.
+    public void showLevelaOverview(int[] arr) {
+       try {    
+                //new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+               editHide=true;
+               returnHome=false;
+       	faded=false;
+               editHideLevelC=false;
+               editHideLevelA=true;
+       	//Update all the Types
+       	getAllTypes();
+       	
+           // Load First Level overview.
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("view/LevelaOverview.fxml"));
+           AnchorPane levelaOverview = (AnchorPane) loader.load();
+
+           // Set levelb overview into the center of root layout.
+           rootLayout.setCenter(levelaOverview);
+
+           // Give the controller access to the main app.
+           LevelaOverviewController controller = loader.getController();
+           controller.setMainApp(this);          
+           controller.setTable(arr);
+          
+           
+
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
     
 //    /**
 //     * Shows the levelb overview inside the root layout.
@@ -273,7 +371,14 @@ public class MainApp extends Application {
     //public void showLevelcOverview() {
     public void showLevelcOverview(String clickedID) {
         try {
-        	
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=true;
+            returnHome=false;
+            faded=false;
+            editHideLevelC=true;
+            editHideLevelA=false;
+            idHolder=clickedID;                
+            initRootLayout();
         	//Update all the Menu_Items
         	getAllMenuItems();
         	//Get only the Menu Items under the Type ID
@@ -291,11 +396,52 @@ public class MainApp extends Application {
             LevelcOverviewController controller = loader.getController();
             //controller.setMainApp(this);
             controller.setMainApp(this, clickedID);
+          //new andrew used to show just id and name column when first going to level c
+            int[] arr=new int[4];
+            arr[0]=1;
+            arr[1]=1;
+            arr[2]=0;
+            arr[3]=0;
+            controller.setTable(arr);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+  //new Andre used when user wants to change table view on level c 
+    public void showLevelcOverview(String clickedID,int[] arr) {
+       try {
+                //new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+               editHide=true;
+               returnHome=false;
+               faded=false;
+               editHideLevelC=true;
+               editHideLevelA=false;
+               
+       	//Update all the Menu_Items
+       	getAllMenuItems();
+       	//Get only the Menu Items under the Type ID
+       	clickedMenuItems(clickedID);
+       	
+           // Load Load Final Level overview.
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(MainApp.class.getResource("view/LevelcOverview.fxml"));
+           AnchorPane levelcOverview = (AnchorPane) loader.load();
+
+           // Set Levelc overview into the center of root layout.
+           rootLayout.setCenter(levelcOverview);
+
+           // Give the controller access to the main app.
+           LevelcOverviewController controller = loader.getController();
+           //controller.setMainApp(this);
+           controller.setMainApp(this, clickedID);
+           controller.setTable(arr);
+
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
     
     /**
      * Opens a dialog to edit details for the specified Menu Item. If the user
@@ -332,6 +478,32 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    
+  //display about menu dialog box when about button is clicked
+    public void showAboutDialog() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/AboutDialogBox.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("About us");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+           
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+            
+        } catch (IOException e) {
+            e.printStackTrace();            
         }
     }
     
@@ -372,6 +544,12 @@ public class MainApp extends Application {
     static void print(String string) {
     	System.out.println("\n\n" + string + "\n\n");
     }
+    
+  //new Andrew used for passing the current level c type to rootlayoutController
+    public String getIDHolder()
+    {
+        return idHolder;
+    }    
     
     /**
      * Returns the main stage.

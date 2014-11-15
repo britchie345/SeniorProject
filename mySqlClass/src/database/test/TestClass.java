@@ -78,8 +78,9 @@ public class TestClass {
 			
 			//ArrayList<String> test = (ArrayList<String>) database.getItems(true, null, "MENU_ITEM", items);
 			//ArrayList<String> test = (ArrayList<String>) database.getItems(true, null, "TYPE", item);
-			
-			ArrayList<LinkedHashMap<String, ArrayList<String>>> test = (ArrayList<LinkedHashMap<String, ArrayList<String>>>) database.getItems(true, null, "TYPE");
+			ArrayList<Integer> tester=new ArrayList<Integer>();
+			tester.add(1);
+			ArrayList<LinkedHashMap<String, ArrayList<String>>> test = (ArrayList<LinkedHashMap<String, ArrayList<String>>>) database.getItems(false, tester, "TYPE");
 			
 			
 			for(LinkedHashMap<String, ArrayList<String>> index: test) {

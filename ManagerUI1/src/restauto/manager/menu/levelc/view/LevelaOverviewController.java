@@ -13,6 +13,8 @@ public class LevelaOverviewController {
     private TableView<Type> typebTable;
     @FXML
     private TableColumn<Type, String> nameColumn;
+    @FXML
+    private TableColumn<Type, String> idColumn;
     
     @FXML
     private Label typeID;
@@ -45,6 +47,9 @@ public class LevelaOverviewController {
     	// Initialize the levelb table with the one column.
         nameColumn.setCellValueFactory(
                 cellData -> cellData.getValue().getNameProperty());
+      //new
+        idColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getIDProperty());
         
         // Clear type details.
         showTypeDetails(null);
@@ -91,6 +96,19 @@ public class LevelaOverviewController {
         	descripton.setText("");
         	totalSubItems.setText("");
         }
+    }
+	
+	public void setTable(int[] arg)
+    {
+        if(arg[0]==1)
+            idColumn.setVisible(true);
+        else
+            idColumn.setVisible(false);
+        
+         if(arg[1]==1)
+            nameColumn.setVisible(true);
+        else
+            nameColumn.setVisible(false);
     }
     
     /**
