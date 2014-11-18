@@ -110,6 +110,6 @@ public class HomePageController {
 	@FXML
 	private void handleReports() {
 
-	}
+	}		 
 
 }

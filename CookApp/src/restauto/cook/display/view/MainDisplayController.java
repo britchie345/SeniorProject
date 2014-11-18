@@ -12,8 +12,8 @@ import restauto.cook.display.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 //import javafx.scene.control.Label;
-//import javafx.scene.control.TableColumn;
-//import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 //import restauto.manager.database.tools.MySQLDatabase;
 //import restauto.manager.menu.levelc.MainApp;
 //import restauto.manager.menu.levelc.model.Levelc;
@@ -50,7 +50,14 @@ public class MainDisplayController {
 //    @FXML
 //    private Label spicyLabel;
     @FXML
-    private Button backButton;
+    private Button backButton;  
+    //Andrew link tableColumns to fxml
+    @FXML   
+    private TableColumn nameColumn;
+    @FXML  
+    private TableColumn tableColumn;
+    @FXML 
+    private TableColumn timeColumn;
     
     // Reference to the main application.
     private Main main;
@@ -265,6 +272,24 @@ public class MainDisplayController {
 //	            .showWarning();
 //	    }
 //	}
+    //Andrew handle displays of Columns
+    public void setTable(int[] arg)
+    {
+        if(arg[0]==1)
+            nameColumn.setVisible(true);
+        else
+            nameColumn.setVisible(false);
+        
+         if(arg[1]==1)
+            tableColumn.setVisible(true);
+        else
+            tableColumn.setVisible(false);
+         
+         if(arg[2]==1)
+             timeColumn.setVisible(true);
+         else
+             timeColumn.setVisible(false);
+    }
 	
 	/**
 	 * Called when the user clicks the back button.
@@ -275,5 +300,6 @@ public class MainDisplayController {
 		//mainApp.showLevelbOverview();
 		main.showHomePageOverview();
 	}
+		
  
 }
