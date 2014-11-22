@@ -321,7 +321,7 @@ public class MainApp extends Application {
                editHideLevelC=false;
                editHideLevelA=true;
        	//Update all the Types
-       	getAllTypes();
+       	//getAllTypes();
        	
            // Load First Level overview.
            FXMLLoader loader = new FXMLLoader();

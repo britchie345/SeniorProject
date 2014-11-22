@@ -1,14 +1,25 @@
 package restauto.cook.display;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
+import restauto.cook.display.model.Orders;
+import restauto.cook.display.model.Sales;
 import restauto.cook.display.view.EmployeeLoginController;
 import restauto.cook.display.view.HomePageController;
 import restauto.cook.display.view.MainDisplayController;
 import restauto.cook.display.view.RootLayoutController;
+import restauto.cook.database.MySQLDatabase;
+import restauto.cook.display.model.Menu_Item;
+import restauto.cook.display.model.Type;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -26,10 +37,47 @@ public class Main extends Application {
     private static boolean returnHome=true;
     private static boolean edit=false;
 
+    private MySQLDatabase database = new MySQLDatabase();
+    private HashMap<String, ArrayList<Integer>> stationTypes = new HashMap<String, ArrayList<Integer>>();
+    
+    private ObservableList<Sales> sales = FXCollections.observableArrayList();
+    private ObservableList<Orders> orders = FXCollections.observableArrayList();
+    
+    private ObservableList<Type> type = FXCollections.observableArrayList();
+    private ObservableList<Menu_Item> menuItem = FXCollections.observableArrayList();
+    public ObservableList<Menu_Item> stationMenuItems = FXCollections.observableArrayList();
+       
     /**
      * Constructor
      */
-    public Main() {}
+    @SuppressWarnings("serial")
+	public Main() {
+    	
+    	//Subscribe each station to a group of types
+    	stationTypes.put("Expodite",
+    			new ArrayList<Integer>(){{ add(4); }});
+    	
+    	stationTypes.put("Salad",
+    			new ArrayList<Integer>(){{ add(3); add(11); }});
+    	
+    	stationTypes.put("FlatTop",
+    			new ArrayList<Integer>(){{ add(2); add(5); }});
+    	
+    	stationTypes.put("Fryer",
+    			new ArrayList<Integer>(){{ add(8); }});
+    	
+    	stationTypes.put("Oven",
+    			new ArrayList<Integer>(){{ add(7); add(9); }});
+    	
+    	stationTypes.put("Grill",
+    			new ArrayList<Integer>(){{ add(10); add(6); }});
+    	
+    	stationTypes.put("Beverage",
+    			new ArrayList<Integer>(){{ add(1); }});
+    	
+    	stationTypes.put("Bar",
+    			new ArrayList<Integer>(){{ add(12); }});	
+    }
     
     @Override
     public void start(Stage primaryStage) {
@@ -48,6 +96,7 @@ public class Main extends Application {
      */
     public void initRootLayout() {
         try {
+        	
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
@@ -58,7 +107,7 @@ public class Main extends Application {
             
             primaryStage.setScene(scene);
             primaryStage.show();
-          //Andrew set root layout controller and change buttons
+            //Andrew set root layout controller and change buttons
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
             controller.fadeOut(fadeOut);
@@ -67,6 +116,180 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public ObservableList<Orders> getStationOrders() {
+    	
+    	return orders;
+    }
+    
+    
+    
+    @SuppressWarnings("unused")
+	private void getAllSales() {
+    	
+    	/*** Get All Types From The Database ***/
+
+		ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+		
+		try {
+			table = database.getItems(true, null, "SALE");
+		} catch (SQLException e) {
+			System.out.println("\n\nGET ALL SALES FAILED****\n\n");
+		}
+		
+		//Clear the list so we start fresh
+		sales.removeAll(sales);
+		sales.clear();
+		
+		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+			sales.add(new Sales(
+						index1.get("SALE_ID").get(0),
+						index1.get("USER_ID").get(0),
+						index1.get("TABLE_NUM").get(0),
+						index1.get("DATE").get(0),
+						index1.get("ARRIVE_TIME").get(0),
+						index1.get("SERVE_TIME").get(0),
+						index1.get("ifApp").get(0),
+						index1.get("ifCarry").get(0))
+					);
+    }
+    
+    public void getAllOrders(String station) {
+    	
+    	sales.removeAll();
+        sales.clear();
+        
+        orders.removeAll();
+        orders.clear();
+
+        type.removeAll();
+        type.clear();
+        
+        menuItem.removeAll();
+        menuItem.clear();
+        
+        stationMenuItems.removeAll();
+        stationMenuItems.clear();
+    	
+    	/*** Get All Orders From The Database ***/
+    	
+    	ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+		
+		try {
+			table = database.getItems(true, null, "ORDERS");
+		} catch (SQLException e) {
+			System.out.println("\n\nGET ALL ORDERS FAILED****\n\n");
+		}
+		
+		//Clear the list so we start fresh
+		orders.removeAll(orders);
+		orders.clear();
+		
+		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+			orders.add(new Orders(
+						index1.get("ORDER_ID").get(0),
+						index1.get("SALE_ID").get(0),
+						index1.get("ITEM_ID").get(0),
+						"")
+					);
+		
+		//Test getting certain menu items
+		ArrayList<Integer> orderedMenuItems = new ArrayList<Integer>();
+		
+		for(Orders index: orders) {
+			
+			print("\n");
+			print("Item ID " + index.getItemID());
+			print("Order ID " + index.getOrderID());
+			print("Sale ID " + index.getSaleID() + "\n");
+			
+			orderedMenuItems.add(Integer.parseInt(index.getItemID()));
+		}
+		
+		for(Integer index: orderedMenuItems)
+			print("\n" + index + "\n");
+		
+		/** Get All Types **/
+		
+		try {
+			table = database.getItems(true, null, "TYPE");
+		} catch (SQLException e) {
+			System.out.println("\n\nSOMETHING FAILED****\n\n");
+		}
+		
+		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+			type.add(new Type(
+						index1.get("TYPE_ID").get(0),
+						index1.get("NAME").get(0),
+						" ")
+					);
+		
+		/** Get All Menu Items **/
+		
+		try {
+			table = database.getItems(false, orderedMenuItems, "MENU_ITEM");
+		} catch (SQLException e) {
+			System.out.println("\n\nGET ALL ORDERS FAILED****\n\n");
+		}
+		
+		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+			menuItem.add(new Menu_Item(
+					index1.get("ITEM_ID").get(0),
+					index1.get("CALORIES").get(0),
+					index1.get("ONMENU").get(0),
+					index1.get("SPICY").get(0),
+					index1.get("RECOMMENDED").get(0),
+					index1.get("PRICE").get(0),
+					index1.get("NAME").get(0),
+					//index1.get("MENU_DESC").get(0), //Null values in database
+					" ",
+					index1.get("DESCRIPTION").get(0),
+					//index1.get("COOKTIME").get(0)) //Null values in database
+					" ")
+				);
+		
+		
+		/** Sort **/
+		
+		ArrayList<Integer> typeID = stationTypes.get(station);
+		
+    	ArrayList<String> matchedTypes = new ArrayList<String>();
+		
+		/*** Get All Menu Items From The Database ***/
+		try {
+			table = database.getItems(true, null, "ITEM_TYPE");
+		} catch (SQLException e) {
+			print("\n\nSOMETHING FAILED****\n\n");
+		}
+    	
+		for(LinkedHashMap<String, ArrayList<String>> index: table)
+			for(Integer index1: typeID)
+				if(index.get("TYPE_ID").get(0).equals(Integer.toString(index1)))
+					matchedTypes.add(index.get("ITEM_ID").get(0));
+		
+    	for(Menu_Item index: menuItem)
+    		for(String neededID: matchedTypes)
+    			if(index.getItemID().equals(neededID))
+    				stationMenuItems.add(index);
+		
+    	for(Menu_Item index: stationMenuItems) {
+    		print("\nHere");
+    		print(index.getName());
+    		print(index.getTableNumber());
+    		print(index.getOrderTime());
+    		print("\n");
+    	}
+		
+    }
+    
+    public ObservableList<Menu_Item> getStationMenuItems() {
+    	return stationMenuItems;
+    }
+    
+    public void completeMenuItem(Menu_Item item) {
+    	
+    	stationMenuItems.remove(item);
     }
     
     /**
@@ -101,6 +324,7 @@ public class Main extends Application {
      */
     public void showHomePageOverview() {
         try {
+        	
         	//Andrew handle setting buttons for this particular scene
         	fadeOut=false;
         	returnHome=true;
@@ -128,6 +352,10 @@ public class Main extends Application {
      */
     public void showMainDisplay(String display) {
         try {
+        	
+        	//Populate the orders list
+        	getAllOrders(display);
+        	
         	//Andrew handle setting buttons for this particular scene
         	fadeOut=false;
         	returnHome=false;
@@ -152,6 +380,7 @@ public class Main extends Application {
     //Andrew used for updating mainDisplay without updating rootlayout
     public void showMainDisplay(String display, int[] arr) {
         try {
+        	
         	//Andrew handle setting buttons for this particular scene
         	fadeOut=false;
         	returnHome=false;
@@ -202,7 +431,7 @@ public class Main extends Application {
     
     // Simple printing solution to help typing
     static void print(String string) {
-    	System.out.println("\n\n" + string + "\n\n");
+    	System.out.println(string);
     }
     
     /**
