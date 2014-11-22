@@ -13,7 +13,7 @@
         <items>
           <AnchorPane prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@DarkTheme.css">
                <children>
-                  <SplitPane dividerPositions="0.294, 0.585" prefHeight="296.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.294, 0.666" prefHeight="296.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@DarkTheme.css">
                            <children>
@@ -31,21 +31,18 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@DarkTheme.css">
                            <children>
-                              <Label layoutX="14.0" layoutY="14.0" styleClass="label-header" text="Item Details" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                              <Label layoutX="14.0" layoutY="14.0" styleClass="label-header" text="Overview" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <HBox layoutX="41.0" layoutY="453.0" prefHeight="53.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
-                                 <children>
-                                    <Button fx:id="completeButton" mnemonicParsing="false" onAction="#handleComplete" prefHeight="55.0" prefWidth="201.0" text="Complete" />
-                                 </children>
-                              </HBox>
+                              <HBox layoutX="41.0" layoutY="453.0" prefHeight="53.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+                              <FlowPane fx:id="flow" layoutX="2.0" layoutY="56.0" prefHeight="392.0" prefWidth="350.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="599.0" prefWidth="413.0" styleClass="background" stylesheets="@DarkTheme.css">
                            <children>
-                              <Label layoutX="14.0" layoutY="14.0" styleClass="label-header" text="Overview" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                              <Label layoutX="14.0" layoutY="14.0" styleClass="label-header" text="Item Details" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
@@ -69,6 +66,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Button fx:id="completeButton" layoutX="389.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleComplete" prefHeight="47.0" prefWidth="201.0" text="Complete" />
                </children>
             </AnchorPane>
         </items>

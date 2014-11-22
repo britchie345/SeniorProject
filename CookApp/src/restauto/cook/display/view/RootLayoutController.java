@@ -113,7 +113,7 @@ public class RootLayoutController {
 	           arr[2]=0;
 	       
 	       
-	       main.showMainDisplay("dummy", arr);
+	       main.showMainDisplay(main.getOverviewName(), arr);
 	   }
     
 

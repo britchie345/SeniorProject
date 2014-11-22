@@ -36,6 +36,7 @@ public class Main extends Application {
     private static boolean fadeOut=true;
     private static boolean returnHome=true;
     private static boolean edit=false;
+    private static String overviewName=null;
 
     private MySQLDatabase database = new MySQLDatabase();
     private HashMap<String, ArrayList<Integer>> stationTypes = new HashMap<String, ArrayList<Integer>>();
@@ -199,16 +200,16 @@ public class Main extends Application {
 		
 		for(Orders index: orders) {
 			
-			print("\n");
-			print("Item ID " + index.getItemID());
-			print("Order ID " + index.getOrderID());
-			print("Sale ID " + index.getSaleID() + "\n");
+//			print("\n");
+//			print("Item ID " + index.getItemID());
+//			print("Order ID " + index.getOrderID());
+//			print("Sale ID " + index.getSaleID() + "\n");
 			
 			orderedMenuItems.add(Integer.parseInt(index.getItemID()));
 		}
 		
-		for(Integer index: orderedMenuItems)
-			print("\n" + index + "\n");
+//		for(Integer index: orderedMenuItems)
+//			print("\n" + index + "\n");
 		
 		/** Get All Types **/
 		
@@ -273,13 +274,13 @@ public class Main extends Application {
     			if(index.getItemID().equals(neededID))
     				stationMenuItems.add(index);
 		
-    	for(Menu_Item index: stationMenuItems) {
-    		print("\nHere");
-    		print(index.getName());
-    		print(index.getTableNumber());
-    		print(index.getOrderTime());
-    		print("\n");
-    	}
+//    	for(Menu_Item index: stationMenuItems) {
+//    		print("\nHere");
+//    		print(index.getName());
+//    		print(index.getTableNumber());
+//    		print(index.getOrderTime());
+//    		print("\n");
+//    	}
 		
     }
     
@@ -360,6 +361,7 @@ public class Main extends Application {
         	fadeOut=false;
         	returnHome=false;
         	edit=true;
+        	overviewName=display;
         	initRootLayout();
             // Load Main Display overview.
             FXMLLoader loader = new FXMLLoader();
@@ -372,6 +374,7 @@ public class Main extends Application {
             // Give the controller access to the main app.
             MainDisplayController controller = loader.getController();
             controller.setMainApp(this, display);
+            controller.setImages(display);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -384,7 +387,7 @@ public class Main extends Application {
         	//Andrew handle setting buttons for this particular scene
         	fadeOut=false;
         	returnHome=false;
-        	edit=true;
+        	edit=true;        	
             // Load Main Display overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/MainDisplay2.fxml"));
@@ -397,6 +400,7 @@ public class Main extends Application {
             MainDisplayController controller = loader.getController();
             controller.setMainApp(this, display);
             controller.setTable(arr);
+            controller.setImages(display);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -432,6 +436,10 @@ public class Main extends Application {
     // Simple printing solution to help typing
     static void print(String string) {
     	System.out.println(string);
+    }
+    public String getOverviewName()
+    {
+    	return overviewName;
     }
     
     /**
