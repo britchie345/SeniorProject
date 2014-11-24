@@ -2,6 +2,9 @@ package restauto.cook.display.view;
 
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -143,14 +146,26 @@ public class MainDisplayController {
     {
     	
     	
-    	if(display=="Bar")
-    	{    		   	 
+        if(display=="Bar")
+    	{    
+    		URL location[] =new URL[5]; 
+    		location[0]=this.getClass().getResource("/images/strawberryBar.png");
+    		location[1]=this.getClass().getResource("/images/cosmo.png");
+    		location[2]=this.getClass().getResource("/images/white.png");
+    		location[3]=this.getClass().getResource("/images/longIsland.png");
+    		location[4]=this.getClass().getResource("/images/rum+coke.jpg");
+    		
+    		String fullPath[] =new String[5];
+    		for(int i=0;i<5;i++)
+        		fullPath[i]=location[i].getPath();   		
+    		
+    		
     		File file[] = new File[5];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/strawberryBar.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/cosmo.png");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/white.png");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/longIsland.png");
-    		file[4]=new File("/Users/Andrew/workspace/CookApp/src/images/rum+coke.jpg");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
+    		file[4]=new File(fullPath[4]);
     		
     		
     		String imgName[] = new String[5];
@@ -190,20 +205,40 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
-    	if(display=="Beverage")
-    	{
-    		File file[] = new File[11];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/cokecola.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/DietCoke.png");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/sprite.jpg");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/drpepper.jpg");
-    		file[4]=new File("/Users/Andrew/workspace/CookApp/src/images/rootbeer.jpg");
-    		file[5]=new File("/Users/Andrew/workspace/CookApp/src/images/orangesoda.jpg");
-    		file[6]=new File("/Users/Andrew/workspace/CookApp/src/images/cherrycoke.jpg");
-    		file[7]=new File("/Users/Andrew/workspace/CookApp/src/images/lemonade.jpg");
-    		file[8]=new File("/Users/Andrew/workspace/CookApp/src/images/strawberry.jpg");
-    		file[9]=new File("/Users/Andrew/workspace/CookApp/src/images/sweetTea.jpg");
-    		file[10]=new File("/Users/Andrew/workspace/CookApp/src/images/unsweet.jpg");
+        else if(display=="Beverage")
+    	{   
+    		URL location[] =new URL[11]; 
+    		location[0]=this.getClass().getResource("/images/cokecola.png");
+    		location[1]=this.getClass().getResource("/images/DietCoke.png");
+    		location[2]=this.getClass().getResource("/images/sprite.jpg");
+    		location[3]=this.getClass().getResource("/images/drpepper.jpg");
+    		location[4]=this.getClass().getResource("/images/rootbeer.jpg");
+    		location[5]=this.getClass().getResource("/images/orangesoda.jpg");
+    		location[6]=this.getClass().getResource("/images/cherrycoke.jpg");
+    		location[7]=this.getClass().getResource("/images/lemonade.jpg");
+    		location[8]=this.getClass().getResource("/images/strawberry.jpg");
+    		location[9]=this.getClass().getResource("/images/sweetTea.jpg");
+    		location[10]=this.getClass().getResource("/images/unsweet.jpg");
+    		
+    		String fullPath[] =new String[11];
+    		for(int i=0;i<11;i++)
+        		fullPath[i]=location[i].getPath();
+    		
+    		
+    		
+    		
+    		File file[] = new File[11];      		
+    		file[0]=new File(fullPath[0]);     		
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
+    		file[4]=new File(fullPath[4]);
+    		file[5]=new File(fullPath[5]);
+    		file[6]=new File(fullPath[6]);
+    		file[7]=new File(fullPath[7]);
+    		file[8]=new File(fullPath[8]);
+    		file[9]=new File(fullPath[9]);
+    		file[10]=new File(fullPath[10]);
     		
     		String imgName[] = new String[11];
     		imgName[0]="Coke-Cola";
@@ -247,13 +282,25 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
-    	if(display=="Grill")
+        else if(display=="Grill")
     	{
+    		URL location[] =new URL[4]; 
+    		location[0]=this.getClass().getResource("/images/chedderBurger.jpg");
+    		location[1]=this.getClass().getResource("/images/veggieBurger.jpg");
+    		location[2]=this.getClass().getResource("/images/filet.jpg");
+    		location[3]=this.getClass().getResource("/images/parmSteak.jpg");
+    		
+    		
+    		String fullPath[] =new String[4];
+    		for(int i=0;i<4;i++)
+        		fullPath[i]=location[i].getPath();
+    		
+    		
     		File file[] = new File[4];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/chedderBurger.jpg");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/veggieBurger.jpg");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/filet.jpg");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/parmSteak.jpg");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
     		
     		
     		
@@ -294,15 +341,27 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
-    	if(display=="Oven")
+        else if(display=="Oven")
     	{
+    		URL location[] =new URL[6]; 
+    		location[0]=this.getClass().getResource("/images/chickenAlfedo.png");
+    		location[1]=this.getClass().getResource("/images/garlicChicken.png");
+    		location[2]=this.getClass().getResource("/images/macNcheese.jpg");
+    		location[3]=this.getClass().getResource("/images/rattlesnake.png");
+    		location[4]=this.getClass().getResource("/images/shrimp.png");
+    		location[5]=this.getClass().getResource("/images/stuffedChicken.jpg");
+    		
+    		String fullPath[] =new String[6];
+    		for(int i=0;i<6;i++)
+        		fullPath[i]=location[i].getPath();
+    		
     		File file[] = new File[6];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/chickenAlfedo.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/garlicChicken.png");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/macNcheese.jpg");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/rattlesnake.png");
-    		file[4]=new File("/Users/Andrew/workspace/CookApp/src/images/shrimp.png");
-    		file[5]=new File("/Users/Andrew/workspace/CookApp/src/images/stuffedChicken.jpg");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
+    		file[4]=new File(fullPath[4]);
+    		file[5]=new File(fullPath[5]);
     		
     		
     		String imgName[] = new String[6];
@@ -343,11 +402,19 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}    	
-    	if(display=="Fryer")
+        else if(display=="Fryer")
     	{
+    		URL location[] =new URL[2]; 
+    		location[0]=this.getClass().getResource("/images/salmon.png");
+    		location[1]=this.getClass().getResource("/images/talipa.jpg");    		    		
+    		
+    		String fullPath[] =new String[2];
+    		fullPath[0]=location[0].getPath();
+    		fullPath[1]=location[1].getPath();    		
+    		
     		File file[] = new File[2];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/salmon.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/talipa.jpg");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
     		
     		
     		
@@ -388,20 +455,37 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}	
     	}
-    	if(display=="FlatTop")
+        else if(display=="FlatTop")
     	{
+    		URL location[] =new URL[11]; 
+    		location[0]=this.getClass().getResource("/images/brushette.png.");
+    		location[1]=this.getClass().getResource("/images/calamari.png");
+    		location[2]=this.getClass().getResource("/images/eggplant.jpg");
+    		location[3]=this.getClass().getResource("/images/firecraker.png");
+    		location[4]=this.getClass().getResource("/images/lasgna.png");
+    		location[5]=this.getClass().getResource("/images/mozz.png");
+    		location[6]=this.getClass().getResource("/images/mushrooms.png");
+    		location[7]=this.getClass().getResource("/images/sample.png");
+    		location[8]=this.getClass().getResource("/images/shrimpFritta.png");
+    		location[9]=this.getClass().getResource("/images/turkeyBacon.png");
+    		location[10]=this.getClass().getResource("/images/wings.png");
+    		
+    		String fullPath[] =new String[11];
+    		for(int i=0;i<11;i++)
+        		fullPath[i]=location[i].getPath();
+    		
     		File file[] = new File[11];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/brushette.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/calamari.png");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/eggplant.jpg");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/firecraker.png");
-    		file[4]=new File("/Users/Andrew/workspace/CookApp/src/images/lasgna.png");
-    		file[5]=new File("/Users/Andrew/workspace/CookApp/src/images/mozz.png");
-    		file[6]=new File("/Users/Andrew/workspace/CookApp/src/images/mushrooms.png");
-    		file[7]=new File("/Users/Andrew/workspace/CookApp/src/images/sample.png");
-    		file[8]=new File("/Users/Andrew/workspace/CookApp/src/images/shrimpFritta.png");
-    		file[9]=new File("/Users/Andrew/workspace/CookApp/src/images/turkeyBacon.png");
-    		file[10]=new File("/Users/Andrew/workspace/CookApp/src/images/wings.png");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
+    		file[4]=new File(fullPath[4]);
+    		file[5]=new File(fullPath[5]);
+    		file[6]=new File(fullPath[6]);
+    		file[7]=new File(fullPath[7]);
+    		file[8]=new File(fullPath[8]);
+    		file[9]=new File(fullPath[9]);
+    		file[10]=new File(fullPath[10]);
     		
     		String imgName[] = new String[11];
     		imgName[0]="Brushetta";
@@ -445,18 +529,34 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
-    	if(display=="Salad")
+        else if(display=="Salad")
     	{
+    		URL location[] =new URL[9]; 
+    		location[0]=this.getClass().getResource("/images/chicMil.png.");
+    		location[1]=this.getClass().getResource("/images/choclate.png");
+    		location[2]=this.getClass().getResource("/images/cobb.png");
+    		location[3]=this.getClass().getResource("/images/grilledChic.png");
+    		location[4]=this.getClass().getResource("/images/grilledcit.png");
+    		location[5]=this.getClass().getResource("/images/honey.png");
+    		location[6]=this.getClass().getResource("/images/house.png");
+    		location[7]=this.getClass().getResource("/images/powerGreen.jpg");
+    		location[8]=this.getClass().getResource("/images/walnut.png");
+    		
+    		String fullPath[] =new String[9];
+    		for(int i=0;i<9;i++)
+        		fullPath[i]=location[i].getPath();  		
+    		
+    		
     		File file[] = new File[9];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/chicMil.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/choclate.png");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/cobb.png");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/grilledChic.png");
-    		file[4]=new File("/Users/Andrew/workspace/CookApp/src/images/grilledcit.png");
-    		file[5]=new File("/Users/Andrew/workspace/CookApp/src/images/honey.png");
-    		file[6]=new File("/Users/Andrew/workspace/CookApp/src/images/house.png");
-    		file[7]=new File("/Users/Andrew/workspace/CookApp/src/images/powerGreen.jpg");
-    		file[8]=new File("/Users/Andrew/workspace/CookApp/src/images/walnut.png");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
+    		file[4]=new File(fullPath[4]);
+    		file[5]=new File(fullPath[5]);
+    		file[6]=new File(fullPath[6]);
+    		file[7]=new File(fullPath[7]);
+    		file[8]=new File(fullPath[8]);
     		
     		
     		String imgName[] = new String[9];
@@ -500,14 +600,26 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
-    	if(display=="Expodite")
+        else if(display=="Expodite")
     	{
+    		URL location[] =new URL[5]; 
+    		location[0]=this.getClass().getResource("/images/brocChed.png");
+    		location[1]=this.getClass().getResource("/images/chickenAGn.png");
+    		location[2]=this.getClass().getResource("/images/pastaeFago.png");
+    		location[3]=this.getClass().getResource("/images/Minestrone.png");
+    		location[4]=this.getClass().getResource("/images/Zuppa.png");
+    		
+    		String fullPath[] =new String[5];
+    		for(int i=0;i<5;i++)
+    		fullPath[i]=location[i].getPath();
+    	
+    		
     		File file[] = new File[5];
-    		file[0]=new File("/Users/Andrew/workspace/CookApp/src/images/brocChed.png");
-    		file[1]=new File("/Users/Andrew/workspace/CookApp/src/images/chickenAGn.png");
-    		file[2]=new File("/Users/Andrew/workspace/CookApp/src/images/pastaeFago.png");
-    		file[3]=new File("/Users/Andrew/workspace/CookApp/src/images/Minestrone.png");
-    		file[4]=new File("/Users/Andrew/workspace/CookApp/src/images/Zuppa.png");
+    		file[0]=new File(fullPath[0]);
+    		file[1]=new File(fullPath[1]);
+    		file[2]=new File(fullPath[2]);
+    		file[3]=new File(fullPath[3]);
+    		file[4]=new File(fullPath[4]);
     		
     		
     		String imgName[] = new String[5];
