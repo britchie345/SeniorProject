@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Font;
 
 //@SuppressWarnings("deprecation")
 public class MainDisplayController {
@@ -92,7 +93,7 @@ public class MainDisplayController {
 
         // Listen for selection changes and show the Menu Item details when changed.
         menuItemTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> menuItemClickedListner(newValue));
+                (observable, oldValue, newValue) -> menuItemClickedListner(newValue));        
     }
 
     /**
@@ -169,15 +170,24 @@ public class MainDisplayController {
     		
     		
     		String imgName[] = new String[5];
-    		imgName[0]="SB Margarita";
+    		imgName[0]="Strawberry Margarita";
     		imgName[1]="Cosmopolitan";
     		imgName[2]="White Sangria";
-    		imgName[3]="Long island";
-    		imgName[4]="Rum and coke";
+    		imgName[3]="Long Island Iced Tea";
+    		imgName[4]="Rum & Coke";
     		
-    		
+    		int count[]=new int[5];
     		for(int i=0;i<5;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
+    		
     	
     		Image image[]=new Image[5];
     		for(int i=0;i<5;i++)
@@ -190,17 +200,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[5];
     		for(int i=0;i<5;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<5;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
@@ -241,20 +254,29 @@ public class MainDisplayController {
     		file[10]=new File(fullPath[10]);
     		
     		String imgName[] = new String[11];
-    		imgName[0]="Coke-Cola";
-    		imgName[1]="Diet-Coke";
+    		imgName[0]="Coca-Cola";
+    		imgName[1]="Diet Coca-Coke";
     		imgName[2]="Sprite";
-    		imgName[3]="Dr.Pepper";
-    		imgName[4]="Root Beer";
-    		imgName[5]="Orange Soda";
-    		imgName[6]="Cherry-Coke";
+    		imgName[3]="Dr. Pepper";
+    		imgName[4]="Barq's Root Beer";
+    		imgName[5]="Fanta Orange";
+    		imgName[6]="Cherry Coca-Cola";
     		imgName[7]="Lemonade";
-    		imgName[8]="Strawberry";
-    		imgName[9]="Sweet Tea";
-    		imgName[10]="Unsweet Tea";
+    		imgName[8]="Flavored Lemonade";
+    		imgName[9]="Flavored Unsweet Iced Tea";
+    		imgName[10]="Unsweetened Iced Tea";
     		
+    		int count[]=new int[11];
     		for(int i=0;i<11;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
     	
     		Image image[]=new Image[11];
     		for(int i=0;i<11;i++)
@@ -267,17 +289,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[11];
     		for(int i=0;i<11;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<11;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
@@ -305,15 +330,24 @@ public class MainDisplayController {
     		
     		
     		String imgName[] = new String[4];
-    		imgName[0]="Ched Burger";
-    		imgName[1]="Veg Burger";
-    		imgName[2]="Filet mignon";
-    		imgName[3]="Parm Filet";
+    		imgName[0]="Cheddar Burger";
+    		imgName[1]="Black Bean Veggie";
+    		imgName[2]="Center Cut Filet Mignon";
+    		imgName[3]="Parmesan Crusted Filet";
     		
-    		
-    		
+    		int count[]=new int[4];
     		for(int i=0;i<4;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
+    		
+    		
     	
     		Image image[]=new Image[4];
     		for(int i=0;i<4;i++)
@@ -326,17 +360,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[4];
     		for(int i=0;i<4;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<4;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
@@ -365,16 +402,25 @@ public class MainDisplayController {
     		
     		
     		String imgName[] = new String[6];
-    		imgName[0]="Chicken Alf";
-    		imgName[1]="Garlic Chic";
-    		imgName[2]="Mac N Cheese";
-    		imgName[3]="Rattlesnake";
-    		imgName[4]="Shimp Scampi";
-    		imgName[5]="Stuffed Chic";
+    		imgName[0]="Chicken & Broccoli Alfredo";
+    		imgName[1]="Garlic Rosemary Chicken";
+    		imgName[2]="Deep Dish Mac & Cheese";
+    		imgName[3]="Rattlesnake Pasta";
+    		imgName[4]="Shrimp Scampi";
+    		imgName[5]="Stuffed Chicken Marsala";
     		
-    		
+    		int count[]=new int[6];
     		for(int i=0;i<6;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
+    		
     	
     		Image image[]=new Image[6];
     		for(int i=0;i<6;i++)
@@ -387,17 +433,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[6];
     		for(int i=0;i<6;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<6;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
@@ -420,14 +469,22 @@ public class MainDisplayController {
     		
     		
     		String imgName[] = new String[2];
-    		imgName[0]="Herb Salmon";
-    		imgName[1]="Baked Talipa";
+    		imgName[0]="Herb-Grilled Salmon";
+    		imgName[1]="Baked Tilapia with Shrimp";
     		
-    		
-    		
-    		
+    		int count[]=new int[2];
     		for(int i=0;i<2;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
+    		
+    		
     	
     		Image image[]=new Image[2];
     		for(int i=0;i<2;i++)
@@ -440,17 +497,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[2];
     		for(int i=0;i<2;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<2;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}	
@@ -489,19 +549,32 @@ public class MainDisplayController {
     		
     		String imgName[] = new String[11];
     		imgName[0]="Brushetta";
-    		imgName[1]="Calamari";
-    		imgName[2]="Eggplant";
-    		imgName[3]="Firecraker";
-    		imgName[4]="Lasagne";
-    		imgName[5]="Mozzarella";
-    		imgName[6]="Stuffed Mush";
-    		imgName[7]="Sampler";
-    		imgName[8]="Shimp Frit";
-    		imgName[9]="Turkey Bac";
-    		imgName[10]="Spicy Wings";
+    		imgName[1]="Spicy Calamari";
+    		imgName[2]="Roasted Eggplant & Zucchini";
+    		imgName[3]="Firecracker Chicken";
+    		imgName[4]="Lasagne Fritta";
+    		imgName[5]="Smoked Mozzarella Fonduta";
+    		imgName[6]="Stuffed Mushrooms";
+    		imgName[7]="Sampler Italiano";
+    		imgName[8]="Classic Shrimp Scampi Fritta";
+    		imgName[9]="Turkey Bacon Avocado";
+    		imgName[10]="Spicy Calabrian Wings";
     		
+    		int count[]=new int[11];
     		for(int i=0;i<11;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    			{
+    				count[i]=itemCount.get(imgName[i]);
+    			}
+    			else
+    			{
+    				count[i]=0;
+    			}
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
     	
     		Image image[]=new Image[11];
     		for(int i=0;i<11;i++)
@@ -514,17 +587,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[11];
     		for(int i=0;i<11;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<11;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(200, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(10);
+    			flow.setVgap(10);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
@@ -560,19 +636,28 @@ public class MainDisplayController {
     		
     		
     		String imgName[] = new String[9];
-    		imgName[0]="Milanese Chic";
-    		imgName[1]="Chocolate Cake";
-    		imgName[2]="Cobb";
-    		imgName[3]="Grilled Chicken";
-    		imgName[4]="Grilled Citrus";
-    		imgName[5]="Honey Crisp";
-    		imgName[6]="House";
-    		imgName[7]="Power Green";
-    		imgName[8]="Walnut/Blue";
+    		imgName[0]="Chicken Milanese";
+    		imgName[1]="Chocolate Mousse Cake";
+    		imgName[2]="Classic Cobb";
+    		imgName[3]="Grilled Chicken Caesar Salad";
+    		imgName[4]="Grilled Citrus Chicken";
+    		imgName[5]="Honey Crisp Chicken Salad";
+    		imgName[6]="House Salad";
+    		imgName[7]="Power Greens";
+    		imgName[8]="Walnut Blueberry & Goat Cheese";
     		
-    		
+    		int count[]=new int[9];
     		for(int i=0;i<9;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
+    		
     	
     		Image image[]=new Image[9];
     		for(int i=0;i<9;i++)
@@ -585,17 +670,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[9];
     		for(int i=0;i<9;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
-   	   
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
+    		imgLabel[8].setStyle("-fx-font-size:10;");
     		for(int i=0;i<9;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(200, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(10);
+    			flow.setVgap(10);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
@@ -624,14 +712,23 @@ public class MainDisplayController {
     		
     		String imgName[] = new String[5];
     		imgName[0]="Broccoli Ched";
-    		imgName[1]="Chicken Gno";
+    		imgName[1]="Chicken & Gnocchi";
     		imgName[2]="Pasta e Fagioli";
     		imgName[3]="Minestrone";
     		imgName[4]="Zuppa Toscana";
     		
-    		
+    		int count[]=new int[5];
     		for(int i=0;i<5;i++)
-    			 imgName[i] = String.format(imgName[i],"%12s").replace(' ', ' ');
+    		{
+    			if(itemCount.containsKey(imgName[i]))
+    				count[i]=itemCount.get(imgName[i]);
+    			else
+    				count[i]=0;
+    			
+    			imgName[i]=imgName[i]+": "+count[i];
+    		}
+    		
+    		
     	
     		Image image[]=new Image[5];
     		for(int i=0;i<5;i++)
@@ -644,17 +741,20 @@ public class MainDisplayController {
    	   
     		Label[] imgLabel = new Label[5];
     		for(int i=0;i<5;i++)
+    		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
+    			imgLabel[i].setStyle("-fx-font-size:11;");
+    		}
    	   
     		for(int i=0;i<5;i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(140, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(50);
-    			flow.setVgap(50);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}	
@@ -662,7 +762,7 @@ public class MainDisplayController {
     }
     
     
-    private void getItemCount()
+    public void getItemCount()
     {
     	for(Menu_Item index: mainApp.stationMenuItems)
     	{
@@ -675,13 +775,9 @@ public class MainDisplayController {
     		else
     		{
     			itemCount.put(index.getName(), 1);
-    		}    		
-    	}
-    	Set<String> iterator = itemCount.keySet();
-    	for(String index: iterator)
-    	{
-    		System.out.print(index);
-    	}
+    		}
+    		
+    	}    	
     }
     
     /**

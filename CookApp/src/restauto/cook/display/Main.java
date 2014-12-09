@@ -374,7 +374,8 @@ public class Main extends Application {
             // Give the controller access to the main app.
             MainDisplayController controller = loader.getController();
             controller.setMainApp(this, display);
-            controller.setImages(display);
+            controller.getItemCount();
+            controller.setImages(display);            
 
         } catch (IOException e) {
             e.printStackTrace();

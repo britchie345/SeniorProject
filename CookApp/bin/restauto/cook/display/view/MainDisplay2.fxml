@@ -13,7 +13,7 @@
         <items>
           <AnchorPane prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@DarkTheme.css">
                <children>
-                  <SplitPane dividerPositions="0.294, 0.666" prefHeight="296.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.294, 0.74" prefHeight="296.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@DarkTheme.css">
                            <children>
@@ -37,7 +37,7 @@
                                  </font>
                               </Label>
                               <HBox layoutX="41.0" layoutY="453.0" prefHeight="53.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
-                              <FlowPane fx:id="flow" layoutX="2.0" layoutY="56.0" prefHeight="392.0" prefWidth="350.0" />
+                              <FlowPane fx:id="flow" layoutX="2.0" layoutY="56.0" prefHeight="459.0" prefWidth="430.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="599.0" prefWidth="413.0" styleClass="background" stylesheets="@DarkTheme.css">
