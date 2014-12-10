@@ -195,22 +195,106 @@ public class Main extends Application {
 						"")
 					);
 		
-		//Test getting certain menu items
-		ArrayList<Integer> orderedMenuItems = new ArrayList<Integer>();
+		//New**************
 		
-		for(Orders index: orders) {
-			
-//			print("\n");
-//			print("Item ID " + index.getItemID());
-//			print("Order ID " + index.getOrderID());
-//			print("Sale ID " + index.getSaleID() + "\n");
-			
-			orderedMenuItems.add(Integer.parseInt(index.getItemID()));
-		}
+		for(Orders index: orders)
+			getMenuItemsDatabase(index, station);
 		
+		//New**************
+		
+//		//Test getting certain menu items
+//		ArrayList<Integer> orderedMenuItems = new ArrayList<Integer>();
+//		
+//		for(Orders index: orders) {
+//			
+////			print("\n");
+////			print("Item ID " + index.getItemID());
+////			print("Order ID " + index.getOrderID());
+////			print("Sale ID " + index.getSaleID() + "\n");
+//			
+//			orderedMenuItems.add(Integer.parseInt(index.getItemID()));
+//		}
+//		
 //		for(Integer index: orderedMenuItems)
 //			print("\n" + index + "\n");
+//		
+//		/** Get All Types **/
+//		
+//		try {
+//			table = database.getItems(true, null, "TYPE");
+//		} catch (SQLException e) {
+//			System.out.println("\n\nSOMETHING FAILED****\n\n");
+//		}
+//		
+//		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+//			type.add(new Type(
+//						index1.get("TYPE_ID").get(0),
+//						index1.get("NAME").get(0),
+//						" ")
+//					);
+//		
+//		/** Get All Menu Items **/
+//		
+//		try {
+//			table = database.getItems(false, orderedMenuItems, "MENU_ITEM");
+//		} catch (SQLException e) {
+//			System.out.println("\n\nGET ALL ORDERS FAILED****\n\n");
+//		}
+//		
+//		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+//			menuItem.add(new Menu_Item(
+//					index1.get("ITEM_ID").get(0),
+//					index1.get("CALORIES").get(0),
+//					index1.get("ONMENU").get(0),
+//					index1.get("SPICY").get(0),
+//					index1.get("RECOMMENDED").get(0),
+//					index1.get("PRICE").get(0),
+//					index1.get("NAME").get(0),
+//					//index1.get("MENU_DESC").get(0), //Null values in database
+//					" ",
+//					index1.get("DESCRIPTION").get(0),
+//					//index1.get("COOKTIME").get(0)) //Null values in database
+//					" ")
+//				);
+//		
+//		
+//		/** Sort **/
+//		
+//		ArrayList<Integer> typeID = stationTypes.get(station);
+//		
+//    	ArrayList<String> matchedTypes = new ArrayList<String>();
+//		
+//		/*** Get All Menu Items From The Database ***/
+//		try {
+//			table = database.getItems(true, null, "ITEM_TYPE");
+//		} catch (SQLException e) {
+//			print("\n\nSOMETHING FAILED****\n\n");
+//		}
+//    	
+//		for(LinkedHashMap<String, ArrayList<String>> index: table)
+//			for(Integer index1: typeID)
+//				if(index.get("TYPE_ID").get(0).equals(Integer.toString(index1)))
+//					matchedTypes.add(index.get("ITEM_ID").get(0));
+//		
+//    	for(Menu_Item index: menuItem)
+//    		for(String neededID: matchedTypes)
+//    			if(index.getItemID().equals(neededID))
+//    				stationMenuItems.add(index);
+//		
+////    	for(Menu_Item index: stationMenuItems) {
+////    		print("\nHere");
+////    		print(index.getName());
+////    		print(index.getTableNumber());
+////    		print(index.getOrderTime());
+////    		print("\n");
+////    	}
 		
+    }
+    
+    private void getMenuItemsDatabase(Orders orderedMenuItem, String station) {
+    	
+    	ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+    	
 		/** Get All Types **/
 		
 		try {
@@ -218,7 +302,7 @@ public class Main extends Application {
 		} catch (SQLException e) {
 			System.out.println("\n\nSOMETHING FAILED****\n\n");
 		}
-		
+    	
 		for(LinkedHashMap<String, ArrayList<String>> index1: table)
 			type.add(new Type(
 						index1.get("TYPE_ID").get(0),
@@ -228,8 +312,11 @@ public class Main extends Application {
 		
 		/** Get All Menu Items **/
 		
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(Integer.parseInt(orderedMenuItem.getItemID()));
+		
 		try {
-			table = database.getItems(false, orderedMenuItems, "MENU_ITEM");
+			table = database.getItems(false, temp, "MENU_ITEM");
 		} catch (SQLException e) {
 			System.out.println("\n\nGET ALL ORDERS FAILED****\n\n");
 		}
@@ -247,9 +334,12 @@ public class Main extends Application {
 					" ",
 					index1.get("DESCRIPTION").get(0),
 					//index1.get("COOKTIME").get(0)) //Null values in database
-					" ")
+					" ",
+					orderedMenuItem.getSaleID(),
+					orderedMenuItem.getOrderID(),
+					orderedMenuItem.getRequest(),
+					orderedMenuItem.getItemID())
 				);
-		
 		
 		/** Sort **/
 		
@@ -273,24 +363,26 @@ public class Main extends Application {
     		for(String neededID: matchedTypes)
     			if(index.getItemID().equals(neededID))
     				stationMenuItems.add(index);
-		
-//    	for(Menu_Item index: stationMenuItems) {
-//    		print("\nHere");
-//    		print(index.getName());
-//    		print(index.getTableNumber());
-//    		print(index.getOrderTime());
-//    		print("\n");
-//    	}
-		
     }
     
     public ObservableList<Menu_Item> getStationMenuItems() {
     	return stationMenuItems;
     }
     
-    public void completeMenuItem(Menu_Item item) {
+    public void completeMenuItem(Menu_Item item, String station) {
     	
     	stationMenuItems.remove(item);
+    	
+    	try {
+			database.deleteItem("ORDERS", Integer.parseInt(item.getOrderID()), "ORDER_ID");
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	//Refresh Orders
+    	getAllOrders(station);
     }
     
     /**

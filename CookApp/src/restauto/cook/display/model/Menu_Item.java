@@ -19,13 +19,18 @@ public class Menu_Item {
     private final StringProperty cookTime;
     
     private final StringProperty tableNumber = new SimpleStringProperty("20");
-    private final StringProperty orderTime = new SimpleStringProperty("9:32");
+    private final StringProperty orderTime   = new SimpleStringProperty("9:32");
+    
+    private String saleID       = "";
+    private String orderID      = "";
+    private String request      = "";
+    private String orderItemID  = "";
 
     /**
      * Simple constructor.
      */
     public Menu_Item() {
-        this(null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     /**
@@ -35,7 +40,9 @@ public class Menu_Item {
     				 String onMenu      ,String spicy,
     				 String recomended  ,String price,
     				 String name        ,String menuDesc,
-    				 String description ,String cookTime) {
+    				 String description ,String cookTime,
+    				 String saleID		,String orderID,
+    				 String request		,String orderItemID) {
     	
         this.itemID      = new SimpleStringProperty(itemID);
         this.calories    = new SimpleStringProperty(calories);
@@ -47,6 +54,11 @@ public class Menu_Item {
         this.menuDesc    = new SimpleStringProperty(menuDesc);
         this.description = new SimpleStringProperty(description);
         this.cookTime    = new SimpleStringProperty(cookTime);
+        
+        this.saleID      = saleID;
+        this.orderID     = orderID;
+        this.request     = request;
+        this.orderItemID = orderItemID;
     }
     
     /**
@@ -127,6 +139,19 @@ public class Menu_Item {
     }
     public String getCookTime() {
         return cookTime.get();
+    }
+    
+    public String getSaleID() {
+        return saleID;
+    } 
+    public String getOrderID() {
+        return orderID;
+    }
+    public String getRequest() {
+        return request;
+    } 
+    public String getOrderItemID() {
+        return orderItemID;
     } 
     
     /**

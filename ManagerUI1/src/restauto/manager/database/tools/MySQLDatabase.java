@@ -12,12 +12,18 @@ import restauto.manager.database.tools.Table;
 
 public class MySQLDatabase {
 
-	//Location of database we are accessing
-	private static final String DB_URL = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql554700" ;
+//	//Location of database we are accessing
+//	private static final String DB_URL = "jdbc:mysql://sql5.freesqldatabase.com:3306/sql554700" ;
+//   
+//	//Password and user name for database
+//	private static final String USER = "sql554700";
+//	private static final String PASS = "kI3!hS8!";
    
+	//Location of database we are accessing
+	private static final String DB_URL = "jdbc:mysql://54.165.67.15:3306/Restaurant" ;
 	//Password and user name for database
-	private static final String USER = "sql554700";
-	private static final String PASS = "kI3!hS8!";
+	private static final String USER = "bob";
+	private static final String PASS = "changemenow";
    
 	private Connection connection = null;
     private Table table = new Table();

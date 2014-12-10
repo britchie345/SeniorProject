@@ -2,11 +2,8 @@ package restauto.cook.display.view;
 
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.LinkedHashMap;
-import java.util.Set;
 
 import restauto.cook.display.Main;
 import restauto.cook.display.model.Menu_Item;
@@ -18,7 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.text.Font;
 
 //@SuppressWarnings("deprecation")
 public class MainDisplayController {
@@ -49,24 +45,7 @@ public class MainDisplayController {
     //Station name
     private String station = "";
     
-    
-    
-    
-    
-    
     LinkedHashMap<String,Integer> itemCount=new  LinkedHashMap<String,Integer>();
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * The constructor.
@@ -236,10 +215,7 @@ public class MainDisplayController {
     		String fullPath[] =new String[11];
     		for(int i=0;i<11;i++)
         		fullPath[i]=location[i].getPath();
-    		
-    		
-    		
-    		
+
     		File file[] = new File[11];      		
     		file[0]=new File(fullPath[0]);     		
     		file[1]=new File(fullPath[1]);
@@ -314,21 +290,17 @@ public class MainDisplayController {
     		location[1]=this.getClass().getResource("/images/veggieBurger.jpg");
     		location[2]=this.getClass().getResource("/images/filet.jpg");
     		location[3]=this.getClass().getResource("/images/parmSteak.jpg");
-    		
-    		
+
     		String fullPath[] =new String[4];
     		for(int i=0;i<4;i++)
         		fullPath[i]=location[i].getPath();
-    		
-    		
+
     		File file[] = new File[4];
     		file[0]=new File(fullPath[0]);
     		file[1]=new File(fullPath[1]);
     		file[2]=new File(fullPath[2]);
     		file[3]=new File(fullPath[3]);
-    		
-    		
-    		
+
     		String imgName[] = new String[4];
     		imgName[0]="Cheddar Burger";
     		imgName[1]="Black Bean Veggie";
@@ -345,10 +317,7 @@ public class MainDisplayController {
     			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    		
-    		
-    		
-    	
+
     		Image image[]=new Image[4];
     		for(int i=0;i<4;i++)
    	  	  		image[i]=new Image(file[i].toURI().toString());
@@ -400,7 +369,6 @@ public class MainDisplayController {
     		file[4]=new File(fullPath[4]);
     		file[5]=new File(fullPath[5]);
     		
-    		
     		String imgName[] = new String[6];
     		imgName[0]="Chicken & Broccoli Alfredo";
     		imgName[1]="Garlic Rosemary Chicken";
@@ -419,14 +387,11 @@ public class MainDisplayController {
     			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    		
-    		
     	
     		Image image[]=new Image[6];
     		for(int i=0;i<6;i++)
    	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
-   	      
+
     		ImageView[] imgview =new ImageView[6];
     		for(int i=0;i<6;i++)
     			imgview[i]=new ImageView(image[i]);
@@ -464,10 +429,7 @@ public class MainDisplayController {
     		File file[] = new File[2];
     		file[0]=new File(fullPath[0]);
     		file[1]=new File(fullPath[1]);
-    		
-    		
-    		
-    		
+
     		String imgName[] = new String[2];
     		imgName[0]="Herb-Grilled Salmon";
     		imgName[1]="Baked Tilapia with Shrimp";
@@ -482,15 +444,11 @@ public class MainDisplayController {
     			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    		
-    		
-    		
-    	
+    
     		Image image[]=new Image[2];
     		for(int i=0;i<2;i++)
    	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
-   	      
+
     		ImageView[] imgview =new ImageView[2];
     		for(int i=0;i<2;i++)
     			imgview[i]=new ImageView(image[i]);
@@ -574,13 +532,11 @@ public class MainDisplayController {
     			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    		
-    	
+
     		Image image[]=new Image[11];
     		for(int i=0;i<11;i++)
    	  	  		image[i]=new Image(file[i].toURI().toString());
    	    
-   	      
     		ImageView[] imgview =new ImageView[11];
     		for(int i=0;i<11;i++)
     			imgview[i]=new ImageView(image[i]);
@@ -621,8 +577,7 @@ public class MainDisplayController {
     		String fullPath[] =new String[9];
     		for(int i=0;i<9;i++)
         		fullPath[i]=location[i].getPath();  		
-    		
-    		
+
     		File file[] = new File[9];
     		file[0]=new File(fullPath[0]);
     		file[1]=new File(fullPath[1]);
@@ -633,8 +588,7 @@ public class MainDisplayController {
     		file[6]=new File(fullPath[6]);
     		file[7]=new File(fullPath[7]);
     		file[8]=new File(fullPath[8]);
-    		
-    		
+
     		String imgName[] = new String[9];
     		imgName[0]="Chicken Milanese";
     		imgName[1]="Chocolate Mousse Cake";
@@ -656,14 +610,11 @@ public class MainDisplayController {
     			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    		
-    		
-    	
+
     		Image image[]=new Image[9];
     		for(int i=0;i<9;i++)
    	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
-   	      
+
     		ImageView[] imgview =new ImageView[9];
     		for(int i=0;i<9;i++)
     			imgview[i]=new ImageView(image[i]);
@@ -700,15 +651,13 @@ public class MainDisplayController {
     		String fullPath[] =new String[5];
     		for(int i=0;i<5;i++)
     		fullPath[i]=location[i].getPath();
-    	
-    		
+
     		File file[] = new File[5];
     		file[0]=new File(fullPath[0]);
     		file[1]=new File(fullPath[1]);
     		file[2]=new File(fullPath[2]);
     		file[3]=new File(fullPath[3]);
     		file[4]=new File(fullPath[4]);
-    		
     		
     		String imgName[] = new String[5];
     		imgName[0]="Broccoli Ched";
@@ -727,14 +676,11 @@ public class MainDisplayController {
     			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    		
-    		
-    	
+
     		Image image[]=new Image[5];
     		for(int i=0;i<5;i++)
    	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
-   	      
+
     		ImageView[] imgview =new ImageView[5];
     		for(int i=0;i<5;i++)
     			imgview[i]=new ImageView(image[i]);
@@ -760,22 +706,17 @@ public class MainDisplayController {
     		}	
     	}
     }
-    
-    
+
     public void getItemCount()
     {
-    	for(Menu_Item index: mainApp.stationMenuItems)
-    	{
-    		if(itemCount.containsKey(index.getName()))
-    		{
+    	for(Menu_Item index: mainApp.stationMenuItems) {
+    		if(itemCount.containsKey(index.getName())) {
     			Integer temp = itemCount.get(index.getName());
     			temp++;
     			itemCount.put(index.getName(), temp);   		
     		}
     		else
-    		{
     			itemCount.put(index.getName(), 1);
-    		}
     		
     	}    	
     }
@@ -787,7 +728,9 @@ public class MainDisplayController {
 	private void handleComplete() {
 		
 		if(clickedMenuItem != null)
-			mainApp.completeMenuItem(clickedMenuItem);
+			mainApp.completeMenuItem(clickedMenuItem, station);
+		getItemCount();
+		setImages(station);
 	}
 	
     /**
@@ -797,6 +740,8 @@ public class MainDisplayController {
 	private void handleRefresh() {
 		
 		mainApp.getAllOrders(station);
+		getItemCount();
+		setImages(station);
 	}
 	
 	/**
