@@ -729,8 +729,8 @@ public class MainDisplayController {
 		
 		if(clickedMenuItem != null)
 			mainApp.completeMenuItem(clickedMenuItem, station);
-		getItemCount();
-		setImages(station);
+		
+		mainApp.showMainDisplay(station);
 	}
 	
     /**
@@ -740,8 +740,7 @@ public class MainDisplayController {
 	private void handleRefresh() {
 		
 		mainApp.getAllOrders(station);
-		getItemCount();
-		setImages(station);
+		mainApp.showMainDisplay(station);
 	}
 	
 	/**

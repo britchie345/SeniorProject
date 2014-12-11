@@ -124,8 +124,6 @@ public class Main extends Application {
     	return orders;
     }
     
-    
-    
     @SuppressWarnings("unused")
 	private void getAllSales() {
     	
@@ -141,7 +139,6 @@ public class Main extends Application {
 		
 		//Clear the list so we start fresh
 		sales.removeAll(sales);
-		sales.clear();
 		
 		for(LinkedHashMap<String, ArrayList<String>> index1: table)
 			sales.add(new Sales(
@@ -158,20 +155,11 @@ public class Main extends Application {
     
     public void getAllOrders(String station) {
     	
-    	sales.removeAll();
-        sales.clear();
-        
-        orders.removeAll();
-        orders.clear();
-
-        type.removeAll();
-        type.clear();
-        
-        menuItem.removeAll();
-        menuItem.clear();
-        
-        stationMenuItems.removeAll();
-        stationMenuItems.clear();
+        sales.removeAll(sales);
+        orders.removeAll(orders);
+        type.removeAll(type);
+        menuItem.removeAll(menuItem);
+        stationMenuItems.removeAll(stationMenuItems);
     	
     	/*** Get All Orders From The Database ***/
     	
@@ -182,11 +170,7 @@ public class Main extends Application {
 		} catch (SQLException e) {
 			System.out.println("\n\nGET ALL ORDERS FAILED****\n\n");
 		}
-		
-		//Clear the list so we start fresh
-		orders.removeAll(orders);
-		orders.clear();
-		
+
 		for(LinkedHashMap<String, ArrayList<String>> index1: table)
 			orders.add(new Orders(
 						index1.get("ORDER_ID").get(0),
@@ -197,8 +181,82 @@ public class Main extends Application {
 		
 		//New**************
 		
-		for(Orders index: orders)
-			getMenuItemsDatabase(index, station);
+		//for(Orders index: orders)
+		//	getMenuItemsDatabase(index, station);
+		
+    	//ArrayList<LinkedHashMap<String, ArrayList<String>>> table = null;
+    	
+		/** Get All Types **/
+		
+		try {
+			table = database.getItems(true, null, "TYPE");
+		} catch (SQLException e) {
+			System.out.println("\n\nSOMETHING FAILED****\n\n");
+		}
+    	
+		for(LinkedHashMap<String, ArrayList<String>> index1: table)
+			type.add(new Type(
+						index1.get("TYPE_ID").get(0),
+						index1.get("NAME").get(0),
+						" ")
+					);
+		
+		/** Get All Menu Items **/
+		
+		for(Orders index: orders) {
+		
+			ArrayList<Integer> temp = new ArrayList<Integer>();
+			temp.add(Integer.parseInt(index.getItemID()));
+		
+			try {
+				table = database.getItems(false, temp, "MENU_ITEM");
+			} catch (SQLException e) {
+				System.out.println("\n\nGET ALL ORDERS FAILED****\n\n");
+			}
+		
+			for(LinkedHashMap<String, ArrayList<String>> index1: table)
+				menuItem.add(new Menu_Item(
+					index1.get("ITEM_ID").get(0),
+					index1.get("CALORIES").get(0),
+					index1.get("ONMENU").get(0),
+					index1.get("SPICY").get(0),
+					index1.get("RECOMMENDED").get(0),
+					index1.get("PRICE").get(0),
+					index1.get("NAME").get(0),
+					//index1.get("MENU_DESC").get(0), //Null values in database
+					" ",
+					index1.get("DESCRIPTION").get(0),
+					//index1.get("COOKTIME").get(0)) //Null values in database
+					" ",
+					index.getSaleID(),
+					index.getOrderID(),
+					index.getRequest(),
+					index.getItemID())
+				);
+		}
+		
+		/** Sort **/
+		
+		ArrayList<Integer> typeID = stationTypes.get(station);
+		
+    	ArrayList<String> matchedTypes = new ArrayList<String>();
+		
+		/*** Get All Menu Items From The Database ***/
+		try {
+			table = database.getItems(true, null, "ITEM_TYPE");
+		} catch (SQLException e) {
+			print("\n\nSOMETHING FAILED****\n\n");
+		}
+    	
+		for(LinkedHashMap<String, ArrayList<String>> index: table)
+			for(Integer index1: typeID)
+				if(index.get("TYPE_ID").get(0).equals(Integer.toString(index1)))
+					matchedTypes.add(index.get("ITEM_ID").get(0));
+		
+    	for(Menu_Item index: menuItem)
+    		for(String neededID: matchedTypes)
+    			if(index.getItemID().equals(neededID))
+    				stationMenuItems.add(index);
 		
 		//New**************
 		

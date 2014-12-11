@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 
 import org.controlsfx.dialog.Dialogs;
 
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -268,7 +267,10 @@ public class LevelcOverviewController {
 				item.put("MENU_DESC",   new ArrayList<String>(){{ add(selectedMenuItem.getMenuDesc());    add("String"); }});
 				item.put("DESCRIPTION", new ArrayList<String>(){{ add(selectedMenuItem.getDescription()); add("String"); }});
 				item.put("COOKTIME",    new ArrayList<String>(){{ add(selectedMenuItem.getCookTime());    add("String"); }});
-		        
+				
+				if(item.get("COOKTIME").get(0) == " ")
+					item.put("COOKTIME",    new ArrayList<String>(){{ add("0:00");    add("String"); }});
+				
 				//Add new Menu Item to database Link Table
 				LinkedHashMap<String, ArrayList<String>> link = new LinkedHashMap<String, ArrayList<String>>();
 				link.put("ITEM_ID", new ArrayList<String>(){{ add(selectedMenuItem.getItemID()); add("int"); }});

@@ -101,7 +101,10 @@ public class MenuItemEditDialogController {
         menuItem.setPrice      (priceField.getText());      
         menuItem.setMenuDesc   (menuDescField.getText());   
         menuItem.setDescription(descriptionField.getText());
-        menuItem.setCookTime   (cookTimeField.getText());  
+        menuItem.setCookTime   (cookTimeField.getText());
+        
+        if(menuItem.getCookTime() == "")
+        	menuItem.setCookTime("0:00");
 
             okClicked = true;
             dialogStage.close();
