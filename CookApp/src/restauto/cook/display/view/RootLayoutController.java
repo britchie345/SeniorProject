@@ -79,6 +79,26 @@ public class RootLayoutController {
     {
         edit.setVisible(arg);
     }
+    //New Andrew
+    public int[] getTable()
+    {
+    	int[] arr=new int[3];
+	       if(name.isSelected())
+	           arr[0]=1;
+	       else
+	           arr[0]=0;
+	       if(table.isSelected())
+	           arr[1]=1;
+	       else
+	           arr[1]=0;
+	       if(time.isSelected())
+	           arr[2]=1;
+	       else
+	           arr[2]=0;
+	       
+	       return arr;
+    }
+    //End New
     @FXML
     private void handleLogOut() 
     {	    
@@ -112,7 +132,7 @@ public class RootLayoutController {
 	       else
 	           arr[2]=0;
 	       
-	       
+	       main.setTable(arr);
 	       main.showMainDisplay(main.getOverviewName(), arr);
 	   }
     

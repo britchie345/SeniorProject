@@ -37,6 +37,8 @@ public class Main extends Application {
     private static boolean returnHome=true;
     private static boolean edit=false;
     private static String overviewName=null;
+    //New Andrew
+    private static int[] tableColumns=new int[3];
 
     private MySQLDatabase database = new MySQLDatabase();
     private HashMap<String, ArrayList<Integer>> stationTypes = new HashMap<String, ArrayList<Integer>>();
@@ -114,6 +116,9 @@ public class Main extends Application {
             controller.fadeOut(fadeOut);
             controller.setReturnHome(returnHome);
             controller.hideEdit(edit);
+            //New Andrew
+            tableColumns=controller.getTable();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -551,6 +556,7 @@ public class Main extends Application {
             MainDisplayController controller = loader.getController();
             controller.setMainApp(this, display);
             controller.setTable(arr);
+            controller.getItemCount();
             controller.setImages(display);
 
         } catch (IOException e) {
@@ -592,7 +598,16 @@ public class Main extends Application {
     {
     	return overviewName;
     }
-    
+    //New Andrew
+    public int[] getTable()
+    {
+    	return tableColumns;
+    }
+    public void setTable(int[] arg)
+    {
+    	tableColumns=arg;
+    }
+    //End New
     /**
      * Returns the main stage.
      * @return

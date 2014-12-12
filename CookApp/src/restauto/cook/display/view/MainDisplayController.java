@@ -372,7 +372,7 @@ public class MainDisplayController {
     		String imgName[] = new String[6];
     		imgName[0]="Chicken & Broccoli Alfredo";
     		imgName[1]="Garlic Rosemary Chicken";
-    		imgName[2]="Deep Dish Mac & Cheese";
+    		imgName[2]="Deep Dish Mac N Cheese";
     		imgName[3]="Rattlesnake Pasta";
     		imgName[4]="Shrimp Scampi";
     		imgName[5]="Stuffed Chicken Marsala";
@@ -730,7 +730,7 @@ public class MainDisplayController {
 		if(clickedMenuItem != null)
 			mainApp.completeMenuItem(clickedMenuItem, station);
 		
-		mainApp.showMainDisplay(station);
+		mainApp.showMainDisplay(station,mainApp.getTable());
 	}
 	
     /**
@@ -740,7 +740,7 @@ public class MainDisplayController {
 	private void handleRefresh() {
 		
 		mainApp.getAllOrders(station);
-		mainApp.showMainDisplay(station);
+		mainApp.showMainDisplay(station,mainApp.getTable());
 	}
 	
 	/**
