@@ -1,5 +1,9 @@
 package restauto.manager.database.tools;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -304,5 +308,47 @@ public class MySQLDatabase {
              e.printStackTrace();
         }
     }
+    
+public void insertImage(String pictureName, File pictureFile, String itemID) throws SQLException, FileNotFoundException {
+    	
+    	connection();
+    	String query = "INSERT INTO IMAGE (IMAGE,FILENAME) VALUES (?,?)";
+    	PreparedStatement statement = connection.prepareStatement(query);
+        
+    	InputStream file=new FileInputStream(pictureFile);
+    	statement.setBinaryStream(1,file);
+    	statement.setString(2, pictureName);
+    	statement.executeUpdate();
+    	
+
+    	closeResources(statement, connection); 
+    	
+    	
+    	connection();
+    	
+    	Statement stmt = connection.createStatement();
+    	String sql = "SELECT IMAGE_ID, FILENAME FROM IMAGE WHERE FILENAME='"+pictureName+"'";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        int id=0;
+        while(rs.next()){
+    	id  = rs.getInt("IMAGE_ID");
+        }
+    	closeResources(stmt, connection);
+    	
+    	
+    	connection();
+    	String query2 = "INSERT INTO ITEM_IMAGE (ITEM_ID,IMAGE_ID) VALUES (?,?)";
+    	PreparedStatement statement2 = connection.prepareStatement(query2);
+        
+    	
+    	statement2.setString(1,itemID);
+    	statement2.setInt(2, id);
+    	statement2.executeUpdate();
+    	
+
+    	closeResources(statement2, connection); 
+    }
+    
     
 }
