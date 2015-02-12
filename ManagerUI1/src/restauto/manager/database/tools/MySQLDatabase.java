@@ -1,9 +1,5 @@
 package restauto.manager.database.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -49,7 +45,48 @@ public class MySQLDatabase {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * New
+     * 
+     * Queries for the chart data
+     */
+    public List<Map<String, String>> getItemsBought() {
+    	
+    	final String query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID GROUP BY NAME";
+    	List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+    	
+    	connection();
+    	Statement statement;
+    	
+		try {
+			
+			statement = connection.createStatement();
+	  	  	ResultSet rs = statement.executeQuery(query);
+	  	  	
+	    	  LinkedHashMap<String, String> rowMap = null;
+	    	  
+			  while(rs.next()) {
+				  
+				 rowMap = new LinkedHashMap<String, String>();
+				  
+				 rowMap.put("NAME", rs.getString("NAME"));
+				 rowMap.put("NUMBER_SOLD", rs.getString("NUMBER_SOLD"));
+				  
+				 result.add(rowMap);
+			  }
+			  
+	    	  closeResources(statement, connection);
+	  	  	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+		return result;
+    }
 
+    
     /*
      *    all:      Do you want all of the items?
      *    idNumber: Pass "null" if "all=true".
@@ -87,6 +124,7 @@ public class MySQLDatabase {
     	  
     	  Statement statement = connection.createStatement();
     	  ResultSet rs = statement.executeQuery(query);
+    	  
     	  
     	  //New
     	  LinkedHashMap<String, ArrayList<String>> temp2 = null;
@@ -308,47 +346,5 @@ public class MySQLDatabase {
              e.printStackTrace();
         }
     }
-    
-public void insertImage(String pictureName, File pictureFile, String itemID) throws SQLException, FileNotFoundException {
-    	
-    	connection();
-    	String query = "INSERT INTO IMAGE (IMAGE,FILENAME) VALUES (?,?)";
-    	PreparedStatement statement = connection.prepareStatement(query);
-        
-    	InputStream file=new FileInputStream(pictureFile);
-    	statement.setBinaryStream(1,file);
-    	statement.setString(2, pictureName);
-    	statement.executeUpdate();
-    	
-
-    	closeResources(statement, connection); 
-    	
-    	
-    	connection();
-    	
-    	Statement stmt = connection.createStatement();
-    	String sql = "SELECT IMAGE_ID, FILENAME FROM IMAGE WHERE FILENAME='"+pictureName+"'";
-        ResultSet rs = stmt.executeQuery(sql);
-
-        int id=0;
-        while(rs.next()){
-    	id  = rs.getInt("IMAGE_ID");
-        }
-    	closeResources(stmt, connection);
-    	
-    	
-    	connection();
-    	String query2 = "INSERT INTO ITEM_IMAGE (ITEM_ID,IMAGE_ID) VALUES (?,?)";
-    	PreparedStatement statement2 = connection.prepareStatement(query2);
-        
-    	
-    	statement2.setString(1,itemID);
-    	statement2.setInt(2, id);
-    	statement2.executeUpdate();
-    	
-
-    	closeResources(statement2, connection); 
-    }
-    
     
 }

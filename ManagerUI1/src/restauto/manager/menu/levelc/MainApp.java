@@ -17,6 +17,7 @@ import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.menu.levelc.model.Menu_Item;
 import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
+import restauto.manager.menu.levelc.view.PieChartReportController;
 //import restauto.manager.menu.levelc.view.LevelbOverviewController;
 //import restauto.manager.menu.levelc.view.LevelcEditDialogController;
 import restauto.manager.menu.levelc.view.RootLayoutController;
@@ -441,6 +442,25 @@ public class MainApp extends Application {
            e.printStackTrace();
        }
    }
+    
+    public void showReportsPage() {
+        try {
+
+            // Load Load Final Level overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/Reports.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+
+            rootLayout.setCenter(pane);
+
+            // Give the controller access to the main app.
+            PieChartReportController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Opens a dialog to edit details for the specified Menu Item. If the user

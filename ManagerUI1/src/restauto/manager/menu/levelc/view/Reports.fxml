@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.PieChartReportController">
+   <children>
+      <SplitPane dividerPositions="0.28557114228456915" prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+               <children>
+                  <SplitPane dividerPositions="0.8913043478260869" layoutY="14.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="366.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                           <children>
+                              <VBox layoutX="112.0" layoutY="47.0" prefHeight="294.0" prefWidth="364.0" spacing="5.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="chartButtonA" mnemonicParsing="false" prefWidth="250.0" text="Button" />
+                                    <Button fx:id="chartButtonB" mnemonicParsing="false" prefWidth="250.0" text="Button" />
+                                    <Button fx:id="chartButtonC" mnemonicParsing="false" prefWidth="250.0" text="Button" />
+                                    <Button fx:id="chartButtonD" mnemonicParsing="false" prefWidth="250.0" text="Button" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                           <children>
+                              <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackward" prefWidth="100.0" text="Back">
+                                 <padding>
+                                    <Insets bottom="15.0" left="15.0" />
+                                 </padding></Button>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+               <children>
+                  <TabPane prefHeight="599.0" prefWidth="709.0" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/src/restauto/manager/menu/levelc/view/DarkTheme.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="Items Sold">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/src/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                 <children>
+                                    <Label prefHeight="77.0" prefWidth="216.0" styleClass="label-header" text="Items Sold">
+                                       <padding>
+                                          <Insets left="20.0" top="15.0" />
+                                       </padding></Label>
+                                    <PieChart fx:id="pieChartA" prefHeight="599.0" prefWidth="709.0" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/src/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Monthly Sales">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/src/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                 <children>
+                                    <BarChart fx:id="barChart" prefHeight="560.0" prefWidth="709.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis minorTickLength="2.0" side="LEFT" tickUnit="2.0" upperBound="20.0" />
+                                      </yAxis>
+                                       <padding>
+                                          <Insets bottom="50.0" left="20.0" right="20.0" top="100.0" />
+                                       </padding>
+                                    </BarChart>
+                                    <Label prefHeight="62.0" prefWidth="273.0" styleClass="label-header" text="Monthly Sales">
+                                       <padding>
+                                          <Insets left="20.0" top="15.0" />
+                                       </padding></Label>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

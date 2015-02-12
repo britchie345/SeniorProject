@@ -46,7 +46,8 @@ public class HomePageController {
 	 */
 	@FXML
 	private void handleReports() {
-
+		
+		mainApp.showReportsPage();
 	}
 
 }
