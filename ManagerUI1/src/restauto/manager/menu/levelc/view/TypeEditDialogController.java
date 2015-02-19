@@ -1,41 +1,39 @@
 package restauto.manager.menu.levelc.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+
+import javax.activation.MimetypesFileTypeMap;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 //import org.controlsfx.dialog.Dialogs;
 
+import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.menu.levelc.model.Menu_Item;
+import restauto.manager.menu.levelc.model.Type;
 
-public class MenuItemEditDialogController {
+public class TypeEditDialogController {
 
-    @FXML
-    private TextField idField;
     @FXML
     private TextField nameField;
     @FXML
-    private TextField caloriesField;
-    @FXML
-    private TextField onMenuField;
-    @FXML
-    private TextField spicyField;
-    @FXML
-    private TextField recomendedField;
-    @FXML
-    private TextField priceField;
-    @FXML
-    private TextField menuDescField;
-    @FXML
     private TextField descriptionField;
     @FXML
-    private TextField cookTimeField;
+    private TextField pictureName;
 
 
     private Stage dialogStage;
-    private Menu_Item menuItem;
+    private Type menuType;
     private boolean okClicked = false;
+    File pictureFile;
+    String pictureNameString;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -56,24 +54,16 @@ public class MenuItemEditDialogController {
     }
 
     /**
-     * Sets the Menu Item to be edited in the dialog.
+     * Sets the Type to be edited in the dialog.
      * 
      * @param Menu Item
      */
-    public void setMenuItem(Menu_Item menuItem) {
+    public void setType(Type menuType) {
     	
-        this.menuItem = menuItem;
+        this.menuType = menuType;
 
-        idField.setText         (menuItem.getItemID());
-        nameField.setText       (menuItem.getName());
-        caloriesField.setText   (menuItem.getCalories());
-        onMenuField.setText     (menuItem.getOnMenu());
-        spicyField.setText      (menuItem.getSpicy());
-        recomendedField.setText (menuItem.getRecomended());
-        priceField.setText      (menuItem.getPrice());
-        menuDescField.setText   (menuItem.getMenuDesc());
-        descriptionField.setText(menuItem.getDescription());
-        cookTimeField.setText   (menuItem.getCookTime());
+        nameField.setText       (menuType.getName());
+        descriptionField.setText(menuType.getDescription());
     }
 
     /**
@@ -87,28 +77,34 @@ public class MenuItemEditDialogController {
 
     /**
      * Called when the user clicks ok.
+     * @throws SQLException 
+     * @throws FileNotFoundException 
      */
     @FXML
-    private void handleOk() {
+    private void handleOk() throws FileNotFoundException, SQLException {
     	
-        //if (isInputValid()) {
-    	menuItem.setItemID     (idField.getText());         
-        menuItem.setName       (nameField.getText());       
-        menuItem.setCalories   (caloriesField.getText());   
-        menuItem.setOnMenu     (onMenuField.getText());     
-        menuItem.setSpicy      (spicyField.getText());      
-        menuItem.setRecomended (recomendedField.getText()); 
-        menuItem.setPrice      (priceField.getText());      
-        menuItem.setMenuDesc   (menuDescField.getText());   
-        menuItem.setDescription(descriptionField.getText());
-        menuItem.setCookTime   (cookTimeField.getText());
-        
-        if(menuItem.getCookTime() == "")
-        	menuItem.setCookTime("0:00");
+        //if (isInputValid()) {     
+        menuType.setName       (nameField.getText()); 
+        menuType.setDescription(descriptionField.getText());
 
             okClicked = true;
             dialogStage.close();
         //}
+            
+       MySQLDatabase database=new MySQLDatabase();
+       database.insertImage(pictureNameString, pictureFile, menuType.getID());
+    }
+    @FXML
+    private void handleChoosePicture()
+    {
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Open Resource File");
+    	pictureFile=fileChooser.showOpenDialog(dialogStage);
+    	
+    	pictureNameString=pictureFile.getName();
+    	
+        pictureName.setText(pictureNameString);
+      
     }
 
     /**

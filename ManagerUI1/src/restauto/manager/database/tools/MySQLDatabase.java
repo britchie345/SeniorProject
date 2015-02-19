@@ -45,48 +45,7 @@ public class MySQLDatabase {
             e.printStackTrace();
         }
     }
-    
-    /**
-     * New
-     * 
-     * Queries for the chart data
-     */
-    public List<Map<String, String>> getItemsBought() {
-    	
-    	final String query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID GROUP BY NAME";
-    	List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-    	
-    	connection();
-    	Statement statement;
-    	
-		try {
-			
-			statement = connection.createStatement();
-	  	  	ResultSet rs = statement.executeQuery(query);
-	  	  	
-	    	  LinkedHashMap<String, String> rowMap = null;
-	    	  
-			  while(rs.next()) {
-				  
-				 rowMap = new LinkedHashMap<String, String>();
-				  
-				 rowMap.put("NAME", rs.getString("NAME"));
-				 rowMap.put("NUMBER_SOLD", rs.getString("NUMBER_SOLD"));
-				  
-				 result.add(rowMap);
-			  }
-			  
-	    	  closeResources(statement, connection);
-	  	  	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	
-    	
-		return result;
-    }
 
-    
     /*
      *    all:      Do you want all of the items?
      *    idNumber: Pass "null" if "all=true".
@@ -124,7 +83,6 @@ public class MySQLDatabase {
     	  
     	  Statement statement = connection.createStatement();
     	  ResultSet rs = statement.executeQuery(query);
-    	  
     	  
     	  //New
     	  LinkedHashMap<String, ArrayList<String>> temp2 = null;

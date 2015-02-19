@@ -44,8 +44,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
                <children>
-                  <PieChart fx:id="pieChartA" prefHeight="599.0" prefWidth="709.0" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/src/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Label layoutX="14.0" layoutY="14.0" prefHeight="58.0" prefWidth="192.0" styleClass="label-header" text="Items Sold" />
+                  <PieChart fx:id="pieChartA" prefHeight="599.0" prefWidth="709.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
         </items>

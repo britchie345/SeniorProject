@@ -190,7 +190,95 @@ public class MySQLDatabase {
 
       return results;
     }
+    
+    /**
+     * OVERLOADED FUNCTION
+     * @param idNumber
+     * @param itemType
+     * @param idValue
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<LinkedHashMap<String, ArrayList<String>>> getItems(List<Integer> idNumber, String itemType, String idValue) throws SQLException {
+        
+      	LinkedHashMap<String, String> item = table.getTableAttributeValuePair(itemType);
+      
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> results
+        		= new ArrayList<LinkedHashMap<String, ArrayList<String>>>();
 
+        connection();
+  	  	Set<String> keys = item.keySet();
+  	  	boolean firstValue=true;
+        String query = "SELECT ";
+      	  
+      	  for(String index: keys) {
+      			
+      		  if(firstValue) {
+    				
+      			  query += index;
+      			  firstValue=false;
+      		  } else 
+      			  query += ", " + index;
+      	  }
+      	  
+      	  query += " FROM " + itemType + " WHERE " + idValue + "=?";
+
+  		  PreparedStatement statement = connection.prepareStatement(query);
+
+      	  for(int index: idNumber) {
+      		  
+      		  statement.setInt(1, index);
+      		  ResultSet rs = statement.executeQuery();
+      		  
+      		  //New
+      		  LinkedHashMap<String, ArrayList<String>> temp2 = null;
+   
+      		  while(rs.next()) {
+      			  
+      			  //New
+      			  temp2 = new LinkedHashMap<String, ArrayList<String>>();
+      			  ArrayList<String> temp1 = null;
+      			  
+      			  for(String index2: keys) {
+      				  
+      				  //New
+      				  temp1 = new ArrayList<String>();
+      				 
+      				  String dataType = item.get(index2);
+      				  
+      				  if( dataType.equals("int") || dataType.equals("Integer") )
+      					  //queryResults.add(Integer.toString(rs.getInt(index2)));
+      					  temp1.add(Integer.toString(rs.getInt(index2)));
+      				  
+      				  else if( dataType.equals("Double") )
+      					  //queryResults.add(Double.toString(rs.getDouble(index2)));
+      					  temp1.add(Double.toString(rs.getDouble(index2)));
+      					  
+      				  else if( dataType.equals("String") )
+      					  //queryResults.add(rs.getString(index2));
+      					  try {
+      						  temp1.add(rs.getString(index2));
+      					  } catch(Exception e) {
+      						  temp1.add("");
+      					  }
+      				  else
+      					  temp1.add("Read Error");
+      				  
+      				  temp1.add(dataType);
+      				  temp2.put(index2, temp1);
+      			  }
+      			  
+      			  results.add(temp2);
+      		  }
+      	  }
+      	  
+  		  closeResources(statement, connection);
+
+        return results;
+      }
+    
+    
+    
     public void insertItem(Map<String, ArrayList<String>> item, String itemType) throws NumberFormatException, SQLException {   	
     	
     	Set<String> keys = item.keySet();

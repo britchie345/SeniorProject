@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 import restauto.cook.display.model.Orders;
 import restauto.cook.display.model.Sales;
@@ -437,7 +438,30 @@ public class Main extends Application {
     	stationMenuItems.remove(item);
     	
     	try {
+    		
+    		ArrayList<Integer> idNumber = new ArrayList<Integer>();
+    		idNumber.add(Integer.parseInt(item.getOrderID()));
+    		ArrayList<LinkedHashMap<String, ArrayList<String>>> test = database.getItems(idNumber, "ORDERS", "ORDER_ID");
+    		
+    		for(LinkedHashMap<String, ArrayList<String>> indexA: test) {
+    			
+//    			Set<String> keys = indexA.keySet();
+//    			for(String indexB: keys) {
+//    				
+//    				System.out.println("\nKey:  " + indexB + "\n\n");
+//    				for(String indexC: indexA.get(indexB)) {
+//    					
+//    					System.out.println("\nData:  " + indexC + "\n");
+//    				}
+//    			}
+    			
+    			database.insertItem(indexA, "ORDERS_ARCHIVE");
+    		}
+    		
+    		
 			database.deleteItem("ORDERS", Integer.parseInt(item.getOrderID()), "ORDER_ID");
+			
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

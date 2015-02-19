@@ -37,7 +37,6 @@ public class HomePageController {
 	 */
 	@FXML
 	private void handleDatabase() {
-	    
 		mainApp.showLevelaOverview();
 	}
 	
@@ -46,7 +45,7 @@ public class HomePageController {
 	 */
 	@FXML
 	private void handleReports() {
-		
+	
 		mainApp.showReportsPage();
 	}
 

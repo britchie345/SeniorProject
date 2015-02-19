@@ -448,7 +448,7 @@ public class MainApp extends Application {
 
             // Load Load Final Level overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/Reports.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/PieChartReport.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
 
             rootLayout.setCenter(pane);
