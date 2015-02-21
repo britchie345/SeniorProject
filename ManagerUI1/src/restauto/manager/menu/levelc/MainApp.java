@@ -24,6 +24,7 @@ import restauto.manager.menu.levelc.view.RootLayoutController;
 import restauto.manager.menu.levelc.view.LevelcOverviewController;
 import restauto.manager.menu.levelc.view.ManagerLoginController;
 import restauto.manager.menu.levelc.view.MenuItemEditDialogController;
+import restauto.manager.menu.levelc.view.TypeEditDialogController;
 import restauto.manager.menu.levelc.model.Type;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -448,7 +449,7 @@ public class MainApp extends Application {
 
             // Load Load Final Level overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PieChartReport.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/Reports.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
 
             rootLayout.setCenter(pane);
@@ -489,6 +490,36 @@ public class MainApp extends Application {
             MenuItemEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setMenuItem(menuItem);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean showTypeEditDialog(Type menuType) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/TypeEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Type Item");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Menu Item into the controller.
+            TypeEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setType(menuType);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

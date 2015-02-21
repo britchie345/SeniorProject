@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -7,7 +8,7 @@
 
 <AnchorPane prefHeight="497.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.MenuItemEditDialogController">
    <children>
-      <AnchorPane prefHeight="497.0" prefWidth="562.0" styleClass="background" stylesheets="@DarkTheme.css">
+      <AnchorPane prefHeight="563.0" prefWidth="562.0" styleClass="background" stylesheets="@DarkTheme.css">
          <children>
             <GridPane prefHeight="412.0" prefWidth="532.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                <children>
@@ -53,6 +54,17 @@
                <children>
                   <Button defaultButton="true" layoutX="133.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleOk" text="OK" />
                   <Button layoutX="206.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+               </children>
+            </HBox>
+            <HBox layoutX="14.0" layoutY="438.0" prefHeight="37.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="38.0" prefWidth="117.0" text="Picture Name" />
+                  <TextField fx:id="pictureName" />
+                  <Button mnemonicParsing="false" onAction="#handleChoosePicture" prefHeight="33.0" prefWidth="164.0" text="Select Picture">
+                     <HBox.margin>
+                        <Insets left="15.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>

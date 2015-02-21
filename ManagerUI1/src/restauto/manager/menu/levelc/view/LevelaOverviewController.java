@@ -1,6 +1,12 @@
 package restauto.manager.menu.levelc.view;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.menu.levelc.MainApp;
+import restauto.manager.menu.levelc.model.Menu_Item;
 import restauto.manager.menu.levelc.model.Type;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -160,7 +166,24 @@ public class LevelaOverviewController {
 	 */
 	@FXML
 	private void handleNew() {
-	    
+		
+	    Type tempMenuType = new Type();
+	    boolean okClicked = mainApp.showTypeEditDialog(tempMenuType);
+	    if (okClicked) {
+	        mainApp.getTypeData().add(tempMenuType);
+	        
+	        //Add new Menu Type to database Menu_Item table
+			LinkedHashMap<String, ArrayList<String>> item = new LinkedHashMap<String, ArrayList<String>>();
+			item.put("NAME",        new ArrayList<String>(){{ add(tempMenuType.getName());        add("String"); }});
+			item.put("DESCRIPTION", new ArrayList<String>(){{ add(tempMenuType.getDescription()); add("String"); }});
+
+			MySQLDatabase database = new MySQLDatabase();
+			try {
+				database.insertItem(item, "TYPE");
+			} catch (NumberFormatException | SQLException e) {
+				e.printStackTrace();
+			}
+	    }	
 	}
 	
     static void print(String string) {
