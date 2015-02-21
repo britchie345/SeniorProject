@@ -125,8 +125,8 @@ public class MenuItemEditDialogController {
             dialogStage.close();
         //}
             
-       MySQLDatabase database=new MySQLDatabase();
-       database.insertImage(pictureNameString, pictureFile, menuItem.getItemID());
+       //MySQLDatabase database=new MySQLDatabase();
+       //database.insertImage(pictureNameString, pictureFile, menuItem.getItemID());
     }
     @FXML
     private void handleChoosePicture()

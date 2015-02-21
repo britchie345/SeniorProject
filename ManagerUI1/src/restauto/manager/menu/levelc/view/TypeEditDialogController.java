@@ -91,8 +91,8 @@ public class TypeEditDialogController {
             dialogStage.close();
         //}
             
-       MySQLDatabase database=new MySQLDatabase();
-       database.insertImage(pictureNameString, pictureFile, menuType.getID());
+       //MySQLDatabase database=new MySQLDatabase();
+       //database.insertImage(pictureNameString, pictureFile, menuType.getID());
     }
     @FXML
     private void handleChoosePicture()
