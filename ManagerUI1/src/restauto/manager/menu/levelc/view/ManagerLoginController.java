@@ -1,5 +1,7 @@
 package restauto.manager.menu.levelc.view;
 
+import java.sql.SQLException;
+
 import restauto.manager.menu.levelc.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,7 +50,12 @@ public class ManagerLoginController {
 	@FXML
 	private void handleLogin() {
 	    
-		mainApp.showHomePageOverview();
+		try {
+			mainApp.showHomePageOverview(username.getText(),password.getText());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
     
 	

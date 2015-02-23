@@ -125,8 +125,10 @@ public class MenuItemEditDialogController {
             dialogStage.close();
         //}
             
-       //MySQLDatabase database=new MySQLDatabase();
-       //database.insertImage(pictureNameString, pictureFile, menuItem.getItemID());
+            MySQLDatabase database=new MySQLDatabase();
+            database.deleteImage(menuItem.getItemID(),pictureNameString);
+            if(pictureFile!=null)
+            database.insertImage(pictureNameString, pictureFile, menuItem.getItemID());
     }
     @FXML
     private void handleChoosePicture()
@@ -134,11 +136,12 @@ public class MenuItemEditDialogController {
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Open Resource File");
     	pictureFile=fileChooser.showOpenDialog(dialogStage);
-    	
+    	if(pictureFile!=null)
+    	{
     	pictureNameString=pictureFile.getName();
     	
         pictureName.setText(pictureNameString);
-      
+    	}
     }
 
     /**

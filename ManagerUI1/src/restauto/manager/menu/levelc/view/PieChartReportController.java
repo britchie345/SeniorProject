@@ -20,11 +20,17 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.menu.levelc.MainApp;
+import restauto.manager.menu.levelc.model.Type;
+import restauto.manager.menu.levelc.model.TypeReports;
 
 
 public class PieChartReportController {
@@ -45,12 +51,21 @@ public class PieChartReportController {
     private BarChart barChartA;
     
     
+    
     @FXML
     private BarChart<String, Integer> barChart;
     @FXML
     private CategoryAxis xAxis;
     private ObservableList<String> monthNames = FXCollections.observableArrayList();
     
+	@FXML
+    private TableView<Type> reportTypeTable;
+    @FXML
+    private TableColumn<Type, String> nameColumn;
+//    @FXML
+//    private TableColumn<Type, Boolean> includeData;
+    @FXML
+    private Button updateButton;
     
     
     // Reference to the main application.
@@ -70,6 +85,25 @@ public class PieChartReportController {
      */
     @FXML
     private void initialize() {
+    	
+//    	//reportTypeTable.getItems().get(0).setChecked(true);
+//        final TableColumn<Type, Boolean> checkedCol = new TableColumn<Type, Boolean>("Check");
+//        reportTypeTable.getColumns().addAll(checkedCol);
+//        checkedCol.setCellValueFactory(new PropertyValueFactory<Type, Boolean>("checked"));
+//        
+    	 //reportTypeTable.getColumns().addAll(includeData);
+//    	 includeData.setCellValueFactory(new PropertyValueFactory<Type, Boolean>("checked"));
+//    	 includeData.setCellFactory(CheckBoxTableCell.forTableColumn(includeData));
+//    	 includeData.setEditable(true);
+//    	 reportTypeTable.setEditable(true);
+
+    	
+    	
+    	
+    	
+    	
+    	nameColumn.setCellValueFactory(
+                cellData -> cellData.getValue().getNameProperty());
     	
         final Label caption = new Label("");
         caption.setTextFill(Color.DARKORANGE);
@@ -212,6 +246,9 @@ public class PieChartReportController {
     	
     	//Save reference to main app
         this.mainApp = mainApp;
+        
+        // Add observable list data to the table
+        reportTypeTable.setItems(mainApp.getTypeData());
     }
 	
 	/**
@@ -221,6 +258,24 @@ public class PieChartReportController {
 	private void handleBackward() {
 				
 		mainApp.showHomePageOverview();
+	}
+	
+	/**
+	 * Called when the user clicks the update button.
+	 * 
+	 * Displays chart data based on the selected types
+	 */
+	@FXML
+	private void handleUpdate() {
+				
+        for (Type type : reportTypeTable.getItems())
+        	if(type.getChecked())
+        		System.out.println("Checked");
+        	else
+        		System.out.println("UnChecked");
+            //System.out.printf("%s %s (%Checked)%n", type.getName(),
+            //		type.getID(), type.isChecked() ? "" : "not ");
+          //System.out.println();
 	}
  
 }

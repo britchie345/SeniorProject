@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -28,6 +29,11 @@
                   <Button fx:id="login" mnemonicParsing="false" onAction="#handleLogin" prefHeight="33.0" prefWidth="313.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+            <Label id="Invalid" layoutX="348.0" layoutY="175.0" prefHeight="21.0" prefWidth="208.0" styleClass="label-bright" text="Invalid Login!" textFill="#e10c0c" visible="false">
+               <padding>
+                  <Insets left="55.0" />
+               </padding>
+            </Label>
          </children>
       </Pane>
    </children>

@@ -6,6 +6,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import fxmltableview.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.PieChartReportController">
    <children>
@@ -17,25 +24,39 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
                            <children>
-                              <VBox layoutX="112.0" layoutY="47.0" prefHeight="294.0" prefWidth="364.0" spacing="5.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Button fx:id="chartButtonA" mnemonicParsing="false" prefWidth="250.0" text="Button" />
-                                    <Button fx:id="chartButtonB" mnemonicParsing="false" prefWidth="250.0" text="Button" />
-                                    <Button fx:id="chartButtonC" mnemonicParsing="false" prefWidth="250.0" text="Button" />
-                                    <Button fx:id="chartButtonD" mnemonicParsing="false" prefWidth="250.0" text="Button" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                 </padding>
-                              </VBox>
+                              <TableView fx:id="reportTypeTable" editable="true" prefHeight="529.0" prefWidth="281.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn fx:id="nameColumn" minWidth="-Infinity" text="Type" />
+                                    <TableColumn fx:id="checkBoxTableColumn" maxWidth="111.0" minWidth="-Infinity" prefWidth="102.0" resizable="false" text="Include">   
+										<cellValueFactory><PropertyValueFactory property="checked" /></cellValueFactory>
+										<cellFactory><restauto.manager.menu.levelc.view.CheckBoxCellFactory /></cellFactory>
+									</TableColumn>
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
                            <children>
-                              <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackward" prefWidth="100.0" text="Back">
-                                 <padding>
-                                    <Insets bottom="15.0" left="15.0" />
-                                 </padding></Button>
+                              <HBox prefHeight="61.0" prefWidth="281.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackward" prefWidth="100.0" text="Back">
+                                       <padding>
+                                          <Insets bottom="15.0" left="15.0" top="15.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets left="10.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="updateButton" mnemonicParsing="false" onAction="#handleUpdate" text="Update">
+                                       <HBox.margin>
+                                          <Insets left="40.0" top="15.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                         </AnchorPane>
                     </items>

@@ -6,17 +6,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-public class Type {
+public class TypeReports {
 
     private final StringProperty id;
     private final StringProperty name;
     private final StringProperty description;
-    private SimpleBooleanProperty checked = new SimpleBooleanProperty(false);
+    private BooleanProperty checked = new SimpleBooleanProperty(false);
 
     /**
      * Simple constructor.
      */
-    public Type() {
+    public TypeReports() {
         this("", "", "");
     }
 
@@ -27,7 +27,7 @@ public class Type {
      * @param name
      * @param description
      */
-    public Type(String id, String name, String description) {
+    public TypeReports(String id, String name, String description) {
     	
         this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
@@ -47,10 +47,9 @@ public class Type {
 
     public void setDescription(String description) {
         this.description.set(description);
-    }  
-    
-    public void setChecked(final java.lang.Boolean checked) {
-        this.checkedProperty().set(checked);
+    }
+    public void setChecked(boolean checked) {
+    	this.checked.set(checked);
     }
     
     /**
@@ -66,10 +65,9 @@ public class Type {
 
     public String getID() {
         return id.get();
-    }  
-    
-    public java.lang.Boolean getChecked() {
-        return this.checkedProperty().get();
+    }
+    public boolean getChecked() {
+    	return checked.get();
     }
     
     /**
@@ -87,8 +85,8 @@ public class Type {
         return description;
     }
     
-    public SimpleBooleanProperty checkedProperty() {
-        return this.checked;
+    public BooleanProperty getCheckedProperty() {
+    	return checked;
     }
 
 }

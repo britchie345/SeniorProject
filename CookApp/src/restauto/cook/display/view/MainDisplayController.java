@@ -1,8 +1,11 @@
 package restauto.cook.display.view;
 
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import restauto.cook.display.Main;
@@ -14,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.FlowPane;
 
 //@SuppressWarnings("deprecation")
@@ -122,69 +127,61 @@ public class MainDisplayController {
              timeColumn.setVisible(false);
     }
     
-    public void setImages(String display)
+    public void setImages(String display) throws IOException
     {
     	
     	
         if(display=="Bar")
-    	{    
-    		URL location[] =new URL[5]; 
-    		location[0]=this.getClass().getResource("/images/strawberryBar.png");
-    		location[1]=this.getClass().getResource("/images/cosmo.png");
-    		location[2]=this.getClass().getResource("/images/white.png");
-    		location[3]=this.getClass().getResource("/images/longIsland.png");
-    		location[4]=this.getClass().getResource("/images/rum+coke.jpg");
+    	{   
+        	LinkedHashMap<String, BufferedImage> pictureList=mainApp.cookAppPictures("12");
     		
-    		String fullPath[] =new String[5];
-    		for(int i=0;i<5;i++)
-        		fullPath[i]=location[i].getPath();   		
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
+
+		}
+    		}	
     		
-    		
-    		File file[] = new File[5];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-    		file[4]=new File(fullPath[4]);
-    		
-    		
-    		String imgName[] = new String[5];
-    		imgName[0]="Strawberry Margarita";
-    		imgName[1]="Cosmopolitan";
-    		imgName[2]="White Sangria";
-    		imgName[3]="Long Island Iced Tea";
-    		imgName[4]="Rum & Coke";
-    		
-    		int count[]=new int[5];
-    		for(int i=0;i<5;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
     		
-    		
-    	
-    		Image image[]=new Image[5];
-    		for(int i=0;i<5;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
    	      
-    		ImageView[] imgview =new ImageView[5];
-    		for(int i=0;i<5;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[5];
-    		for(int i=0;i<5;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<5;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
@@ -196,81 +193,61 @@ public class MainDisplayController {
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
+    		
     	}
         else if(display=="Beverage")
     	{   
-    		URL location[] =new URL[11]; 
-    		location[0]=this.getClass().getResource("/images/cokecola.png");
-    		location[1]=this.getClass().getResource("/images/DietCoke.png");
-    		location[2]=this.getClass().getResource("/images/sprite.jpg");
-    		location[3]=this.getClass().getResource("/images/drpepper.jpg");
-    		location[4]=this.getClass().getResource("/images/rootbeer.jpg");
-    		location[5]=this.getClass().getResource("/images/orangesoda.jpg");
-    		location[6]=this.getClass().getResource("/images/cherrycoke.jpg");
-    		location[7]=this.getClass().getResource("/images/lemonade.jpg");
-    		location[8]=this.getClass().getResource("/images/strawberry.jpg");
-    		location[9]=this.getClass().getResource("/images/sweetTea.jpg");
-    		location[10]=this.getClass().getResource("/images/unsweet.jpg");
+        	
+        	LinkedHashMap<String, BufferedImage> pictureList=mainApp.cookAppPictures("1");
     		
-    		String fullPath[] =new String[11];
-    		for(int i=0;i<11;i++)
-        		fullPath[i]=location[i].getPath();
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
 
-    		File file[] = new File[11];      		
-    		file[0]=new File(fullPath[0]);     		
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-    		file[4]=new File(fullPath[4]);
-    		file[5]=new File(fullPath[5]);
-    		file[6]=new File(fullPath[6]);
-    		file[7]=new File(fullPath[7]);
-    		file[8]=new File(fullPath[8]);
-    		file[9]=new File(fullPath[9]);
-    		file[10]=new File(fullPath[10]);
+		}
+    		}	
     		
-    		String imgName[] = new String[11];
-    		imgName[0]="Coca-Cola";
-    		imgName[1]="Diet Coca-Coke";
-    		imgName[2]="Sprite";
-    		imgName[3]="Dr. Pepper";
-    		imgName[4]="Barq's Root Beer";
-    		imgName[5]="Fanta Orange";
-    		imgName[6]="Cherry Coca-Cola";
-    		imgName[7]="Lemonade";
-    		imgName[8]="Flavored Lemonade";
-    		imgName[9]="Flavored Unsweet Iced Tea";
-    		imgName[10]="Unsweetened Iced Tea";
-    		
-    		int count[]=new int[11];
-    		for(int i=0;i<11;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
     		
-    	
-    		Image image[]=new Image[11];
-    		for(int i=0;i<11;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
    	      
-    		ImageView[] imgview =new ImageView[11];
-    		for(int i=0;i<11;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[11];
-    		for(int i=0;i<11;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<11;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
@@ -285,56 +262,60 @@ public class MainDisplayController {
     	}
         else if(display=="Grill")
     	{
-    		URL location[] =new URL[4]; 
-    		location[0]=this.getClass().getResource("/images/chedderBurger.jpg");
-    		location[1]=this.getClass().getResource("/images/veggieBurger.jpg");
-    		location[2]=this.getClass().getResource("/images/filet.jpg");
-    		location[3]=this.getClass().getResource("/images/parmSteak.jpg");
-
-    		String fullPath[] =new String[4];
-    		for(int i=0;i<4;i++)
-        		fullPath[i]=location[i].getPath();
-
-    		File file[] = new File[4];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-
-    		String imgName[] = new String[4];
-    		imgName[0]="Cheddar Burger";
-    		imgName[1]="Black Bean Veggie";
-    		imgName[2]="Center Cut Filet Mignon";
-    		imgName[3]="Parmesan Crusted Filet";
+        	LinkedHashMap<String, BufferedImage> pictureList1=mainApp.cookAppPictures("10");
+        	LinkedHashMap<String, BufferedImage> pictureList2=mainApp.cookAppPictures("6");
+        	LinkedHashMap<String, BufferedImage> pictureList=new LinkedHashMap<String, BufferedImage>();
+        	pictureList.putAll(pictureList1);
+        	pictureList.putAll(pictureList2);
     		
-    		int count[]=new int[4];
-    		for(int i=0;i<4;i++)
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
+
+		}
+    		}	
+    		
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-
-    		Image image[]=new Image[4];
-    		for(int i=0;i<4;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
+    		
    	      
-    		ImageView[] imgview =new ImageView[4];
-    		for(int i=0;i<4;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[4];
-    		for(int i=0;i<4;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<4;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
@@ -347,63 +328,64 @@ public class MainDisplayController {
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
+    		
+    	
         else if(display=="Oven")
     	{
-    		URL location[] =new URL[6]; 
-    		location[0]=this.getClass().getResource("/images/chickenAlfedo.png");
-    		location[1]=this.getClass().getResource("/images/garlicChicken.png");
-    		location[2]=this.getClass().getResource("/images/macNcheese.jpg");
-    		location[3]=this.getClass().getResource("/images/rattlesnake.png");
-    		location[4]=this.getClass().getResource("/images/shrimp.png");
-    		location[5]=this.getClass().getResource("/images/stuffedChicken.jpg");
+        	LinkedHashMap<String, BufferedImage> pictureList1=mainApp.cookAppPictures("7");
+        	LinkedHashMap<String, BufferedImage> pictureList2=mainApp.cookAppPictures("9");
+        	LinkedHashMap<String, BufferedImage> pictureList=new LinkedHashMap<String, BufferedImage>();
+        	pictureList.putAll(pictureList1);
+        	pictureList.putAll(pictureList2);
     		
-    		String fullPath[] =new String[6];
-    		for(int i=0;i<6;i++)
-        		fullPath[i]=location[i].getPath();
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
+
+		}
+    		}	
     		
-    		File file[] = new File[6];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-    		file[4]=new File(fullPath[4]);
-    		file[5]=new File(fullPath[5]);
-    		
-    		String imgName[] = new String[6];
-    		imgName[0]="Chicken & Broccoli Alfredo";
-    		imgName[1]="Garlic Rosemary Chicken";
-    		imgName[2]="Deep Dish Mac N Cheese";
-    		imgName[3]="Rattlesnake Pasta";
-    		imgName[4]="Shrimp Scampi";
-    		imgName[5]="Stuffed Chicken Marsala";
-    		
-    		int count[]=new int[6];
-    		for(int i=0;i<6;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    	
-    		Image image[]=new Image[6];
-    		for(int i=0;i<6;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-
-    		ImageView[] imgview =new ImageView[6];
-    		for(int i=0;i<6;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		
+   	      
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[6];
-    		for(int i=0;i<6;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<6;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
@@ -415,52 +397,61 @@ public class MainDisplayController {
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
-    	}    	
+    	}
+    		
+    	   	
         else if(display=="Fryer")
     	{
-    		URL location[] =new URL[2]; 
-    		location[0]=this.getClass().getResource("/images/salmon.png");
-    		location[1]=this.getClass().getResource("/images/talipa.jpg");    		    		
+        	LinkedHashMap<String, BufferedImage> pictureList=mainApp.cookAppPictures("8");
     		
-    		String fullPath[] =new String[2];
-    		fullPath[0]=location[0].getPath();
-    		fullPath[1]=location[1].getPath();    		
-    		
-    		File file[] = new File[2];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
 
-    		String imgName[] = new String[2];
-    		imgName[0]="Herb-Grilled Salmon";
-    		imgName[1]="Baked Tilapia with Shrimp";
+		}
+    		}	
     		
-    		int count[]=new int[2];
-    		for(int i=0;i<2;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-    
-    		Image image[]=new Image[2];
-    		for(int i=0;i<2;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-
-    		ImageView[] imgview =new ImageView[2];
-    		for(int i=0;i<2;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		
+   	      
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[2];
-    		for(int i=0;i<2;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<2;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
@@ -471,228 +462,198 @@ public class MainDisplayController {
     			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
-    		}	
+    		}
     	}
+    		
+    	
         else if(display=="FlatTop")
     	{
-    		URL location[] =new URL[11]; 
-    		location[0]=this.getClass().getResource("/images/brushette.png.");
-    		location[1]=this.getClass().getResource("/images/calamari.png");
-    		location[2]=this.getClass().getResource("/images/eggplant.jpg");
-    		location[3]=this.getClass().getResource("/images/firecraker.png");
-    		location[4]=this.getClass().getResource("/images/lasgna.png");
-    		location[5]=this.getClass().getResource("/images/mozz.png");
-    		location[6]=this.getClass().getResource("/images/mushrooms.png");
-    		location[7]=this.getClass().getResource("/images/sample.png");
-    		location[8]=this.getClass().getResource("/images/shrimpFritta.png");
-    		location[9]=this.getClass().getResource("/images/turkeyBacon.png");
-    		location[10]=this.getClass().getResource("/images/wings.png");
+        	LinkedHashMap<String, BufferedImage> pictureList1=mainApp.cookAppPictures("2");
+        	LinkedHashMap<String, BufferedImage> pictureList2=mainApp.cookAppPictures("5");
+        	LinkedHashMap<String, BufferedImage> pictureList=new LinkedHashMap<String, BufferedImage>();
+        	pictureList.putAll(pictureList1);
+        	pictureList.putAll(pictureList2);
     		
-    		String fullPath[] =new String[11];
-    		for(int i=0;i<11;i++)
-        		fullPath[i]=location[i].getPath();
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
+
+		}
+    		}	
     		
-    		File file[] = new File[11];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-    		file[4]=new File(fullPath[4]);
-    		file[5]=new File(fullPath[5]);
-    		file[6]=new File(fullPath[6]);
-    		file[7]=new File(fullPath[7]);
-    		file[8]=new File(fullPath[8]);
-    		file[9]=new File(fullPath[9]);
-    		file[10]=new File(fullPath[10]);
-    		
-    		String imgName[] = new String[11];
-    		imgName[0]="Brushetta";
-    		imgName[1]="Spicy Calamari";
-    		imgName[2]="Roasted Eggplant & Zucchini";
-    		imgName[3]="Firecracker Chicken";
-    		imgName[4]="Lasagne Fritta";
-    		imgName[5]="Smoked Mozzarella Fonduta";
-    		imgName[6]="Stuffed Mushrooms";
-    		imgName[7]="Sampler Italiano";
-    		imgName[8]="Classic Shrimp Scampi Fritta";
-    		imgName[9]="Turkey Bacon Avocado";
-    		imgName[10]="Spicy Calabrian Wings";
-    		
-    		int count[]=new int[11];
-    		for(int i=0;i<11;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
-    			{
     				count[i]=itemCount.get(imgName[i]);
-    			}
     			else
-    			{
     				count[i]=0;
-    			}
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-
-    		Image image[]=new Image[11];
-    		for(int i=0;i<11;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-   	    
-    		ImageView[] imgview =new ImageView[11];
-    		for(int i=0;i<11;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		
+   	      
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[11];
-    		for(int i=0;i<11;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<11;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(200, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(10);
-    			flow.setVgap(10);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
-    	}
+    	}    		   		    	
         else if(display=="Salad")
     	{
-    		URL location[] =new URL[9]; 
-    		location[0]=this.getClass().getResource("/images/chicMil.png.");
-    		location[1]=this.getClass().getResource("/images/choclate.png");
-    		location[2]=this.getClass().getResource("/images/cobb.png");
-    		location[3]=this.getClass().getResource("/images/grilledChic.png");
-    		location[4]=this.getClass().getResource("/images/grilledcit.png");
-    		location[5]=this.getClass().getResource("/images/honey.png");
-    		location[6]=this.getClass().getResource("/images/house.png");
-    		location[7]=this.getClass().getResource("/images/powerGreen.jpg");
-    		location[8]=this.getClass().getResource("/images/walnut.png");
-    		
-    		String fullPath[] =new String[9];
-    		for(int i=0;i<9;i++)
-        		fullPath[i]=location[i].getPath();  		
+        	LinkedHashMap<String, BufferedImage> pictureList1=mainApp.cookAppPictures("3");
+        	LinkedHashMap<String, BufferedImage> pictureList2=mainApp.cookAppPictures("11");
+        	LinkedHashMap<String, BufferedImage> pictureList=new LinkedHashMap<String, BufferedImage>();
+        	pictureList.putAll(pictureList1);
+        	pictureList.putAll(pictureList2);
+        	
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
 
-    		File file[] = new File[9];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-    		file[4]=new File(fullPath[4]);
-    		file[5]=new File(fullPath[5]);
-    		file[6]=new File(fullPath[6]);
-    		file[7]=new File(fullPath[7]);
-    		file[8]=new File(fullPath[8]);
-
-    		String imgName[] = new String[9];
-    		imgName[0]="Chicken Milanese";
-    		imgName[1]="Chocolate Mousse Cake";
-    		imgName[2]="Classic Cobb";
-    		imgName[3]="Grilled Chicken Caesar Salad";
-    		imgName[4]="Grilled Citrus Chicken";
-    		imgName[5]="Honey Crisp Chicken Salad";
-    		imgName[6]="House Salad";
-    		imgName[7]="Power Greens";
-    		imgName[8]="Walnut Blueberry & Goat Cheese";
+		}
+    		}	
     		
-    		int count[]=new int[9];
-    		for(int i=0;i<9;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-
-    		Image image[]=new Image[9];
-    		for(int i=0;i<9;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-
-    		ImageView[] imgview =new ImageView[9];
-    		for(int i=0;i<9;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		
+   	      
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[9];
-    		for(int i=0;i<9;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
-    		imgLabel[8].setStyle("-fx-font-size:10;");
-    		for(int i=0;i<9;i++)
+   	   
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
     			
-    			imgLabel[i].setPrefSize(200, 40);
+    			imgLabel[i].setPrefSize(180, 40);
 		
-    			flow.setHgap(10);
-    			flow.setVgap(10);
+    			flow.setHgap(20);
+    			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
     		}
     	}
         else if(display=="Expodite")
     	{
-    		URL location[] =new URL[5]; 
-    		location[0]=this.getClass().getResource("/images/brocChed.png");
-    		location[1]=this.getClass().getResource("/images/chickenAGn.png");
-    		location[2]=this.getClass().getResource("/images/pastaeFago.png");
-    		location[3]=this.getClass().getResource("/images/Minestrone.png");
-    		location[4]=this.getClass().getResource("/images/Zuppa.png");
+        	LinkedHashMap<String, BufferedImage> pictureList=mainApp.cookAppPictures("4");
     		
-    		String fullPath[] =new String[5];
-    		for(int i=0;i<5;i++)
-    		fullPath[i]=location[i].getPath();
+    		String imgName[]=new String[pictureList.size()];
+    		BufferedImage holder[]=new BufferedImage[pictureList.size()];
+    		WritableImage images[]=new WritableImage[pictureList.size()];
+    		int g=0;
+    		for(Iterator i=pictureList.keySet().iterator();i.hasNext();)
+    		{
+    			imgName[g]=i.next().toString();
+    			holder[g]= (BufferedImage) pictureList.get(imgName[g]);
+    			g++;
+    			
+    		}
+    		for(int i=0;i<pictureList.size();i++)
+    		{
+    		if (holder[i] != null) {
+	            images[i] = new WritableImage(holder[i].getWidth(), holder[i].getHeight());
+	            PixelWriter pw = images[i].getPixelWriter();
+	            for (int x = 0; x < holder[i].getWidth(); x++) {
+	                for (int y = 0; y < holder[i].getHeight(); y++) {
+	                    pw.setArgb(x, y, holder[i].getRGB(x, y));
+	                }
+	            }
 
-    		File file[] = new File[5];
-    		file[0]=new File(fullPath[0]);
-    		file[1]=new File(fullPath[1]);
-    		file[2]=new File(fullPath[2]);
-    		file[3]=new File(fullPath[3]);
-    		file[4]=new File(fullPath[4]);
+		}
+    		}	
     		
-    		String imgName[] = new String[5];
-    		imgName[0]="Broccoli Ched";
-    		imgName[1]="Chicken & Gnocchi";
-    		imgName[2]="Pasta e Fagioli";
-    		imgName[3]="Minestrone";
-    		imgName[4]="Zuppa Toscana";
-    		
-    		int count[]=new int[5];
-    		for(int i=0;i<5;i++)
+    		int count[]=new int[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			if(itemCount.containsKey(imgName[i]))
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
-    			
     			imgName[i]=imgName[i]+": "+count[i];
     		}
-
-    		Image image[]=new Image[5];
-    		for(int i=0;i<5;i++)
-   	  	  		image[i]=new Image(file[i].toURI().toString());
-
-    		ImageView[] imgview =new ImageView[5];
-    		for(int i=0;i<5;i++)
-    			imgview[i]=new ImageView(image[i]);
+    		
+   	      
+    		ImageView[] imgview =new ImageView[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
+    			imgview[i]=new ImageView(images[i]);
    	   
-    		Label[] imgLabel = new Label[5];
-    		for(int i=0;i<5;i++)
+    		Label[] imgLabel = new Label[pictureList.size()];
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgLabel[i]= new Label(imgName[i],imgview[i]);
     			imgLabel[i].setStyle("-fx-font-size:11;");
     		}
    	   
-    		for(int i=0;i<5;i++)
+    		for(int i=0;i<pictureList.size();i++)
     		{
     			imgview[i].setFitHeight(30);
     			imgview[i].setFitWidth(30);
@@ -703,7 +664,7 @@ public class MainDisplayController {
     			flow.setVgap(20);
   		
     			flow.getChildren().add(imgLabel[i]);
-    		}	
+    		}
     	}
     }
 

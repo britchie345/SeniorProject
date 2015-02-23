@@ -1,11 +1,17 @@
 package restauto.cook.database;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
+
 import restauto.cook.database.Table;
 
 
@@ -18,10 +24,14 @@ public class MySQLDatabase {
 //	private static final String USER = "sql554700";
 //	private static final String PASS = "kI3!hS8!";
    
-	//Location of database we are accessing
-	private static final String DB_URL = "jdbc:mysql://54.165.67.15:3306/Restaurant" ;
+private static final String DB_URL = "jdbc:mysql://mysql.surestaurantapp.com:3306/restaurantapp" ;
+	
 	//Password and user name for database
-	private static final String USER = "bob";
+	
+	//private static final String USER = "bob";
+	private static final String USER = "restaurantapp";
+	
+	//private static final String PASS = "changemenow";
 	private static final String PASS = "changemenow";
    
 	private Connection connection = null;
@@ -409,6 +419,58 @@ public class MySQLDatabase {
          
         closeResources(statement, connection);
     }
+    
+public LinkedHashMap<String,BufferedImage> getCookPictures(String typeID) throws SQLException, IOException {
+    	
+    	connection();
+    	//String query = "DELETE FROM " + itemType + " WHERE ITEM_ID=?";
+    	String query = "SELECT NAME, IMAGE FROM MENU_ITEM, ITEM_TYPE,IMAGE, ITEM_IMAGE WHERE ITEM_TYPE.TYPE_ID=? "
+    			+ "AND ITEM_TYPE.ITEM_ID=ITEM_IMAGE.ITEM_ID AND ITEM_TYPE.ITEM_ID=MENU_ITEM.ITEM_ID AND "
+    			+ "ITEM_IMAGE.IMAGE_ID=IMAGE.IMAGE_ID";
+    	PreparedStatement statement = connection.prepareStatement(query);
+            
+    	statement.setString(1, typeID);
+    	ResultSet rs =statement.executeQuery();
+    	LinkedHashMap<String,BufferedImage> pictureList=new LinkedHashMap<String,BufferedImage>();
+    	
+    	while(rs.next()){
+            //Retrieve by column name
+            String name = rs.getString("NAME");
+            Blob imageBlob = rs.getBlob("IMAGE");
+            byte[] data = imageBlob.getBytes(1, (int) imageBlob.length());
+            BufferedImage bufferedImg = ImageIO.read(new ByteArrayInputStream(data));
+ 
+           
+            
+            pictureList.put(name,bufferedImg);
+            
+            
+
+            
+         }
+         rs.close();
+
+    	closeResources(statement, connection);
+    	return pictureList;
+    }
+
+public boolean loginAttempt(String userName, String passWord) throws SQLException
+{
+	connection();
+	
+	String query = "SELECT * FROM EMPLOYEE WHERE USERNAME=? AND PASSWORD=?";
+	PreparedStatement statement = connection.prepareStatement(query);
+	
+	statement.setString(1, userName);
+	statement.setString(2, passWord);
+	ResultSet rs =statement.executeQuery();
+	
+	if (!rs.next() ) {
+	    return false;
+	}
+	else
+		return true;
+}
     
     private void closeResources(Statement statement, Connection connection) {
     	

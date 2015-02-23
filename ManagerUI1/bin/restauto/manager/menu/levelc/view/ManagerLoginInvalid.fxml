@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.cook.display.view.EmployeeLoginController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.ManagerLoginController">
    <children>
       <Pane layoutX="-322.0" layoutY="-129.0" prefHeight="71.0" prefWidth="0.0" styleClass="background" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="47.0" layoutY="37.0" styleClass="label-header" text="Login" />
+            <Label layoutX="47.0" layoutY="37.0" styleClass="label-header" text="Manager Login" />
             <GridPane layoutX="218.0" layoutY="211.0" prefHeight="187.0" prefWidth="394.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="84.0" />
@@ -29,7 +29,7 @@
                   <Button fx:id="login" mnemonicParsing="false" onAction="#handleLogin" prefHeight="33.0" prefWidth="313.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            <Label id="Invalid" layoutX="348.0" layoutY="175.0" prefHeight="21.0" prefWidth="208.0" styleClass="label-bright" text="Invalid Login!" textFill="#e10c0c" visible="false">
+            <Label layoutX="356.0" layoutY="190.0" prefHeight="21.0" prefWidth="202.0" text="Invalid Login!">
                <padding>
                   <Insets left="55.0" />
                </padding>

@@ -222,6 +222,33 @@ public class MainApp extends Application {
         }
     }
     
+    public void showManagerLoginInvalidOverview() {
+        try {
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=false;
+            returnHome=true;
+            faded=true;
+            editHideLevelC=false;
+            editHideLevelA=false;
+            initRootLayout();
+        	
+            // Load Manager Login overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ManagerLoginInvalid.fxml"));
+            AnchorPane managerLogin = (AnchorPane) loader.load();
+
+            // Set manager login overview into the center of root layout.
+            rootLayout.setCenter(managerLogin);
+
+            // Give the controller access to the main app.
+            ManagerLoginController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     /**
      * Shows the HomePage overview inside the root layout.
      */
@@ -245,6 +272,37 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             HomePageController controller = loader.getController();
             controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showHomePageOverview(String userName, String passWord) throws SQLException {
+        try {
+        	 //new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=false;
+            returnHome=true;
+            faded=false;
+            editHideLevelC=false;
+            editHideLevelA=false;
+            if(database.loginAttempt(userName, passWord))
+            {
+            initRootLayout();
+            // Load Home Page overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/HomePage.fxml"));
+            AnchorPane homePageOverview = (AnchorPane) loader.load();
+
+            // Set levela overview into the center of root layout.
+            rootLayout.setCenter(homePageOverview);
+
+            // Give the controller access to the main app.
+            HomePageController controller = loader.getController();
+            controller.setMainApp(this);
+            }
+            else
+            	showManagerLoginInvalidOverview();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -282,6 +340,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
     
     //New Andrew used to go backwards from level c without clearing type Observable list
     public void showLevelaOverviewBack() {

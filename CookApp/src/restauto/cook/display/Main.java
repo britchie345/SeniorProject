@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -498,10 +499,29 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-    
-    /**
-     * Shows the HomePage overview inside the root layout.
-     */
+    public void showEmployeeLoginInvalidOverview() {
+        try {
+        	//Andrew handle setting buttons for this particular scene
+        	fadeOut=true;
+        	returnHome=true;
+        	edit=false;
+        	initRootLayout();
+            // Load Manager Login overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/EmployeeLoginInvalid.fxml"));
+            AnchorPane managerLogin = (AnchorPane) loader.load();
+
+            // Set manager login overview into the center of root layout.
+            rootLayout.setCenter(managerLogin);
+
+            // Give the controller access to the main app.
+            EmployeeLoginController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void showHomePageOverview() {
         try {
         	
@@ -509,6 +529,7 @@ public class Main extends Application {
         	fadeOut=false;
         	returnHome=true;
         	edit=false;
+        	
         	initRootLayout();
             // Load Home Page overview.
             FXMLLoader loader = new FXMLLoader();
@@ -521,6 +542,40 @@ public class Main extends Application {
             // Give the controller access to the main app.
             HomePageController controller = loader.getController();
             controller.setMainApp(this);
+        	
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Shows the HomePage overview inside the root layout.
+     * @throws SQLException 
+     */
+    public void showHomePageOverview(String userName, String passWord) throws SQLException {
+        try {
+        	
+        	//Andrew handle setting buttons for this particular scene
+        	fadeOut=false;
+        	returnHome=true;
+        	edit=false;
+        	if(database.loginAttempt(userName, passWord))
+        	{
+        	initRootLayout();
+            // Load Home Page overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/HomePage.fxml"));
+            AnchorPane homePageOverview = (AnchorPane) loader.load();
+
+            // Set levela overview into the center of root layout.
+            rootLayout.setCenter(homePageOverview);
+
+            // Give the controller access to the main app.
+            HomePageController controller = loader.getController();
+            controller.setMainApp(this);
+        	}
+        	else
+        		showEmployeeLoginInvalidOverview();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -612,6 +667,22 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();            
         }
+    }
+    
+    private LinkedHashMap<String,BufferedImage> getCookPics(String typeID) throws SQLException, IOException
+    {
+    	return database.getCookPictures(typeID);
+    }
+    public LinkedHashMap<String,BufferedImage> cookAppPictures(String typeID) throws IOException
+    {
+    	LinkedHashMap<String,BufferedImage> pics=new LinkedHashMap<String,BufferedImage>();
+    	try {
+			pics= getCookPics(typeID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return pics;
     }
     
     // Simple printing solution to help typing
