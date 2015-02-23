@@ -47,6 +47,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
+                              <TextFlow fx:id="itemTextFlow" layoutX="6.0" layoutY="60.0" prefHeight="448.0" prefWidth="244.0" />
                            </children>
                         </AnchorPane>
                     </items>
