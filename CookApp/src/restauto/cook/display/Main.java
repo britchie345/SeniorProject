@@ -1,28 +1,35 @@
 package restauto.cook.display;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+import restauto.cook.display.model.HelpTable;
 import restauto.cook.display.model.Orders;
 import restauto.cook.display.model.Sales;
 import restauto.cook.display.view.EmployeeLoginController;
+import restauto.cook.display.view.HelpScannerController;
 import restauto.cook.display.view.HomePageController;
 import restauto.cook.display.view.MainDisplayController;
 import restauto.cook.display.view.RootLayoutController;
 import restauto.cook.database.MySQLDatabase;
 import restauto.cook.display.model.Menu_Item;
 import restauto.cook.display.model.Type;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -51,6 +58,7 @@ public class Main extends Application {
     private ObservableList<Type> type = FXCollections.observableArrayList();
     private ObservableList<Menu_Item> menuItem = FXCollections.observableArrayList();
     public ObservableList<Menu_Item> stationMenuItems = FXCollections.observableArrayList();
+    public ObservableList<HelpTable> helpTable=FXCollections.observableArrayList();
        
     /**
      * Constructor
@@ -430,6 +438,36 @@ public class Main extends Application {
     				stationMenuItems.add(index);
     }
     
+    public void setHelpRequest()
+    {
+    	try {
+    			helpTable.addAll(database.getHelpRequest());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public void clearHelp()
+    {
+    	helpTable.clear();
+    }
+    public void deleteHelp(HelpTable helpTable)
+    {
+    	try {
+			database.deleteHelpRequest(helpTable.getTableID());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public ObservableList<HelpTable> getHelpRequest()
+    {
+    	setHelpRequest();
+    	return helpTable;
+    }
+    
     public ObservableList<Menu_Item> getStationMenuItems() {
     	return stationMenuItems;
     }
@@ -668,6 +706,45 @@ public class Main extends Application {
             e.printStackTrace();            
         }
     }
+    
+    public void showHelpRequest(){
+        try {
+        	// Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/helpScanner.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Help Requested");
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Menu Item into the controller.
+            HelpScannerController controller = loader.getController();
+            controller.setMainApp(this, "");
+            
+            dialogStage.show();
+            dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+                @Override
+                public void handle(WindowEvent event) {
+                    Platform.runLater(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            controller.getTimeLine().stop();
+                            clearHelp();
+                        }
+                    });
+                }
+            });
+            
+        } catch (IOException e) {
+            e.printStackTrace();            
+        }
+    }
+    
     
     private LinkedHashMap<String,BufferedImage> getCookPics(String typeID) throws SQLException, IOException
     {

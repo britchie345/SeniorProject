@@ -5,18 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-import restauto.cook.database.MySQLDatabase;
 import restauto.cook.display.Main;
 import restauto.cook.display.model.Menu_Item;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -25,9 +22,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 //@SuppressWarnings("deprecation")
 public class MainDisplayController {
@@ -48,6 +46,8 @@ public class MainDisplayController {
     private Button refreshButton;
     @FXML
    	private FlowPane flow;
+    @FXML
+    private Button helpButton;
     
     // Reference to the main application.
     private Main mainApp;
@@ -58,10 +58,6 @@ public class MainDisplayController {
     //Station name
     private String station = "";
     
-    //Brians part
-    @FXML
-    private TextFlow itemTextFlow;
-    
     LinkedHashMap<String,Integer> itemCount=new  LinkedHashMap<String,Integer>();
 
     /**
@@ -71,10 +67,6 @@ public class MainDisplayController {
     public MainDisplayController() {
     	//getItemCount();
     }
-    
-  //Set the Labels for item details
-    Label nameLabel = new Label();;
-    Label idLabel = new Label();;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -111,13 +103,6 @@ public class MainDisplayController {
 
         // Add observable list data to the table
         menuItemTable.setItems(mainApp.getStationMenuItems());
-        
-        itemTextFlow.setTextAlignment(TextAlignment.LEFT);
-	    nameLabel.setMaxWidth(240);
-	    nameLabel.setWrapText(true);
-	 
-	    itemTextFlow.getChildren().add(nameLabel);
-	    itemTextFlow.getChildren().add(idLabel);
     }
     
     /**
@@ -129,16 +114,7 @@ public class MainDisplayController {
     private void menuItemClickedListner(Menu_Item clickedMenuItem) {
 
     	this.clickedMenuItem = clickedMenuItem;
-    	itemTextFlow.getChildren().removeAll();
-    	try {
-			displayOverview(clickedMenuItem);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
     }
-    
 
     //Andrew handle displays of Columns
     public void setTable(int[] arg)
@@ -538,6 +514,7 @@ public class MainDisplayController {
     				count[i]=itemCount.get(imgName[i]);
     			else
     				count[i]=0;
+    			imgName[i] = imgName[i].substring(0, Math.min(imgName[i].length(), 20));
     			imgName[i]=imgName[i]+": "+count[i];
     		}
     		
@@ -746,43 +723,13 @@ public class MainDisplayController {
 		mainApp.showHomePageOverview();
 	}
 	
-	private void displayOverview(Menu_Item itemDisplay) throws SQLException
-	 {
-		 //flow pane function for reference
-		 //fit to parent
-		 //itemTextFlow
-		 
-		//idLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
-		//idLabel.setText(itemDisplay.getName());
-		 MySQLDatabase database=new MySQLDatabase();
-		 //returns map
-		 //System.out.println(database.getOrderOptions(clickedMenuItem.getOrderID().toString())); 
-		 
-		 Map optionReturn= new HashMap();
-		 optionReturn = database.getOrderOptions(clickedMenuItem.getOrderID());
-	 	
+	@FXML
+	private void handleHelp()
+	{
 		
-		nameLabel.setText       (itemDisplay.getName() + 
-				"\nID #: " + itemDisplay.getItemID() + 
-				"\n\nCook Time: " + itemDisplay.getCookTime() + 
-				"\n\nDescription: " + itemDisplay.getDescription());
-		
-		//nameLabel.setText(itemDisplay.getCookTime());
-		 
-		
-		Set<String> sortedKeys = new TreeSet<String>();
-		sortedKeys.addAll(optionReturn.keySet());
+	   mainApp.showHelpRequest();
 
-		String boi = new String("");
-		for(String key: sortedKeys){
-		    boi+=(key  + ":\n" + optionReturn.get(key)+"\n\n");
-		}
-		idLabel.setText(boi);
-		
-		
-		// Query -> add child if not null
 
-	 }
 	}
-		
  
+}

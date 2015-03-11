@@ -47,7 +47,6 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <TextFlow fx:id="itemTextFlow" layoutX="6.0" layoutY="60.0" prefHeight="448.0" prefWidth="244.0" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -68,6 +67,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Button fx:id="helpButton"  onAction="#handleHelp" layoutX="341.0" layoutY="17.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="120.0" text="Open Help" />
                </children>
             </AnchorPane>
         </items>
