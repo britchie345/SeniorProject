@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import fxmltableview.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.ReportController">
+   <children>
+      <TabPane prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Items Sold">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.28557114228456915" prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                 <children>
+                                    <SplitPane dividerPositions="0.8913043478260869" layoutY="14.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="366.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                             <children>
+                                                <TableView fx:id="reportTypeTable" editable="true" prefHeight="529.0" prefWidth="281.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="nameColumn" minWidth="-Infinity" text="Type" />
+                                                      <TableColumn fx:id="checkBoxTableColumn" maxWidth="111.0" minWidth="-Infinity" prefWidth="102.0" resizable="false" text="Include">   
+                  										<cellValueFactory>
+                                                            <PropertyValueFactory property="checked" />
+                                                         </cellValueFactory>
+                  										<cellFactory>
+                                                            <restauto.manager.menu.levelc.view.CheckBoxCellFactory />
+                                                         </cellFactory>
+                  									</TableColumn>
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                             <children>
+                                                <HBox prefHeight="61.0" prefWidth="281.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Button fx:id="backButtonA" mnemonicParsing="false" onAction="#handleBackward" prefWidth="100.0" text="Back">
+                                                         <padding>
+                                                            <Insets bottom="15.0" left="15.0" top="15.0" />
+                                                         </padding>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" top="15.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                      <Button fx:id="updateButtonA" mnemonicParsing="false" onAction="#handleUpdateA" text="Update">
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" top="15.0" />
+                                                         </HBox.margin>
+                                                         <padding>
+                                                            <Insets left="10.0" />
+                                                         </padding>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                 <children>
+                                    <Label prefHeight="77.0" prefWidth="216.0" styleClass="label-header" text="Items Sold">
+                                       <padding>
+                                          <Insets left="20.0" top="15.0" />
+                                       </padding>
+                                    </Label>
+                                    <PieChart fx:id="pieChartA" prefHeight="599.0" prefWidth="709.0" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/src/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Sales">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.28557114228456915" prefHeight="559.0" prefWidth="1000.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                 <children>
+                                    <SplitPane dividerPositions="0.8913043478260869" layoutY="14.0" orientation="VERTICAL" prefHeight="599.0" prefWidth="281.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <items>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                             <children>
+                                                <VBox prefHeight="492.0" prefWidth="281.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label text="Start Date" />
+                                                      <DatePicker fx:id="startDateA" onAction="#handleStartDateA" />
+                                                      <Label text="End Date" />
+                                                      <DatePicker fx:id="endDateA" onAction="#handleEndDateA" />
+                                                   </children>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <padding>
+                                                      <Insets left="15.0" top="25.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                             <children>
+                                                <HBox prefHeight="61.0" prefWidth="281.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Button fx:id="backButtonB" mnemonicParsing="false" onAction="#handleBackward" prefWidth="100.0" text="Back">
+                                                         <padding>
+                                                            <Insets bottom="15.0" left="15.0" top="15.0" />
+                                                         </padding>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" top="15.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                      <Button fx:id="updateButtonB" mnemonicParsing="false" onAction="#handleUpdateB" text="Update">
+                                                         <padding>
+                                                            <Insets left="10.0" />
+                                                         </padding>
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" top="15.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background" stylesheets="@../../../../../../../../../Workspace_JavaFX/ManagerUI1/bin/restauto/manager/menu/levelc/view/DarkTheme.css">
+                                 <children>
+                                    <Label prefHeight="77.0" prefWidth="216.0" styleClass="label-header" text="Sales">
+                                       <padding>
+                                          <Insets left="20.0" top="15.0" />
+                                       </padding>
+                                    </Label>
+                                    <BarChart fx:id="barChart" prefHeight="599.0" prefWidth="709.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis minorTickLength="2.0" side="LEFT" tickUnit="2.0" upperBound="20.0" />
+                                      </yAxis>
+                                       <padding>
+                                          <Insets bottom="50.0" left="20.0" right="20.0" top="100.0" />
+                                       </padding>
+                                    </BarChart>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

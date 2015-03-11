@@ -18,6 +18,7 @@ import restauto.manager.menu.levelc.model.Menu_Item;
 import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
 import restauto.manager.menu.levelc.view.PieChartReportController;
+import restauto.manager.menu.levelc.view.ReportController;
 //import restauto.manager.menu.levelc.view.LevelbOverviewController;
 //import restauto.manager.menu.levelc.view.LevelcEditDialogController;
 import restauto.manager.menu.levelc.view.RootLayoutController;
@@ -508,13 +509,13 @@ public class MainApp extends Application {
 
             // Load Load Final Level overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/Reports.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/Reports2.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
 
             rootLayout.setCenter(pane);
 
             // Give the controller access to the main app.
-            PieChartReportController controller = loader.getController();
+            ReportController controller = loader.getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {

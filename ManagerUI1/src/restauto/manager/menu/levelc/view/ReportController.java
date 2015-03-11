@@ -1,16 +1,15 @@
 package restauto.manager.menu.levelc.view;
 
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.Node;
@@ -19,21 +18,23 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import restauto.manager.database.tools.MySQLDatabase;
 import restauto.manager.menu.levelc.MainApp;
 import restauto.manager.menu.levelc.model.Type;
-import restauto.manager.menu.levelc.model.TypeReports;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
+import javafx.event.EventHandler;
 
 
-public class PieChartReportController {
+public class ReportController {
 
     @FXML
     private Button chartButtonA;
@@ -44,11 +45,21 @@ public class PieChartReportController {
     @FXML
     private Button chartButtonD;
     @FXML
-    private Button backButton;
+    private Button backButtonA;
+    @FXML
+    private Button backButtonB;
     @FXML
     private PieChart pieChartA;
+    //@FXML
+    //private BarChart barChartA;
+    
+    
     @FXML
-    private BarChart barChartA;
+    private DatePicker startDateA;
+    private LocalDate localStartDateA;
+    @FXML
+    private DatePicker endDateA;
+    private LocalDate localEndDateA;
     
     
     
@@ -65,8 +76,11 @@ public class PieChartReportController {
 //    @FXML
 //    private TableColumn<Type, Boolean> includeData;
     @FXML
-    private Button updateButton;
+    private Button updateButtonA;
+    @FXML
+    private Button updateButtonB;
     
+    private final String pattern = "yyyy-MM-dd";
     
     // Reference to the main application.
     private MainApp mainApp;
@@ -75,7 +89,7 @@ public class PieChartReportController {
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public PieChartReportController() {
+    public ReportController() {
     	
     }
 
@@ -144,12 +158,12 @@ public class PieChartReportController {
         
         
         // Get an array with the English month names.
-        String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
+        //////////String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
         // Convert it to a list and add it to our ObservableList of months.
-        monthNames.addAll(Arrays.asList(months));
+        /////////monthNames.addAll(Arrays.asList(months));
 
-        xAxis.setCategories(monthNames);
-        setPersonData();
+        //////////xAxis.setCategories(monthNames);
+        //////////setPersonData();
         
         
         
@@ -189,7 +203,38 @@ public class PieChartReportController {
 //        series3.getData().add(new XYChart.Data(usa, 92633.68));  
 //        
 //        barChartA.getData().addAll(series1, series2, series3);
-    
+        
+        //-------------------------------------------
+        
+        StringConverter converter = new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = 
+                DateTimeFormatter.ofPattern(pattern);
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        };   
+        
+        startDateA.setConverter(converter);
+        endDateA.setConverter(converter);
+        
+        startDateA.setPromptText(pattern.toLowerCase());
+        endDateA.setPromptText(pattern.toLowerCase());
+
+        startDateA.requestFocus();
+        endDateA.requestFocus();
     
     
     }
@@ -273,13 +318,14 @@ public class PieChartReportController {
 	 * Displays chart data based on the selected types
 	 */
 	@FXML
-	private void handleUpdate() {
+	private void handleUpdateA() {
 		
     	MySQLDatabase database = new MySQLDatabase();
     	
     	//New
     	
     	String typesIncluded = "";
+    	boolean isFirst = true;
     	
         for (Type type : reportTypeTable.getItems()) {
         	
@@ -287,7 +333,14 @@ public class PieChartReportController {
         		System.out.println(type.getName() + " is Checked");
             	//System.out.println(" " + type.getID());
             	
-            	typesIncluded = "AND TYPE.TYPE_ID = " + type.getID() + " ";
+        		if(isFirst) {
+        			
+        			typesIncluded = type.getID();
+        			isFirst = false;
+        		}
+        		else
+        			typesIncluded += ", " + type.getID();
+        			
         	}
         	
 
@@ -320,6 +373,35 @@ public class PieChartReportController {
         		  if (data.getName().equals(((Text) node).getText()))
         			  ((Text) node).setText("  " + data.getName() + " (" + String.format("%,.0f", data.getPieValue()) + ")  ");
         
+	}
+	
+	@FXML
+	private void handleUpdateB() {
+		
+		//System.out.println("\n\nStart Date: " + localStartDateA.toString() + "End Date: " + localEndDateA);
+		
+		
+		MySQLDatabase database = new MySQLDatabase();
+		double salesAmount = database.getSales(localStartDateA.toString(), localEndDateA.toString());
+		
+		System.out.println("\n\n" + salesAmount + "\n\n");
+		
+        XYChart.Series<String,Integer> series = new XYChart.Series<String,Integer>();
+        XYChart.Data<String, Integer> totalSales = new XYChart.Data<String,Integer>("Total Sales", 1);
+        series.getData().add(totalSales);
+        barChart.getData().add(series);
+	}
+	
+	@FXML
+	private void handleStartDateA() {
+		
+		localStartDateA = startDateA.getValue();
+	}
+	
+	@FXML
+	private void handleEndDateA() {
+		
+		localEndDateA = endDateA.getValue();
 	}
  
 }

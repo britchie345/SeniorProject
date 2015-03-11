@@ -62,9 +62,70 @@ public class MySQLDatabase {
      * 
      * Queries for the chart data
      */
-    public List<Map<String, String>> getItemsBought() {
+    public double getSales(String startDate, String endDate) {
     	
-    	final String query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID GROUP BY NAME";
+    	//final String query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID GROUP BY NAME";
+    	String query = "SELECT SUM(PRICE) AS TOTAL_SALES FROM ORDERS_ARCHIVE, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '" + startDate + "' AND '" + endDate + "') AND ORDERS_ARCHIVE.ITEM_ID = MENU_ITEM.ITEM_ID";
+    	//List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+    	double result = 0;
+    	
+    	connection();
+    	Statement statement;
+    	
+		try {
+			
+			statement = connection.createStatement();
+	  	  	ResultSet rs = statement.executeQuery(query);
+	  	  	
+	    	  //LinkedHashMap<String, String> rowMap = null;
+	    	  
+			  while(rs.next()) {
+				  
+				 //rowMap = new LinkedHashMap<String, String>();
+				  
+				 //rowMap.put("NAME", rs.getString("NAME"));
+				 //rowMap.put("NUMBER_SOLD", rs.getString("NUMBER_SOLD"));
+				  
+				 //result.add(rowMap);
+				  
+				  result = rs.getDouble("TOTAL_SALES");
+				  System.out.println("\n\ndouble: " + result + "\n");
+				  
+				  int integer = rs.getInt("TOTAL_SALES");
+				  System.out.println("ninteger: " + integer + "\n");
+				  
+				  String string = rs.getString("TOTAL_SALES");
+				  System.out.println("string: " + string + "\n");
+				  
+				  float myfloat = rs.getFloat("TOTAL_SALES");
+				  System.out.println("myfloat: " + myfloat + "\n\n");
+			  }
+			  
+	    	  closeResources(statement, connection);
+	  	  	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+		return result;
+    }
+    
+    /**
+     * New
+     * 
+     * Queries for the chart data
+     */
+    public List<Map<String, String>> getItemsBought(boolean all, String typesIncluded) {
+    	
+    	//final String query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID GROUP BY NAME";
+    	
+    	String query = "";
+    	
+    	if(all)
+    		query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID AND MENU_ITEM.ITEM_ID IN (SELECT ITEM_TYPE.ITEM_ID FROM TYPE, ITEM_TYPE WHERE TYPE.TYPE_ID = ITEM_TYPE.TYPE_ID) GROUP BY NAME";
+    	else
+    		query = "SELECT NAME, ORDERS_ARCHIVE.ITEM_ID, COUNT(ORDERS_ARCHIVE.ITEM_ID) AS NUMBER_SOLD FROM `ORDERS_ARCHIVE`, MENU_ITEM WHERE SALE_ID IN (SELECT SALE_ID FROM SALE_ARCHIVE WHERE DATE BETWEEN '2014-01-01' AND '2015-12-20') AND MENU_ITEM.ITEM_ID = ORDERS_ARCHIVE.ITEM_ID AND MENU_ITEM.ITEM_ID IN (SELECT ITEM_TYPE.ITEM_ID FROM TYPE, ITEM_TYPE WHERE TYPE.TYPE_ID = ITEM_TYPE.TYPE_ID AND TYPE.TYPE_ID IN (" + typesIncluded + ")) GROUP BY NAME";
     	List<Map<String, String>> result = new ArrayList<Map<String, String>>();
     	
     	connection();
