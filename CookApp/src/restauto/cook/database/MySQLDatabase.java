@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -526,5 +527,59 @@ public void deleteHelpRequest(String HelpID) throws SQLException
              e.printStackTrace();
         }
     }
+    
+    public Map getOrderOptions( String idValue) throws SQLException {
+    		
+    	connection();
+    		Map optionReturn=new HashMap();
+    		ArrayList options = new ArrayList();
+    		
+    		String query = "SELECT OPTION_ID FROM ORDER_OPTIONS WHERE ORDER_ID=?";
+    		PreparedStatement statement = connection.prepareStatement(query);
+    	        
+    		statement.setString(1, idValue);
+    		ResultSet rs=statement.executeQuery();
+    	
+    		 while(rs.next()){
+    			 String query2 = "SELECT NAME FROM OPTIONS WHERE OPTION_ID=?";
+    		    	PreparedStatement statement2 = connection.prepareStatement(query2);
+    		            
+    	    	statement2.setString(1, rs.getString("OPTION_ID"));
+    		    	ResultSet rs2=statement2.executeQuery();
+    		    	
+    		    	 while(rs2.next()){
+    		    		 String query3 = "SELECT OPTIONTYPE_ID FROM OPTION_GROUPINGS WHERE OPTION_ID=?";
+    		    	    	PreparedStatement statement3 = connection.prepareStatement(query3);
+    		    	    	
+    		    	    	String optionName=rs2.getString("NAME");
+    		    	    	statement3.setString(1, rs.getString("OPTION_ID"));
+    		    	    	ResultSet rs3=statement3.executeQuery();
+    		    	    	
+    		    	    	while(rs3.next())
+    		    	    	{
+    		    	    		 String query4 = "SELECT DESCRIPTION FROM OPTION_TYPE WHERE OPTIONTYPE_ID=?";
+    		    	    	    	PreparedStatement statement4 = connection.prepareStatement(query4);
+    		    	    	    	
+    		    	    	    	statement4.setString(1, rs3.getString("OPTIONTYPE_ID"));
+    		    	    	    	ResultSet rs4=statement4.executeQuery();
+    		    	    	    	
+    		    	    	    	while(rs4.next())
+    		    	    	    	{
+    		    	    	    		String name=rs4.getString("DESCRIPTION");
+    		    	    	    		
+    	   	    	    		//optionReturn.get(name).equals(optionReturn.get(name)+"\n"+optionName);
+    		    	    	    		if (optionReturn.get(name) != null){
+    		    	    	    		optionReturn.put(name, optionReturn.get(name) +"\n"+ optionName);}
+    		    	    	    		else
+    		    	    	    			optionReturn.put(name, optionName);
+    		    	    	    		
+    		    	    	    	}
+    		    	    	}
+    		          }
+    	      }
+    		closeResources(statement, connection);
+    	//Add a comment to this line
+    		return optionReturn;
+    	}
     
 }

@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import restauto.manager.database.tools.Table;
+import restauto.manager.menu.levelc.model.Employee;
+import restauto.manager.menu.levelc.model.LocationGoogle;
 
 
 public class MySQLDatabase {
@@ -460,6 +462,86 @@ public void deleteImage(String idValue, String imgID) throws SQLException {
 
 	closeResources(statement, connection); 
 }
+
+public void deleteLocation(String itemType, int idValue)
+		throws SQLException {
+
+	connection();
+	String query = "DELETE FROM " + itemType + " WHERE LOCATIONS_ID=?";
+	PreparedStatement statement = connection.prepareStatement(query);
+
+	statement.setInt(1, idValue);
+	statement.executeUpdate();
+
+	closeResources(statement, connection);
+}
+
+public void deleteEmployee(String itemType, int idValue)
+		throws SQLException {
+
+	connection();
+	String query = "DELETE FROM " + itemType + " WHERE EMP_ID=?";
+	PreparedStatement statement = connection.prepareStatement(query);
+
+	statement.setInt(1, idValue);
+	statement.executeUpdate();
+
+	closeResources(statement, connection);
+}
+
+
+public ArrayList<LocationGoogle> locationAttempt() throws SQLException {
+	ArrayList<LocationGoogle> tempArray = new ArrayList<LocationGoogle>();
+	connection();
+
+	String query = "SELECT * FROM LOCATIONS";
+	Statement statement = connection.createStatement();
+
+	ResultSet rs = statement.executeQuery(query);
+
+	while (rs.next()) {
+		LocationGoogle Holder = new LocationGoogle();
+		Holder.setItemID(rs.getString("LOCATIONS_ID"));
+		Holder.setLatitude(rs.getString("LAT"));
+		Holder.setLongitude(rs.getString("LONG"));
+		Holder.setTitle(rs.getString("TITLE"));
+		Holder.setDescription(rs.getString("DESCRIPTION"));
+		Holder.setStreet(rs.getString("STREET"));
+		Holder.setCity(rs.getString("CITY"));
+		Holder.setState(rs.getString("STATE"));
+		Holder.setZip(rs.getString("ZIP"));
+
+		tempArray.add(Holder);
+	}
+
+	return tempArray;
+
+}
+
+public ArrayList<Employee> employeeAttempt() throws SQLException {
+	ArrayList<Employee> tempArray = new ArrayList<Employee>();
+	connection();
+
+	String query = "SELECT * FROM EMPLOYEE";
+	Statement statement = connection.createStatement();
+
+	ResultSet rs = statement.executeQuery(query);
+
+	while (rs.next()) {
+		Employee Holder = new Employee();
+		Holder.setItemID(rs.getString("EMP_ID"));
+		Holder.setUsername(rs.getString("USERNAME"));
+		Holder.setPassword(rs.getString("PASSWORD"));
+		Holder.setFname(rs.getString("FIRSTNAME"));
+		Holder.setLname(rs.getString("LASTNAME"));
+
+		tempArray.add(Holder);
+	}
+
+	return tempArray;
+
+}
+
 public boolean loginAttempt(String userName, String passWord) throws SQLException
 {
 	connection();
@@ -477,6 +559,132 @@ public boolean loginAttempt(String userName, String passWord) throws SQLExceptio
 	else
 		return true;
 }
+
+public void updateLocation(Map<String, ArrayList<String>> item,
+		String itemType) throws SQLException {
+
+	Set<String> keys = item.keySet();
+	String query = "UPDATE " + itemType + " SET ";
+	boolean firstValue = true;
+
+	for (String index : keys) {
+
+		if (firstValue) {
+			query += index + "=?";
+			firstValue = false;
+		} else
+			query += "," + index + "=?";
+	}
+
+	query += " WHERE LOCATIONS_ID=?";
+
+	connection();
+	PreparedStatement statement = connection.prepareStatement(query);
+
+	int itemID = 0;
+	int count = 0;
+	for (String index : keys) {
+		count++;
+
+		ArrayList<String> hold = item.get(index);
+
+		if (index.equals("LOCATIONS_ID"))
+			itemID = Integer.parseInt(hold.get(0));
+
+		if (hold.get(1).equals("int") || hold.get(1).equals("Integer"))
+			statement.setInt(count, Integer.parseInt(hold.get(0)));
+
+		else if (hold.get(1).equals("Double"))
+			statement.setDouble(count, Double.parseDouble(hold.get(0)));
+
+		else if (hold.get(1).equals("String"))
+			statement.setString(count, hold.get(0));
+
+		else
+			System.out.println("Insert Error - Datatype Unknown");
+
+	}
+
+	statement.setInt(count + 1, itemID);
+
+	statement.executeUpdate();
+
+	closeResources(statement, connection);
+}
+
+public void updateEmployees(Map<String, ArrayList<String>> item,
+		String itemType) throws SQLException {
+
+	Set<String> keys = item.keySet();
+	String query = "UPDATE " + itemType + " SET ";
+	boolean firstValue = true;
+
+	for (String index : keys) {
+
+		if (firstValue) {
+			query += index + "=?";
+			firstValue = false;
+		} else
+			query += "," + index + "=?";
+	}
+
+	query += " WHERE EMP_ID=?";
+
+	connection();
+	PreparedStatement statement = connection.prepareStatement(query);
+
+	int itemID = 0;
+	int count = 0;
+	for (String index : keys) {
+		count++;
+
+		ArrayList<String> hold = item.get(index);
+
+		if (index.equals("EMP_ID"))
+			itemID = Integer.parseInt(hold.get(0));
+
+		if (hold.get(1).equals("int") || hold.get(1).equals("Integer"))
+			statement.setInt(count, Integer.parseInt(hold.get(0)));
+
+		else if (hold.get(1).equals("Double"))
+			statement.setDouble(count, Double.parseDouble(hold.get(0)));
+
+		else if (hold.get(1).equals("String"))
+			statement.setString(count, hold.get(0));
+
+		else
+			System.out.println("Insert Error - Datatype Unknown");
+
+	}
+
+	statement.setInt(count + 1, itemID);
+
+	statement.executeUpdate();
+
+	closeResources(statement, connection);
+}
+
+public void insertLoc(String itemType,LocationGoogle locGoogle) throws SQLException {
+
+	connection();
+	String query = "INSERT INTO " + itemType + " VALUES (?,?,?,?,?,?,?,?,?,?)";
+	PreparedStatement statement = connection.prepareStatement(query);
+	statement.setString(1, locGoogle.getItemID());
+	statement.setString(2, locGoogle.getLatitude());
+	statement.setString(3, locGoogle.getLongitude());
+	statement.setString(4, locGoogle.getTitle());
+	statement.setString(5, locGoogle.getDescription());
+	statement.setString(6, locGoogle.getStreet());
+	statement.setString(7, locGoogle.getCity());
+	statement.setString(8, locGoogle.getState());
+	statement.setString(9, locGoogle.getZip());
+	statement.setString(10, "4444444444");
+	statement.executeUpdate();
+
+	closeResources(statement, connection);
+}
+
+
     
     private void closeResources(Statement statement, Connection connection) {
     	

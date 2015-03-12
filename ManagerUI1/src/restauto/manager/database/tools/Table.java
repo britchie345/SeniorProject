@@ -131,7 +131,28 @@ public class Table {
 					new ArrayList<String>(){{ add(""); add("String"); }});
 			}});
                 
-                
+items.put("LOCATIONS", new LinkedHashMap<String, ArrayList<String>>(){{
+			
+			put("LOCATIONS_ID",
+					new ArrayList<String>(){{ add(""); add("int"); }});
+			put("LAT",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("LONG",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("TITLE",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("DESCRIPTION",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("STREET",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("CITY",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("STATE",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+            put("ZIP",
+					new ArrayList<String>(){{ add(""); add("String"); }});
+			}});
+        
         items.put("LOGIN_INFO", new LinkedHashMap<String, ArrayList<String>>(){{
 			
 			put("CUSTOMER_ID",

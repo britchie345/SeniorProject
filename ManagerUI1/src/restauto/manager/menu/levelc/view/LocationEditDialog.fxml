@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="497.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restauto.manager.menu.levelc.view.LocationEditDialogController">
+   <children>
+      <AnchorPane prefHeight="563.0" prefWidth="562.0" styleClass="background" stylesheets="@DarkTheme.css">
+         <children>
+            <GridPane prefHeight="412.0" prefWidth="532.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <Label text="Location ID" />
+                  <Label text="Title" GridPane.rowIndex="1" />
+                  <Label text="Latitude" GridPane.rowIndex="2" />
+                  <Label text="Longitude" GridPane.rowIndex="3" />
+                  <Label text="Description" GridPane.rowIndex="4" />
+                  <Label text="Street" GridPane.rowIndex="5" />
+                  <TextField fx:id="idField" GridPane.columnIndex="1" />
+                  <TextField fx:id="titleField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="latitudeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="longitudeField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="streetField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="City" GridPane.rowIndex="6" />
+                  <Label text="State" GridPane.rowIndex="7" />
+                  <Label text="Zip" GridPane.rowIndex="8" />
+                  <TextField fx:id="cityField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="stateField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="zipField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="547.0" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="547.0" minWidth="0.0" prefWidth="412.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <HBox layoutX="133.0" layoutY="245.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+               <children>
+                  <Button defaultButton="true" layoutX="133.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleOk" text="OK" />
+                  <Button layoutX="206.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

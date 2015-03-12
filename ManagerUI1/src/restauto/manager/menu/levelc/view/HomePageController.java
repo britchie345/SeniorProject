@@ -49,5 +49,22 @@ public class HomePageController {
 		
 		mainApp.showReportsPage();
 	}
-
+	/**
+	 * Called when the user clicks the employee button.
+	 */
+	@FXML
+	private void handleEmployee() {
+		
+		mainApp.showEmployeePage("1");
+		
+	}
+	/**
+	 * Called when the user clicks the employee button.
+	 */
+	@FXML
+	private void handleLocation() {
+		
+		mainApp.showLocationPage("1");
+		
+	}
 }

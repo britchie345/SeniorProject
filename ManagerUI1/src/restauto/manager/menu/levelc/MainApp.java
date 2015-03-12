@@ -12,11 +12,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import restauto.manager.database.tools.MySQLDatabase;
+import restauto.manager.menu.levelc.model.Employee;
+import restauto.manager.menu.levelc.model.LocationGoogle;
 //import restauto.manager.database.tools.Populate;
 //import restauto.manager.menu.levelc.model.Levelc;
 import restauto.manager.menu.levelc.model.Menu_Item;
+import restauto.manager.menu.levelc.view.EmployeeEditDialogController;
+import restauto.manager.menu.levelc.view.EmployeeOverviewController;
 import restauto.manager.menu.levelc.view.HomePageController;
 import restauto.manager.menu.levelc.view.LevelaOverviewController;
+import restauto.manager.menu.levelc.view.LocationEditDialogController;
+import restauto.manager.menu.levelc.view.LocationOverviewController;
 import restauto.manager.menu.levelc.view.PieChartReportController;
 import restauto.manager.menu.levelc.view.ReportController;
 //import restauto.manager.menu.levelc.view.LevelbOverviewController;
@@ -54,6 +60,8 @@ public class MainApp extends Application {
     
     private ObservableList<Type> type = FXCollections.observableArrayList();
     private ObservableList<Menu_Item> menuItem = FXCollections.observableArrayList();
+    private ObservableList<LocationGoogle> locationGoogle = FXCollections.observableArrayList();
+    private ObservableList<Employee> employee = FXCollections.observableArrayList();
     
     public ObservableList<Menu_Item> clickedMenuItems = FXCollections.observableArrayList();
     
@@ -138,6 +146,42 @@ public class MainApp extends Application {
 //			print("************************\n\n");	
 		}
     }
+    
+private void getAllLocations() {
+		
+		/*** Get All Locations From The Database ***/
+    	
+		ArrayList<LocationGoogle> table = new ArrayList<LocationGoogle>();
+		
+		try {
+			table = database.locationAttempt();
+		} catch (SQLException e) {
+			System.out.println("\n\nSOMETHING FAILED****\n\n");
+		}
+
+		//Clear the list so we start fresh
+				locationGoogle.clear();
+				
+				locationGoogle.addAll(table);
+    }
+
+private void getAllEmployees() {
+	
+	/*** Get All Employees From The Database ***/
+	
+	ArrayList<Employee> table = new ArrayList<Employee>();
+	
+	try {
+		table = database.employeeAttempt();
+	} catch (SQLException e) {
+		System.out.println("\n\nSOMETHING FAILED****\n\n");
+	}
+
+	//Clear the list so we start fresh
+			employee.clear();
+			
+			employee.addAll(table);
+}
 
     /**
      * Returns the data as an observable list. 
@@ -151,6 +195,16 @@ public class MainApp extends Application {
         //return menuItem;
     	return clickedMenuItems;
     }
+    
+    public ObservableList<LocationGoogle> getLocation() {
+	 	getAllLocations();
+    	return locationGoogle;
+    }
+ 
+ public ObservableList<Employee> getEmployee() {
+	 getAllEmployees();
+ 	return employee;
+ }
     
     @Override
     public void start(Stage primaryStage) {
@@ -504,6 +558,47 @@ public class MainApp extends Application {
        }
    }
     
+    /**
+     * Shows the location overview inside the root layout.
+     */
+    public void showLocationPage(String clickedID) {
+    	try {
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=false;
+            returnHome=false;
+            faded=false;
+            editHideLevelC=true;
+            editHideLevelA=false;
+            idHolder=clickedID;                
+            initRootLayout();
+        	//Update all the Menu_Items
+        	getAllLocations();
+        	
+            // Load Load Final Level overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/LocationOverview.fxml"));
+            AnchorPane locationOverview = (AnchorPane) loader.load();
+
+            // Set Levelc overview into the center of root layout.
+            rootLayout.setCenter(locationOverview);
+
+            // Give the controller access to the main app.
+            LocationOverviewController controller = loader.getController();
+            //controller.setMainApp(this);
+            controller.setMainApp(this, clickedID);
+          //new andrew used to show just id and name column when first going to level c
+            int[] arr=new int[4];
+            arr[0]=1;
+            arr[1]=1;
+            arr[2]=0;
+            arr[3]=0;
+            //controller.setTable(arr);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void showReportsPage() {
         try {
 
@@ -580,6 +675,36 @@ public class MainApp extends Application {
             TypeEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setType(menuType);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean showLocationEditDialog(LocationGoogle location) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/LocationEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Location Item");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Menu Item into the controller.
+            LocationEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setLocation(location);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -671,6 +796,74 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public void showEmployeePage(String clickedID) {
+    	try {
+        	//new andrew used to set the view/avaibility of menu buttons and refresh rootlayout.
+            editHide=false;
+            returnHome=false;
+            faded=false;
+            editHideLevelC=true;
+            editHideLevelA=false;
+            idHolder=clickedID;                
+            initRootLayout();
+        	//Update all the Menu_Items
+        	getAllLocations();
+        	
+            // Load Load Final Level overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/EmployeeOverview.fxml"));
+            AnchorPane employeeOverview = (AnchorPane) loader.load();
+
+            // Set Levelc overview into the center of root layout.
+            rootLayout.setCenter(employeeOverview);
+
+            // Give the controller access to the main app.
+            EmployeeOverviewController controller = loader.getController();
+            //controller.setMainApp(this);
+            controller.setMainApp(this, clickedID);
+          //new andrew used to show just id and name column when first going to level c
+            int[] arr=new int[4];
+            arr[0]=1;
+            arr[1]=1;
+            arr[2]=0;
+            arr[3]=0;
+            //controller.setTable(arr);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+    public boolean showEmployeeEditDialog(Employee employee) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/EmployeeEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Employee Item");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the Menu Item into the controller.
+            EmployeeEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setLocation(employee);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
 }

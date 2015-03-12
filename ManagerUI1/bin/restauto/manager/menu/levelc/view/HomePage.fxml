@@ -10,7 +10,7 @@
    <children>
       <Pane layoutX="-211.0" layoutY="-144.0" prefHeight="56.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox layoutX="44.0" layoutY="168.0" spacing="25.0">
+            <VBox layoutX="44.0" layoutY="168.0" prefHeight="358.0" prefWidth="200.0" spacing="25.0">
                <children>
                   <Button layoutX="79.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleDatabase" prefHeight="70.0" prefWidth="200.0" stylesheets="@DarkTheme.css" text="Database">
                      <font>
@@ -18,6 +18,16 @@
                      </font>
                   </Button>
                   <Button layoutX="63.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleReports" prefHeight="70.0" prefWidth="200.0" text="Reports">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleEmployee" prefHeight="70.0" prefWidth="200.0" text="Employee Sign-Up">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleLocation" prefHeight="70.0" prefWidth="200.0" text="Location Manager">
                      <font>
                         <Font size="24.0" />
                      </font>

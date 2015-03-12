@@ -5,9 +5,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
+import restauto.cook.database.MySQLDatabase;
 import restauto.cook.display.Main;
 import restauto.cook.display.model.Menu_Item;
 import javafx.fxml.FXML;
@@ -24,6 +30,8 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -48,6 +56,9 @@ public class MainDisplayController {
    	private FlowPane flow;
     @FXML
     private Button helpButton;
+  //Brians part
+        @FXML
+        private TextFlow itemTextFlow;
     
     // Reference to the main application.
     private Main mainApp;
@@ -67,6 +78,10 @@ public class MainDisplayController {
     public MainDisplayController() {
     	//getItemCount();
     }
+    
+  //Set the Labels for item details
+        Label nameLabel = new Label();;
+        Label idLabel = new Label();;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -103,6 +118,12 @@ public class MainDisplayController {
 
         // Add observable list data to the table
         menuItemTable.setItems(mainApp.getStationMenuItems());
+        itemTextFlow.setTextAlignment(TextAlignment.LEFT);
+        	    nameLabel.setMaxWidth(240);
+        	    nameLabel.setWrapText(true);
+        	 
+        	    itemTextFlow.getChildren().add(nameLabel);
+        	    itemTextFlow.getChildren().add(idLabel);
     }
     
     /**
@@ -114,6 +135,13 @@ public class MainDisplayController {
     private void menuItemClickedListner(Menu_Item clickedMenuItem) {
 
     	this.clickedMenuItem = clickedMenuItem;
+    	itemTextFlow.getChildren().removeAll();
+    	    	try {
+    				displayOverview(clickedMenuItem);
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
     }
 
     //Andrew handle displays of Columns
@@ -731,5 +759,44 @@ public class MainDisplayController {
 
 
 	}
+	
+	private void displayOverview(Menu_Item itemDisplay) throws SQLException
+		 {
+			 //flow pane function for reference
+			 //fit to parent
+			 //itemTextFlow
+			 
+			//idLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
+			//idLabel.setText(itemDisplay.getName());
+			 MySQLDatabase database=new MySQLDatabase();
+			 //returns map
+			 //System.out.println(database.getOrderOptions(clickedMenuItem.getOrderID().toString())); 
+			 
+			 Map optionReturn= new HashMap();
+			 optionReturn = database.getOrderOptions(clickedMenuItem.getOrderID());
+		 	
+			
+			nameLabel.setText       (itemDisplay.getName() + 
+					"\nID #: " + itemDisplay.getItemID() + 
+					"\n\nCook Time: " + itemDisplay.getCookTime() + 
+					"\n\nDescription: " + itemDisplay.getDescription());
+			
+			//nameLabel.setText(itemDisplay.getCookTime());
+			 
+			
+			Set<String> sortedKeys = new TreeSet<String>();
+			sortedKeys.addAll(optionReturn.keySet());
+	
+			String boi = new String("");
+			for(String key: sortedKeys){
+			    boi+=(key  + ":\n" + optionReturn.get(key)+"\n\n");
+			}
+			idLabel.setText(boi);
+			
+			
+	//Add a comment to this line
+			// Query -> add child if not null
+	
+		 }
  
 }
